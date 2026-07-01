@@ -547,6 +547,12 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 .tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}
 .tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}
 .tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}
+.club-filter-bar{background:#fff;border-bottom:1px solid #e8e8e8;padding:12px 32px;display:flex;align-items:center;gap:10px}
+.club-filter-bar label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.6px;color:#1B3A28}
+.club-filter-bar select{font-family:inherit;font-size:14px;font-weight:600;color:#111;background:#f5f5f5;border:1px solid #ddd;border-radius:5px;padding:7px 12px;cursor:pointer}
+.club-filter-bar select:focus{outline:2px solid #C9A84C}
+.club-filter-note{font-size:12px;color:#999;margin-left:auto}
+@media(max-width:600px){.club-filter-bar{padding:10px 16px;flex-wrap:wrap}.club-filter-note{margin-left:0;width:100%}}
 @keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
@@ -569,6 +575,12 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <a href="/transfers" class="tab-link">🔄 Transfers</a>
 </nav>
 
+<div class="club-filter-bar">
+  <label for="clubFilter">Filter by club</label>
+  <select id="clubFilter"><option value="">All Clubs</option></select>
+  <span class="club-filter-note" id="clubFilterNote"></span>
+</div>
+
 <div class="page">
 
 <!-- ═══════════════════════ CHAMPIONSHIP ═══════════════════════ -->
@@ -580,35 +592,35 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 <div class="div-section">
   <div class="sub-hdr red">Summer News <span class="sub-hdr-badge">Pre-Season</span></div>
 
-  <div class="story red">
+  <div class="story red" data-clubs="Southampton, Middlesbrough, Hull City">
     <h3><span class="bge" style="background:#D71920">SOU</span>🔴 Spygate ends: Southampton disqualified, Hull City promoted instead</h3>
     <p>Southampton beat Middlesbrough in the semi-final but were <strong>expelled from the play-offs entirely</strong> after admitting a member of staff filmed Boro's training at Rockliffe Hall. Middlesbrough took their spot in the final — and lost 1–0 to Hull City at Wembley (McBurnie, 90+5', att. 84,506). Hull are promoted to the Premier League.</p>
     <p>Southampton also start 2026/27 on <strong>a 4-point deduction</strong> — meaning they need results just to reach zero before the season "really" begins.</p>
     <div class="src"><a href="https://en.wikipedia.org/wiki/2026_EFL_Championship_play-off_final" target="_blank">Wikipedia</a></div>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Wolverhampton Wanderers, Blackburn Rovers, Burnley, West Ham United">
     <h3>⬇️ Three Premier League clubs arrive: Wolves, Burnley &amp; West Ham</h3>
     <p>Wolves sacked Rob Edwards and appointed <strong>César Peixoto</strong>; they open at home to Blackburn (Fri 14 Aug) — Tony Mowbray's first game back in his second Rovers spell. Burnley are still managerless (Michael Jackson interim only) and open at Turf Moor against West Ham (Sun 16 Aug) — the two relegated sides colliding on matchday one. West Ham kept faith with Nuno Espírito Santo, tying him down to 2028.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Sheffield Wednesday">
     <h3><span class="bge" style="background:#0066B2">SWE</span>💰 Sheffield Wednesday's £20m takeover — and the crest is coming back</h3>
     <p>The Storch family and Tom Costin completed a £20m takeover via Arise Capital Partners on 2 May, ending the Dejphon Chansiri era. The EFL waived a looming 15-point penalty that would otherwise have hit them in League One. Fans then voted ~96% in favour of reverting to the classic "stylised owl" crest last used in 2016 — ratified by the EFL for 2026/27.</p>
     <div class="src"><a href="https://www.skysports.com/football/news/11703/13539108/sheffield-wednesday-david-storch-and-arise-capital-partners-consortium-complete-takeover" target="_blank">Sky Sports</a></div>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Wolverhampton Wanderers, Blackburn Rovers, Burnley, West Ham United, Wrexham, Cardiff City, Sheffield United, Birmingham City">
     <h3>📅 Fixtures out, play-offs expanding to six teams</h3>
     <p>The 2026/27 fixture list was released 25 June — season starts 14–17 August. Standout openers: Wolves vs Blackburn (new managers on debut), Burnley vs West Ham at Turf Moor, Wrexham vs Cardiff City (first game back for Cardiff), Sheffield United vs Birmingham. Structural change to flag: the Championship play-offs expand from four to six qualifying teams from this season.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Bristol City, Lincoln City, Watford, West Bromwich Albion">
     <h3>🔄 Manager merry-go-round</h3>
     <p>In, out, and one big surprise: <strong>Bristol City hired Michael Skubala</strong> — the man who just took Lincoln City up as League One champions — to replace the sacked Gerhard Struber. Watford appointed Italian Alessio Dionisi after sacking Ed Still inside three months. West Brom made James Morrison permanent after he steadied the ship post-Eric Ramsay. Lincoln, in turn, have promoted internally (Chris Cohen &amp; Tom Shaw) rather than replace Skubala with an outside appointment.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Wolverhampton Wanderers, Leicester City, Middlesbrough, Southampton">
     <h3>💼 Ins &amp; outs so far</h3>
     <p>Wolves have been busy — free-transfer swoops for <strong>Raúl Jiménez</strong> and <strong>Kieran Trippier</strong>. Leicester re-signed <strong>Patson Daka</strong> from RB Salzburg but are still mostly selling (El Khannouss to Stuttgart, Monga to Arsenal). Middlesbrough look set to lose captain Hayden Hackney to Everton for around £25m. Watch Southampton's Mateus Fernandes situation — conflicting reports on interest from West Ham/Tottenham, nothing confirmed yet.</p>
   </div>
@@ -669,28 +681,28 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 <div class="div-section">
   <div class="sub-hdr red">Summer News <span class="sub-hdr-badge">Pre-Season</span></div>
 
-  <div class="story">
+  <div class="story" data-clubs="Bolton Wanderers, Stockport County">
     <h3><span class="bge" style="background:#1C3A8A">BOL</span>🏆 Bolton Wanderers 4-1 Stockport County — Trotters back in the Championship</h3>
     <p>Wembley, 24 May, att. 48,268. Rúben Rodrigues scored twice (3', a stoppage-time penalty) either side of a Kyle Wootton own goal and a Sam Dalby strike; Adama Sidibeh's reply came too late. Stockport's Josh Dacres-Cogley was sent off before the late penalty. Bolton return to the second tier after seven years away.</p>
     <div class="src"><a href="https://www.bwfc.co.uk/news/play-final-report-wanderers-4-stockport-county-1" target="_blank">Bolton Wanderers</a></div>
   </div>
 
-  <div class="story red">
+  <div class="story red" data-clubs="Sheffield Wednesday, Swansea City, Aston Villa">
     <h3><span class="bge" style="background:#0066B2">SWE</span>💰 Sheffield Wednesday land in League One with a new owner and a new (old) crest</h3>
     <p>Fresh off a £20m takeover and an EFL-ratified return to the classic "stylised owl" badge, Wednesday arrive as one of the biggest scalps this division has ever had. On the pitch: Ricardo Santos in from Swansea, Callum Slattery and Jordi Liongola added, Sil Swinkels close to a permanent move from Aston Villa. Their first home game of the new era is a Yorkshire derby.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Leicester City">
     <h3><span class="bge" style="background:#003090">LEI</span>🦊 Leicester City's rebuild — Daka back, plenty out the door</h3>
     <p>Patson Daka has re-signed on a 5-year deal from RB Salzburg, but it's mostly an exodus so far: Bilal El Khannouss to Stuttgart, Jeremy Monga to Arsenal, and Fatawu/Mavididi/Winks/Okoli all available. Leicester open the season away at Notts County (Sat 15 Aug, 12:30pm).</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Blackpool, Luton Town, Barnsley, Huddersfield Town, Exeter City, Wigan Athletic, Stockport County, Lincoln City, Bristol City">
     <h3>🔄 Manager merry-go-round</h3>
     <p>Blackpool appointed <strong>Steve Bruce</strong>; Luton Town brought back boyhood fan <strong>Jack Wilshere</strong> to manage his old club and moved their pre-season camp to Spain; Barnsley re-appointed <strong>Daniel Stendel</strong> for a second Oakwell spell; Huddersfield hired <strong>Martin Drury</strong> — their 10th permanent or de-facto boss since 2022; Exeter made <strong>Matt Taylor</strong> permanent after Gary Caldwell left for Wigan (2nd spell); Stockport lost Dave Challinor and turned to ex-Rochdale promotion-winner <strong>Jimmy McNulty</strong>; and Lincoln City, having lost title-winner Michael Skubala to Bristol City, are running with internal duo <strong>Chris Cohen &amp; Tom Shaw</strong>.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Oxford United, West Bromwich Albion">
     <h3>💼 Oxford United's rebuild</h3>
     <p>Matt Ingram has joined West Brom and Przemysław Płacheta's off to Austin FC in MLS — Oxford are chasing free agent Bamba Dieng (also wanted by Blackburn, Leicester, Portsmouth and St Pauli) but haven't landed a confirmed first-team signing yet.</p>
   </div>
@@ -751,23 +763,23 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 <div class="div-section">
   <div class="sub-hdr red">Summer News <span class="sub-hdr-badge">Pre-Season</span></div>
 
-  <div class="story">
+  <div class="story" data-clubs="Notts County, Salford City">
     <h3><span class="bge" style="background:#1C1C1C">NTM</span>🏆 Notts County 3-0 Salford City — world's oldest club up to League One</h3>
     <p>Wembley, Monday 25 May, att. 30,851. Alassana Jatta, Lucas Ness and Jodi Jones scored for Notts County, who beat Salford's co-owner David Beckham to a promotion party in front of him in the stands. Nine days later, Salford sacked manager <strong>Karl Robinson</strong> — and still haven't named a replacement as of 1 July.</p>
     <div class="src"><a href="https://www.efl.com/news/2026/may/25/live--sky-bet-league-two-play-off-final-notts-county-v-salford-city/" target="_blank">EFL.com</a></div>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Northampton Town, Rotherham United, Walsall, Salford City">
     <h3>🔄 Manager merry-go-round</h3>
     <p>Northampton Town appointed <strong>Chris Hogg</strong>; Rotherham United (relegated from League One) turned to <strong>Alex Bruce</strong> after failed approaches for Ian Burchnall and Mat Sadler; Walsall hired ex-Man Utd keeper <strong>Lee Grant</strong> after sacking Sadler in March. Salford's vacancy (above) remains the big one still unresolved.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Rochdale, Stockport County">
     <h3>👋 Rochdale back in the EFL — but lose their promotion-winning boss</h3>
     <p>Rochdale beat Boreham Wood on penalties to return to the Football League, then immediately lost manager Jimmy McNulty to League One's Stockport County. They've replaced him with Ian Watson, arriving from National League North side South Shields.</p>
   </div>
 
-  <div class="story">
+  <div class="story" data-clubs="Grimsby Town, Fleetwood Town">
     <h3>👕 Kit news: Grimsby switch manufacturer, Fleetwood go retro</h3>
     <p>Grimsby Town have signed a new multi-year kit deal with Italian brand Lotto, ending their relationship with Umbro. Fleetwood Town's new Puma home kit brings back a retro badge and darker red.</p>
   </div>
@@ -827,11 +839,11 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <h3>📅 Fixtures out 10 July — season starts 8 August</h3>
     <p>National League, NL North and NL South fixtures all drop together on Friday 10 July at 11am — still a week away as we go to print. Play-offs run 28 April–2 May 2027, with the Promotion Final back at Wembley on 9 May.</p>
   </div>
-  <div class="story">
+  <div class="story" data-clubs="Carlisle United, Gateshead, Southend United, Kidderminster Harriers, Barrow">
     <h3>🔄 Manager merry-go-round: three first-time bosses appointed</h3>
     <p>Carlisle United — bookies' early favourites for the title at 11/4 — appointed ex-Newcastle keeper <strong>Rob Elliot</strong>. Gateshead gave <strong>Lee Cattermole</strong> his first senior job. Southend United did the same for <strong>Kieron Dyer</strong>. Meanwhile Kidderminster Harriers lost promotion-winning boss Adam Murray to Barrow just days after going up, and replaced him with ex-Torquay manager <strong>Paul Wotton</strong>.</p>
   </div>
-  <div class="story">
+  <div class="story" data-clubs="Hornchurch">
     <h3>🎙️ Anton Ferdinand takes his first coaching role — at Hornchurch</h3>
     <p>The former West Ham and QPR defender has joined newly-promoted Hornchurch as first-team coach, reuniting with old team-mate and manager Daryl McMahon.</p>
     <div class="src"><a href="https://fanbanter.co.uk/anton-ferdinand-speaks-on-taking-first-coaching-role-with-national-league-new-boys/" target="_blank">Fan Banter</a></div>
@@ -840,7 +852,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <h3>📣 "3UP" campaign still unresolved</h3>
     <p>All 72 National League clubs back the campaign for three automatic EFL promotion spots instead of one, and it's picked up cross-party MP support and an FSA fan poll showing 9 in 10 in favour. The EFL has agreed to put it to its member clubs — but no vote date or result yet. Genuine live story to keep tracking into the season.</p>
   </div>
-  <div class="story">
+  <div class="story" data-clubs="Portishead Town, Willand Rovers">
     <h3>🚧 Portishead denied promotion over ground grading</h3>
     <p>Portishead Town won the Southern League Division One South play-offs but were denied a step up the pyramid after failing ground grading requirements — Willand Rovers took the reprieved spot instead.</p>
   </div>
@@ -861,11 +873,11 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 </div>
 
 <div class="div-section">
-  <div class="story">
+  <div class="story" data-clubs="AFC Fylde, Kidderminster Harriers, Worthing, Hornchurch">
     <h3>🏆 The four promoted sides settling in</h3>
     <p><span class="bge" style="background:#6b7280">FYL</span><strong>AFC Fylde</strong> (NL North champions) have signed striker Cedric Main from Darlington, described as the first of "several marquee signings planned." <strong>Kidderminster Harriers</strong> (NL North play-off winners) retained key men Olly Tipton and academy graduate Samson, but lost Joe Foulkes to Grimsby Town and manager Adam Murray to Barrow (see above). <strong>Worthing</strong> (NL South champions) have made four signings including ex-Watford academy winger Dom Hutchinson. <strong>Hornchurch</strong> (NL South play-off winners) have signed midfielder Nathan Ferguson from Hartlepool, plus the Anton Ferdinand coaching appointment above.</p>
   </div>
-  <div class="story">
+  <div class="story" data-clubs="Alfreton Town, Curzon Ashton, Bath City, Chippenham, Enfield Town, Eastbourne Borough">
     <h3>📉 Relegated sides regrouping</h3>
     <p>Alfreton Town, Curzon Ashton (NL North) and Bath City, Chippenham, Enfield Town, Eastbourne Borough (NL South) all dropped out of their respective divisions at the end of last season and are now rebuilding a tier down.</p>
   </div>
@@ -880,6 +892,53 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 </div>
 
 <footer>The Pyramid &nbsp;·&nbsp; EFL Football Weekly &nbsp;·&nbsp; 1 July 2026</footer>
+
+<script>
+(function(){
+  var select = document.getElementById('clubFilter');
+  var note = document.getElementById('clubFilterNote');
+  var stories = Array.prototype.slice.call(document.querySelectorAll('.story[data-clubs]'));
+  var clubs = [];
+  stories.forEach(function(s){
+    s.getAttribute('data-clubs').split(',').forEach(function(c){
+      c = c.trim();
+      if (c && clubs.indexOf(c) === -1) clubs.push(c);
+    });
+  });
+  clubs.sort();
+  clubs.forEach(function(c){
+    var opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    select.appendChild(opt);
+  });
+
+  var newsSections = Array.prototype.slice.call(document.querySelectorAll('.div-section')).filter(function(sec){
+    return sec.querySelector('.story') !== null;
+  });
+
+  function applyFilter(){
+    var val = select.value;
+    var visibleCount = 0;
+    stories.forEach(function(s){
+      var list = (s.getAttribute('data-clubs') || '').split(',').map(function(c){ return c.trim(); });
+      var show = !val || list.indexOf(val) !== -1;
+      s.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    newsSections.forEach(function(sec){
+      if (!val) { sec.style.display = ''; return; }
+      var anyVisible = Array.prototype.slice.call(sec.querySelectorAll('.story')).some(function(s){
+        return s.style.display !== 'none';
+      });
+      sec.style.display = anyVisible ? '' : 'none';
+    });
+    note.textContent = val ? (visibleCount + ' stor' + (visibleCount === 1 ? 'y' : 'ies') + ' about ' + val) : '';
+  }
+
+  select.addEventListener('change', applyFilter);
+})();
+</script>
 
 </body>
 </html>`;
