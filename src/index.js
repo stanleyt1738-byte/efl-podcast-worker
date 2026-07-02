@@ -159,7 +159,11 @@ const TRANSFERS = [
   {club:'Stoke City',player:'Djibril Soumare',age:22,from:'Sheffield United (loan spell)',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
   {club:'Stoke City',player:'Josh Griffiths',age:23,from:'Portsmouth (loan spell)',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
   {club:'Sheffield Wednesday',player:'Ricardo Santos',age:31,from:'Swansea City',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed'},
-  {club:'Leicester City',player:'Patson Daka',age:27,from:'RB Salzburg',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed'},
+  {club:'Burnley',player:'Florentino',age:25,from:'Benfica',fee:'£20.7m',type:'in',date:'Jun 2026',status:'confirmed'},
+  {club:'Stoke City',player:'Ethan Galbraith',age:25,from:'Swansea City',fee:'£10m',type:'in',date:'Jun 2026',status:'confirmed'},
+  {club:'Southampton',player:'Daniel Peretz',age:25,from:'Bayern Munich',fee:'£6.9m',type:'in',date:'Jun 2026',status:'confirmed'},
+  {club:'Derby County',player:'Bobby Clark',age:21,from:'RB Salzburg',fee:'£6m',type:'in',date:'Jun 2026',status:'confirmed'},
+  {club:'Wolverhampton Wanderers',player:'Ladislav Krejci',age:25,from:'Girona',fee:'£6.5m',type:'in',date:'Jun 2026',status:'confirmed'},
 
   // ── CONFIRMED DEPARTURES ──────────────────────────────────────────────────
   {club:'Wolverhampton Wanderers',player:'Matt Doherty',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
@@ -189,6 +193,8 @@ const TRANSFERS = [
   {club:'Norwich City',player:'Tony Springett',age:22,to:'Leyton Orient',fee:'Undisclosed',type:'out',date:'Jun 2026',status:'confirmed'},
   {club:'Leicester City',player:'Bilal El Khannouss',age:22,to:'VfB Stuttgart',fee:'Undisclosed',type:'out',date:'Jun 2026',status:'confirmed'},
   {club:'Leicester City',player:'Jeremy Monga',age:17,to:'Arsenal',fee:'Undisclosed',type:'out',date:'Jun 2026',status:'confirmed'},
+  {club:'Leicester City',player:'Patson Daka',age:27,to:'Free agent (contract expired)',fee:'Released',type:'out',date:'1 Jul 2026',status:'confirmed'},
+  {club:'Leicester City',player:'Wout Faes',age:27,to:'Free agent (contract expired)',fee:'Released',type:'out',date:'1 Jul 2026',status:'confirmed'},
   {club:'Oxford United',player:'Matt Ingram',age:32,to:'West Bromwich Albion',fee:'Undisclosed',type:'out',date:'Jun 2026',status:'confirmed'},
   {club:'Oxford United',player:'Przemysław Płacheta',age:26,to:'Austin FC (MLS)',fee:'Undisclosed',type:'out',date:'Jun 2026',status:'confirmed'},
 
@@ -197,6 +203,7 @@ const TRANSFERS = [
   {club:'West Bromwich Albion',player:'Ben Brereton Díaz',age:27,from:'Southampton',fee:'TBC',type:'in',date:'Jun 2026',status:'advanced'},
   {club:'Sheffield Wednesday',player:'Sil Swinkels',age:22,from:'Aston Villa',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'advanced'},
   {club:'Middlesbrough',player:'Hayden Hackney',age:23,to:'Everton',fee:'~£25m',type:'out',date:'Jun 2026',status:'advanced'},
+  {club:'West Ham United',player:'Mateus Fernandes',age:21,to:'Tottenham Hotspur',fee:'~£85m',type:'out',date:'1 Jul 2026',status:'advanced'},
 
   // ── RUMOURS ─────────────────────────────────────────────────────────────
   {club:'Middlesbrough',player:'Morgan Whittaker',age:25,to:'Fulham / Bournemouth / Wolves',fee:'~£20m',type:'out',date:'Jun 2026',status:'rumour'},
@@ -204,7 +211,6 @@ const TRANSFERS = [
   {club:'Wrexham AFC',player:'Callum Doyle',age:22,to:'Premier League interest (Man City buyback clause)',fee:'£7.5m+',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Wrexham AFC',player:'Josh Windass',age:32,to:'Rangers',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Swansea City',player:'Zan Vipotnik',age:24,to:'Leeds / Everton / Newcastle / Aston Villa',fee:'£15-25m asked',type:'out',date:'Jun 2026',status:'rumour'},
-  {club:'Swansea City',player:'Ethan Galbraith',age:25,to:'Wrexham + PL clubs',fee:'Free (contract standoff)',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Watford',player:'Imran Louza',age:27,to:'Everton / Fulham / Brighton',fee:'~£15m',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Watford',player:'Nestory Irankunda',age:20,to:'Everton / Bayer Leverkusen',fee:'TBC (Bayern 50% sell-on)',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'West Ham United',player:'Jarrod Bowen',age:29,to:'Aston Villa',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour'},
@@ -225,6 +231,7 @@ const TRANSFERS = [
   {club:'Barnsley',player:'Cameron McGeehan',age:31,from:'Northampton Town',fee:'Undisclosed',type:'in',date:'29 Jun 2026',status:'confirmed'},
   {club:'Plymouth Argyle',player:'Alex Hartridge',age:24,from:'Burton Albion',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
   {club:'Doncaster Rovers',player:'Leon Ayinde',age:21,from:'Ipswich Town',fee:'Free',type:'in',date:'20 May 2026',status:'confirmed'},
+  {club:'Reading',player:'Kyreece Lisbie',age:23,from:'Colchester United',fee:'Undisclosed (~£500k)',type:'in',date:'1 Jul 2026',status:'confirmed'},
 
   // ── LEAGUE TWO — CONFIRMED ────────────────────────────────────────────────
   {club:'Oldham Athletic',player:'Ollie Norburn',age:32,from:'Notts County',fee:'Undisclosed',type:'in',date:'15 Jun 2026',status:'confirmed'},
@@ -234,6 +241,7 @@ const TRANSFERS = [
   {club:'Northampton Town',player:'Janoi Donacien',age:31,from:'Chesterfield',fee:'Free',type:'in',date:'26 Jun 2026',status:'confirmed'},
   {club:'Rotherham United',player:'Fábio Tavares',age:26,from:'Burton Albion',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed'},
   {club:'Walsall',player:'Sven Sprangler',age:28,from:'St Johnstone',fee:'Undisclosed',type:'in',date:'27 Jun 2026',status:'confirmed'},
+  {club:'Port Vale',player:'Jackson Smith',age:23,from:'Barnsley',fee:'Undisclosed',type:'in',date:'19 Jun 2026',status:'confirmed'},
 
   // ── NATIONAL LEAGUE — CONFIRMED ───────────────────────────────────────────
   {club:'AFC Fylde',player:'Cedric Main',age:27,from:'Darlington',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
@@ -436,7 +444,7 @@ const HOME = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Pyramid — 1 July 2026</title>
+<title>The Pyramid — 2 July 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -565,7 +573,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <div class="sub">Tom Garratt &amp; Callum Fowler · EFL Football Weekly</div>
   </div>
   <div class="hdr-meta">
-    <div class="week-pill">1 July 2026</div>
+    <div class="week-pill">2 July 2026</div>
     <div class="date">Countdown to 2026/27</div>
   </div>
 </div>
@@ -620,9 +628,16 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <p>In, out, and one big surprise: <strong>Bristol City hired Michael Skubala</strong> — the man who just took Lincoln City up as League One champions — to replace the sacked Gerhard Struber. Watford appointed Italian Alessio Dionisi after sacking Ed Still inside three months. West Brom made James Morrison permanent after he steadied the ship post-Eric Ramsay. Lincoln, in turn, have promoted internally (Chris Cohen &amp; Tom Shaw) rather than replace Skubala with an outside appointment.</p>
   </div>
 
-  <div class="story" data-clubs="Wolverhampton Wanderers, Leicester City, Middlesbrough, Southampton">
+  <div class="story red" data-clubs="West Ham United, Tottenham Hotspur, Burnley">
+    <h3>💰 Spurs beat Man Utd to Mateus Fernandes in club-record £85m deal</h3>
+    <p>West Ham have agreed to sell 21-year-old midfielder <strong>Mateus Fernandes</strong> to Tottenham for around £85m — a Spurs club record — with the medical underway; Manchester United were also in the race. It's the biggest fee involving a Championship club so far this window. Burnley, meanwhile, have made their own statement signing: <strong>Florentino</strong> in from Benfica for £20.7m to sit in front of the defence.</p>
+    <div class="src"><a href="https://www.skysports.com/football/news/11095/13559281" target="_blank">Sky Sports</a></div>
+  </div>
+
+  <div class="story" data-clubs="Wolverhampton Wanderers, Leicester City, Middlesbrough, Stoke City, Southampton, Derby County, Birmingham City">
     <h3>💼 Ins &amp; outs so far</h3>
-    <p>Wolves have been busy — free-transfer swoops for <strong>Raúl Jiménez</strong> and <strong>Kieran Trippier</strong>. Leicester re-signed <strong>Patson Daka</strong> from RB Salzburg but are still mostly selling (El Khannouss to Stuttgart, Monga to Arsenal). Middlesbrough look set to lose captain Hayden Hackney to Everton for around £25m. Watch Southampton's Mateus Fernandes situation — conflicting reports on interest from West Ham/Tottenham, nothing confirmed yet.</p>
+    <p>Wolves have been busy — free-transfer swoops for <strong>Raúl Jiménez</strong> and <strong>Kieran Trippier</strong>, plus <strong>Ladislav Krejci</strong> in from Girona for £6.5m. Leicester's rebuild is mostly an exodus rather than a rebuild for now — around ten players are leaving as contracts expire, including <strong>Patson Daka</strong>, Jordan Ayew, Ricardo Pereira and Jamaal Lascelles (El Khannouss and Monga have already gone, to Stuttgart and Arsenal respectively). Middlesbrough look set to lose captain Hayden Hackney to Everton for around £25m. Elsewhere: Stoke paid £10m to Swansea for Ethan Galbraith, Southampton signed goalkeeper Daniel Peretz from Bayern (£6.9m) and Derby brought in Bobby Clark from RB Salzburg (£6m).</p>
+    <div class="src"><a href="https://www.lcfc.com/news-transfers" target="_blank">LCFC</a> <a href="https://sportsmole.co.uk" target="_blank">Sports Mole</a></div>
   </div>
 
   <div class="on-air">
@@ -692,9 +707,10 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <p>Fresh off a £20m takeover and an EFL-ratified return to the classic "stylised owl" badge, Wednesday arrive as one of the biggest scalps this division has ever had. On the pitch: Ricardo Santos in from Swansea, Callum Slattery and Jordi Liongola added, Sil Swinkels close to a permanent move from Aston Villa. Their first home game of the new era is a Yorkshire derby.</p>
   </div>
 
-  <div class="story" data-clubs="Leicester City">
-    <h3><span class="bge" style="background:#003090">LEI</span>🦊 Leicester City's rebuild — Daka back, plenty out the door</h3>
-    <p>Patson Daka has re-signed on a 5-year deal from RB Salzburg, but it's mostly an exodus so far: Bilal El Khannouss to Stuttgart, Jeremy Monga to Arsenal, and Fatawu/Mavididi/Winks/Okoli all available. Leicester open the season away at Notts County (Sat 15 Aug, 12:30pm).</p>
+  <div class="story red" data-clubs="Leicester City">
+    <h3><span class="bge" style="background:#003090">LEI</span>🦊 Leicester in League One for only the 2nd time in 142 years — Russell Martin in, exodus under way</h3>
+    <p>Ten years on from the 5,000-1 title, back-to-back relegations (plus a 6-point PSR deduction) have sent Leicester into the third tier. Russell Martin has been appointed on a three-year deal — their seventh permanent boss since April 2023 — replacing caretaker Gary Rowett. On the pitch it's almost entirely outgoings so far: around ten players leaving as contracts expire, including Patson Daka, Jordan Ayew, Ricardo Pereira and Jamaal Lascelles, plus Wout Faes confirmed departing and Harry Winks (Cagliari) and Victor Kristiansen (Panathinaikos) both in exit talks. Leicester open the season away at Notts County (Sat 15 Aug, 12:30pm, live on Sky) in an East Midlands derby.</p>
+    <div class="src"><a href="https://www.lcfc.com/media-article/chairman-statement-leicester-city-relegated-league-one" target="_blank">LCFC</a></div>
   </div>
 
   <div class="story" data-clubs="Blackpool, Luton Town, Barnsley, Huddersfield Town, Exeter City, Wigan Athletic, Stockport County, Lincoln City, Bristol City">
@@ -703,8 +719,14 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   </div>
 
   <div class="story" data-clubs="Oxford United, West Bromwich Albion">
-    <h3>💼 Oxford United's rebuild</h3>
-    <p>Matt Ingram has joined West Brom and Przemysław Płacheta's off to Austin FC in MLS — Oxford are chasing free agent Bamba Dieng (also wanted by Blackburn, Leicester, Portsmouth and St Pauli) but haven't landed a confirmed first-team signing yet.</p>
+    <h3>💼 Oxford turn to Aaron Ramsey after Bloomfield exit</h3>
+    <p>Oxford sacked Matt Bloomfield following relegation (22nd, four points from safety) and have appointed Aaron Ramsey — the 35-year-old ex-Arsenal and Wales midfielder, who retired earlier this year and had a caretaker spell at Cardiff — as head coach, his first permanent job. On transfers: Matt Ingram has joined West Brom and Przemysław Płacheta's off to Austin FC in MLS; Oxford are chasing free agent Bamba Dieng (also wanted by Blackburn, Leicester, Portsmouth and St Pauli) but haven't landed a confirmed first-team signing yet.</p>
+    <div class="src"><a href="https://www.skysports.com/football/news/12040/13556847/oxford-united-aaron-ramsey-appointed-head-coach-after-matt-bloomfield-exit" target="_blank">Sky Sports</a></div>
+  </div>
+
+  <div class="story" data-clubs="Leyton Orient, Bristol City">
+    <h3>🎯 Bristol City bid for League One's top scorer</h3>
+    <p>Bristol City have tabled a bid for Leyton Orient's Dom Ballard, who scored 23 goals last season to finish as League One's top scorer — Orient are said to want the offer improved before it goes through.</p>
   </div>
 
   <div class="on-air">
@@ -765,8 +787,13 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 
   <div class="story" data-clubs="Notts County, Salford City">
     <h3><span class="bge" style="background:#1C1C1C">NTM</span>🏆 Notts County 3-0 Salford City — world's oldest club up to League One</h3>
-    <p>Wembley, Monday 25 May, att. 30,851. Alassana Jatta, Lucas Ness and Jodi Jones scored for Notts County, who beat Salford's co-owner David Beckham to a promotion party in front of him in the stands. Nine days later, Salford sacked manager <strong>Karl Robinson</strong> — and still haven't named a replacement as of 1 July.</p>
-    <div class="src"><a href="https://www.efl.com/news/2026/may/25/live--sky-bet-league-two-play-off-final-notts-county-v-salford-city/" target="_blank">EFL.com</a></div>
+    <p>Wembley, Monday 25 May, att. 30,851. Alassana Jatta, Lucas Ness and Jodi Jones scored for Notts County, who beat Salford's co-owner David Beckham to a promotion party in front of him in the stands. Salford have since moved on: from 1 July they've reverted to a circular black-and-orange crest and orange home kit (77.1% of fans backed the change in a vote), and appointed <strong>Peter Cklamovski</strong> — formerly Ange Postecoglou's assistant, most recently Malaysia national team boss — as their new head coach.</p>
+    <div class="src"><a href="https://www.efl.com/news/2026/may/25/live--sky-bet-league-two-play-off-final-notts-county-v-salford-city/" target="_blank">EFL.com</a> <a href="https://www.footballleagueworld.co.uk/salford-city-confirm-big-change-after-stoke-city-middlesbrough-decisions" target="_blank">FLW</a></div>
+  </div>
+
+  <div class="story" data-clubs="Newport County">
+    <h3>😬 Newport boss quits on the eve of pre-season</h3>
+    <p>Christian Fuchs has resigned as Newport County manager after just seven months — barely eight weeks after keeping the club up on the final day. Newport are now searching for their fourth boss in a little over two years, with no replacement named as of 2 July.</p>
   </div>
 
   <div class="story" data-clubs="Northampton Town, Rotherham United, Walsall, Salford City">
@@ -787,9 +814,10 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <div class="on-air">
     <div class="on-air-lbl">On Air</div>
     <ul>
-      <li>David Beckham watching Salford lose the play-off final, then sacking the manager nine days later — cold business or fair call?</li>
+      <li>Salford's full rebrand plus a Postecoglou-lineage head coach in Cklamovski — genuine promotion push or just a fresh coat of paint?</li>
       <li>Notts County — world's oldest professional club — now in League One. Where do they end up in 5 years?</li>
       <li>Rochdale get promoted then immediately lose their manager to a divisional rival two tiers up — gutted or just football?</li>
+      <li>Newport's manager quitting on the eve of pre-season, two months after saving them from relegation — what's actually going on there?</li>
       <li>Which of this summer's new managers (Hogg, Bruce, Grant) is under the most pressure from day one?</li>
     </ul>
   </div>
@@ -891,7 +919,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 
 </div>
 
-<footer>The Pyramid &nbsp;·&nbsp; EFL Football Weekly &nbsp;·&nbsp; 1 July 2026</footer>
+<footer>The Pyramid &nbsp;·&nbsp; EFL Football Weekly &nbsp;·&nbsp; 2 July 2026</footer>
 
 <script>
 (function(){
