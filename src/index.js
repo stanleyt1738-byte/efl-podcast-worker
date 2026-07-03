@@ -1,7 +1,50 @@
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const ok = (b) => new Response(b, { headers: { "Content-Type": "text/html;charset=utf-8" } });
+    const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json" } });
     const p = new URL(request.url).pathname;
+
+    if (p === "/api/clips" && request.method === "GET") {
+      const { results } = await env.DB.prepare("SELECT * FROM clips ORDER BY posted_date DESC, id DESC").all();
+      return json(results);
+    }
+
+    if (p === "/api/clips" && request.method === "POST") {
+      const b = await request.json();
+      if (!b.title || !b.title.trim()) return json({ error: "Title is required" }, 400);
+      const result = await env.DB.prepare(
+        `INSERT INTO clips (title, topic, posted_date, notes, link_x, link_youtube, link_instagram, link_tiktok, views_x, views_youtube, views_instagram, views_tiktok, reviewed, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`
+      ).bind(
+        b.title.trim(), b.topic || "", b.posted_date || new Date().toISOString().slice(0, 10), b.notes || "",
+        b.link_x || "", b.link_youtube || "", b.link_instagram || "", b.link_tiktok || "",
+        b.views_x || 0, b.views_youtube || 0, b.views_instagram || 0, b.views_tiktok || 0, b.reviewed ? 1 : 0
+      ).run();
+      return json({ id: result.meta.last_row_id });
+    }
+
+    const clipMatch = p.match(/^\/api\/clips\/(\d+)$/);
+    if (clipMatch && request.method === "PUT") {
+      const id = clipMatch[1];
+      const b = await request.json();
+      if (!b.title || !b.title.trim()) return json({ error: "Title is required" }, 400);
+      await env.DB.prepare(
+        `UPDATE clips SET title=?, topic=?, posted_date=?, notes=?, link_x=?, link_youtube=?, link_instagram=?, link_tiktok=?,
+         views_x=?, views_youtube=?, views_instagram=?, views_tiktok=?, reviewed=?, updated_at=datetime('now') WHERE id=?`
+      ).bind(
+        b.title.trim(), b.topic || "", b.posted_date || "", b.notes || "",
+        b.link_x || "", b.link_youtube || "", b.link_instagram || "", b.link_tiktok || "",
+        b.views_x || 0, b.views_youtube || 0, b.views_instagram || 0, b.views_tiktok || 0, b.reviewed ? 1 : 0, id
+      ).run();
+      return json({ ok: true });
+    }
+
+    if (clipMatch && request.method === "DELETE") {
+      await env.DB.prepare("DELETE FROM clips WHERE id=?").bind(clipMatch[1]).run();
+      return json({ ok: true });
+    }
+
+    if (p === "/clips") return ok(clipsPage());
     if (p === "/clubs") return ok(clubsPage());
     if (p === "/transfers") return ok(transfersPage());
     const m = p.match(/^\/club\/([a-z0-9-]+)$/);
@@ -251,7 +294,7 @@ const TRANSFERS = [
 ];
 
 function transfersPage() {
-  const NAV = `<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link active">🔄 Transfers</a></nav>`;
+  const NAV = `<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link active">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a></nav>`;
 
   const clubColour = (name) => {
     const match = Object.values(CLUBS).find(c => c.n === name || c.a === name);
@@ -374,6 +417,444 @@ ${NAV}
 </body></html>`;
 }
 
+function clipsPage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clip Tracker — EFL Pod</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111;font-size:15px;line-height:1.5}
+.hdr{background:linear-gradient(135deg,#0d2218 0%,#1B3A28 100%);border-bottom:4px solid #C9A84C;padding:20px 32px;display:flex;align-items:center;gap:20px;animation:fadeDown .4s ease}
+.hdr-icon{font-size:36px;color:#C9A84C;line-height:1;flex-shrink:0}
+.hdr-text h1{font-size:26px;font-weight:900;color:#C9A84C;text-transform:uppercase;letter-spacing:1.5px}
+.hdr-text .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-top:2px;font-weight:500}
+.tab-nav{background:#fff;border-bottom:2px solid #e8e8e8;display:flex;padding:0 32px;overflow-x:auto}
+.tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}
+.tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}
+.tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}
+.page{max-width:1100px;margin:0 auto;padding:24px 24px 60px}
+
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat-card{background:#fff;border-radius:8px;padding:16px 18px;border:1px solid #e8e8e8}
+.stat-card .num{font-size:24px;font-weight:900;color:#1B3A28}
+.stat-card .lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#888;margin-top:2px}
+
+.platform-bars{background:#fff;border-radius:8px;padding:18px 20px;border:1px solid #e8e8e8;margin-bottom:20px}
+.platform-bars h3,.section-hdr{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:#1B3A28;margin-bottom:12px}
+.pbar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:13px}
+.pbar-row .pname{width:90px;font-weight:700;flex-shrink:0}
+.pbar-track{flex:1;background:#f0f0f0;border-radius:4px;height:16px;overflow:hidden}
+.pbar-fill{height:100%;border-radius:4px}
+.pbar-row .pval{width:90px;text-align:right;font-weight:700;color:#333;flex-shrink:0}
+
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.toolbar input[type=text]{flex:1;min-width:180px;padding:10px 14px;border-radius:6px;border:1px solid #ddd;font-size:14px;font-family:inherit}
+.toolbar select{padding:10px 12px;border-radius:6px;border:1px solid #ddd;font-size:13px;background:#fff;font-family:inherit}
+.btn-primary{background:#1B3A28;color:#fff;border:none;padding:11px 18px;border-radius:6px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
+.btn-primary:hover{background:#264d36}
+
+.section{background:#fff;border-radius:8px;border:1px solid #e8e8e8;margin-bottom:20px;overflow:hidden}
+.section-inner{padding:18px 20px}
+.review-item{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 0;border-top:1px solid #f0f0f0}
+.review-item:first-child{border-top:none}
+.review-item .rtitle{flex:1;min-width:160px;font-weight:700}
+.review-item .rmeta{font-size:12px;color:#888}
+.review-item input[type=number]{width:80px;padding:6px 8px;border-radius:4px;border:1px solid #ddd;font-size:13px}
+.review-item .rplat{font-size:10px;font-weight:800;text-transform:uppercase;color:#888;display:block;margin-bottom:2px}
+.review-item button{background:#C9A84C;color:#1B3A28;border:none;padding:8px 14px;border-radius:5px;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap}
+
+table.clip-table{width:100%;border-collapse:collapse;font-size:13px}
+table.clip-table th{text-align:left;padding:10px 12px;background:#f7f8f6;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:0.5px;color:#666;border-bottom:2px solid #e8e8e8;white-space:nowrap}
+table.clip-table td{padding:10px 12px;border-bottom:1px solid #f0f0f0;vertical-align:middle}
+table.clip-table tr:hover td{background:#f5faf7}
+.rank-pill{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#f0f0f0;font-weight:900;font-size:11px;color:#666}
+.rank-pill.gold{background:#C9A84C;color:#1B3A28}
+.clip-title{font-weight:700}
+.topic-chip{background:#eef3ef;color:#1B3A28;font-size:11px;font-weight:700;padding:2px 9px;border-radius:12px;white-space:nowrap}
+.total-cell{font-weight:900;color:#1B3A28}
+.best-badge{font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.row-actions button{border:none;background:none;color:#888;font-size:12px;font-weight:700;cursor:pointer;padding:2px 5px}
+.row-actions button:hover{color:#1B3A28}
+.empty-msg{text-align:center;color:#999;padding:30px;font-size:14px}
+
+.topic-table{width:100%;border-collapse:collapse;font-size:13px}
+.topic-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:900;text-transform:uppercase;color:#666;border-bottom:2px solid #e8e8e8}
+.topic-table td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
+
+#modalOverlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:none;align-items:center;justify-content:center;z-index:500;padding:20px}
+#modal{background:#fff;border-radius:12px;padding:26px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto}
+#modal h2{font-size:19px;font-weight:900;margin-bottom:16px;color:#1B3A28}
+#modal label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;color:#666;display:block;margin:12px 0 5px}
+#modal input,#modal select,#modal textarea{width:100%;padding:9px 12px;border-radius:6px;border:1px solid #ddd;font-family:inherit;font-size:14px}
+#modal textarea{min-height:60px;resize:vertical}
+.plat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.plat-block{border-top:1px solid #f0f0f0;padding-top:10px;margin-top:10px}
+.plat-block h4{font-size:11px;font-weight:900;text-transform:uppercase;color:#888;margin-bottom:6px}
+.plat-block .row2{display:flex;gap:8px}
+.check-row{display:flex;align-items:center;gap:8px;margin-top:14px}
+.check-row input{width:auto}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.modal-actions button{flex:1;padding:12px;border-radius:8px;font-weight:800;font-size:14px;cursor:pointer;border:none}
+.modal-actions .save{background:#1B3A28;color:#fff}
+.modal-actions .cancel{background:#eee;color:#333}
+.modal-actions .cancel.danger{background:#f8d7da;color:#c0392b}
+footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px solid #1B3A28;margin:0 32px}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-icon">🎬</div>
+  <div class="hdr-text"><h1>Clip Tracker</h1><div class="sub">Every short across X, YouTube, Instagram &amp; TikTok — see what actually performs</div></div>
+</div>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link active">🎬 Clips</a></nav>
+
+<div class="page">
+
+  <div class="stat-row" id="statRow"></div>
+
+  <div class="platform-bars">
+    <h3>Platform Totals (All Time)</h3>
+    <div id="platBars"></div>
+  </div>
+
+  <div class="section" id="reviewSection" style="display:none">
+    <div class="section-inner">
+      <div class="section-hdr">⏳ Awaiting Review — enter this week's views</div>
+      <div id="reviewList"></div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="searchBox" placeholder="Search clips...">
+    <select id="topicFilter"><option value="">All Topics</option></select>
+    <select id="sortBy">
+      <option value="total">Sort: Total Views</option>
+      <option value="date">Sort: Newest</option>
+      <option value="views_x">Sort: X Views</option>
+      <option value="views_youtube">Sort: YouTube Views</option>
+      <option value="views_instagram">Sort: Instagram Views</option>
+      <option value="views_tiktok">Sort: TikTok Views</option>
+    </select>
+    <button class="btn-primary" onclick="openModal()">+ Add Clip</button>
+  </div>
+
+  <div class="section">
+    <div class="section-inner" style="overflow-x:auto">
+      <div class="section-hdr">🏆 Leaderboard</div>
+      <table class="clip-table" id="clipTable">
+        <thead><tr>
+          <th>#</th><th>Clip</th><th>Topic</th><th>Posted</th>
+          <th>X</th><th>YouTube</th><th>Instagram</th><th>TikTok</th><th>Total</th><th>Best</th><th></th>
+        </tr></thead>
+        <tbody id="clipRows"></tbody>
+      </table>
+      <div class="empty-msg" id="emptyMsg" style="display:none">No clips match your filters.</div>
+    </div>
+  </div>
+
+  <div class="section" id="topicSection" style="display:none">
+    <div class="section-inner">
+      <div class="section-hdr">📊 Performance by Topic</div>
+      <table class="topic-table" id="topicTable"></table>
+    </div>
+  </div>
+
+</div>
+
+<div id="modalOverlay">
+  <div id="modal">
+    <h2 id="modalTitle">Add Clip</h2>
+    <input type="hidden" id="clipId">
+    <label>Title / description</label>
+    <input id="fTitle" type="text" placeholder="e.g. Deeney vs Pukki hot take">
+    <label>Topic / category</label>
+    <input id="fTopic" type="text" list="topicList" placeholder="e.g. hot take, transfer news, goal of the week">
+    <datalist id="topicList"></datalist>
+    <label>Posted date</label>
+    <input id="fDate" type="date">
+
+    <div class="plat-grid">
+      <div class="plat-block">
+        <h4>𝕏 (Twitter)</h4>
+        <input id="fLinkX" type="text" placeholder="Link (optional)">
+        <div class="row2"><input id="fViewsX" type="number" min="0" placeholder="Views" style="margin-top:6px"></div>
+      </div>
+      <div class="plat-block">
+        <h4>YouTube Shorts</h4>
+        <input id="fLinkYoutube" type="text" placeholder="Link (optional)">
+        <div class="row2"><input id="fViewsYoutube" type="number" min="0" placeholder="Views" style="margin-top:6px"></div>
+      </div>
+      <div class="plat-block">
+        <h4>Instagram Reels</h4>
+        <input id="fLinkInstagram" type="text" placeholder="Link (optional)">
+        <div class="row2"><input id="fViewsInstagram" type="number" min="0" placeholder="Views" style="margin-top:6px"></div>
+      </div>
+      <div class="plat-block">
+        <h4>TikTok</h4>
+        <input id="fLinkTiktok" type="text" placeholder="Link (optional)">
+        <div class="row2"><input id="fViewsTiktok" type="number" min="0" placeholder="Views" style="margin-top:6px"></div>
+      </div>
+    </div>
+
+    <label>Notes</label>
+    <textarea id="fNotes" placeholder="Anything worth remembering — hook used, why it worked/flopped, etc."></textarea>
+
+    <div class="check-row"><input type="checkbox" id="fReviewed"><label style="margin:0;text-transform:none;font-size:13px;font-weight:600;color:#333">Stats entered / reviewed</label></div>
+
+    <div class="modal-actions">
+      <button class="cancel" onclick="closeModal()">Cancel</button>
+      <button class="save" onclick="saveClip()">Save</button>
+    </div>
+    <div class="modal-actions" id="deleteRow" style="display:none">
+      <button class="cancel danger" style="flex:none;width:100%" onclick="deleteClip()">Delete Clip</button>
+    </div>
+  </div>
+</div>
+
+<footer>Clip Tracker · EFL Pod</footer>
+
+<script>
+var PLATFORMS = [
+  { key: 'x', field: 'views_x', linkField: 'link_x', label: 'X', color: '#111' },
+  { key: 'youtube', field: 'views_youtube', linkField: 'link_youtube', label: 'YouTube', color: '#FF0000' },
+  { key: 'instagram', field: 'views_instagram', linkField: 'link_instagram', label: 'Instagram', color: '#C13584' },
+  { key: 'tiktok', field: 'views_tiktok', linkField: 'link_tiktok', label: 'TikTok', color: '#FE2C55' }
+];
+var clips = [];
+
+function esc(s){
+  return (s || '').toString().replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+function fmtNum(n){ return (n || 0).toLocaleString('en-GB'); }
+function totalViews(c){ return (c.views_x||0)+(c.views_youtube||0)+(c.views_instagram||0)+(c.views_tiktok||0); }
+function bestPlatform(c){
+  var best = null, bestVal = -1;
+  PLATFORMS.forEach(function(p){
+    var v = c[p.field] || 0;
+    if (v > bestVal) { bestVal = v; best = p; }
+  });
+  return bestVal > 0 ? best : null;
+}
+
+function loadClips(){
+  fetch('/api/clips').then(function(r){ return r.json(); }).then(function(data){
+    clips = data;
+    renderStats();
+    renderPlatformBars();
+    renderTopicFilter();
+    renderReviewSection();
+    renderTopicBreakdown();
+    render();
+  });
+}
+
+function renderStats(){
+  var total = clips.length;
+  var totalV = clips.reduce(function(s,c){ return s + totalViews(c); }, 0);
+  var avg = total ? Math.round(totalV / total) : 0;
+  var platTotals = {};
+  PLATFORMS.forEach(function(p){ platTotals[p.key] = clips.reduce(function(s,c){ return s + (c[p.field]||0); }, 0); });
+  var bestPlatKey = null, bestPlatVal = -1;
+  PLATFORMS.forEach(function(p){ if (platTotals[p.key] > bestPlatVal) { bestPlatVal = platTotals[p.key]; bestPlatKey = p.label; } });
+  var topClip = clips.slice().sort(function(a,b){ return totalViews(b) - totalViews(a); })[0];
+
+  document.getElementById('statRow').innerHTML =
+    '<div class="stat-card"><div class="num">' + total + '</div><div class="lbl">Total Clips</div></div>' +
+    '<div class="stat-card"><div class="num">' + fmtNum(totalV) + '</div><div class="lbl">Total Views</div></div>' +
+    '<div class="stat-card"><div class="num">' + fmtNum(avg) + '</div><div class="lbl">Avg Views / Clip</div></div>' +
+    '<div class="stat-card"><div class="num" style="font-size:18px">' + (bestPlatKey || '—') + '</div><div class="lbl">Top Platform</div></div>' +
+    '<div class="stat-card"><div class="num" style="font-size:15px">' + (topClip ? esc(topClip.title) : '—') + '</div><div class="lbl">Best Performing Clip</div></div>';
+}
+
+function renderPlatformBars(){
+  var totals = PLATFORMS.map(function(p){ return { p: p, val: clips.reduce(function(s,c){ return s + (c[p.field]||0); }, 0) }; });
+  var max = Math.max.apply(null, totals.map(function(t){ return t.val; }).concat([1]));
+  document.getElementById('platBars').innerHTML = totals.map(function(t){
+    var pct = Math.round((t.val / max) * 100);
+    return '<div class="pbar-row"><div class="pname">' + t.p.label + '</div><div class="pbar-track"><div class="pbar-fill" style="width:' + pct + '%;background:' + t.p.color + '"></div></div><div class="pval">' + fmtNum(t.val) + '</div></div>';
+  }).join('');
+}
+
+function renderTopicFilter(){
+  var topics = [];
+  clips.forEach(function(c){ if (c.topic && topics.indexOf(c.topic) === -1) topics.push(c.topic); });
+  topics.sort();
+  var sel = document.getElementById('topicFilter');
+  var current = sel.value;
+  sel.innerHTML = '<option value="">All Topics</option>' + topics.map(function(t){ return '<option value="' + esc(t) + '">' + esc(t) + '</option>'; }).join('');
+  sel.value = current;
+  document.getElementById('topicList').innerHTML = topics.map(function(t){ return '<option value="' + esc(t) + '">'; }).join('');
+}
+
+function renderReviewSection(){
+  var pending = clips.filter(function(c){ return !c.reviewed; });
+  var section = document.getElementById('reviewSection');
+  if (!pending.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  document.getElementById('reviewList').innerHTML = pending.map(function(c){
+    var inputs = PLATFORMS.map(function(p){
+      return '<div><span class="rplat">' + p.label + '</span><input type="number" min="0" id="rv_' + p.key + '_' + c.id + '" value="' + (c[p.field] || 0) + '"></div>';
+    }).join('');
+    return '<div class="review-item">' +
+      '<div class="rtitle">' + esc(c.title) + '<div class="rmeta">' + esc(c.topic || 'no topic') + ' · posted ' + esc(c.posted_date) + '</div></div>' +
+      inputs +
+      '<button onclick="saveReview(' + c.id + ')">Save &amp; Mark Reviewed</button>' +
+      '</div>';
+  }).join('');
+}
+
+function saveReview(id){
+  var c = clips.find(function(x){ return x.id === id; });
+  if (!c) return;
+  var payload = Object.assign({}, c);
+  PLATFORMS.forEach(function(p){
+    var el = document.getElementById('rv_' + p.key + '_' + id);
+    payload[p.field] = parseInt(el.value, 10) || 0;
+  });
+  payload.reviewed = 1;
+  fetch('/api/clips/' + id, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(function(){ loadClips(); });
+}
+
+function renderTopicBreakdown(){
+  var byTopic = {};
+  clips.forEach(function(c){
+    var t = c.topic || '(no topic)';
+    if (!byTopic[t]) byTopic[t] = [];
+    byTopic[t].push(c);
+  });
+  var topics = Object.keys(byTopic);
+  var section = document.getElementById('topicSection');
+  if (!topics.length) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  var rows = topics.map(function(t){
+    var list = byTopic[t];
+    var totals = list.map(totalViews);
+    var sum = totals.reduce(function(a,b){ return a+b; }, 0);
+    var avg = Math.round(sum / list.length);
+    var best = list.slice().sort(function(a,b){ return totalViews(b)-totalViews(a); })[0];
+    return { t: t, count: list.length, avg: avg, best: best };
+  }).sort(function(a,b){ return b.avg - a.avg; });
+  document.getElementById('topicTable').innerHTML =
+    '<thead><tr><th>Topic</th><th>Clips</th><th>Avg Views</th><th>Best Clip</th></tr></thead><tbody>' +
+    rows.map(function(r){
+      return '<tr><td>' + esc(r.t) + '</td><td>' + r.count + '</td><td>' + fmtNum(r.avg) + '</td><td>' + esc(r.best.title) + ' (' + fmtNum(totalViews(r.best)) + ')</td></tr>';
+    }).join('') + '</tbody>';
+}
+
+function render(){
+  var q = document.getElementById('searchBox').value.toLowerCase();
+  var topic = document.getElementById('topicFilter').value;
+  var sortBy = document.getElementById('sortBy').value;
+
+  var filtered = clips.filter(function(c){
+    if (topic && c.topic !== topic) return false;
+    if (q && (c.title || '').toLowerCase().indexOf(q) === -1) return false;
+    return true;
+  });
+
+  filtered.sort(function(a,b){
+    if (sortBy === 'date') return (b.posted_date || '').localeCompare(a.posted_date || '');
+    if (sortBy === 'total') return totalViews(b) - totalViews(a);
+    return (b[sortBy] || 0) - (a[sortBy] || 0);
+  });
+
+  var tbody = document.getElementById('clipRows');
+  document.getElementById('emptyMsg').style.display = filtered.length ? 'none' : 'block';
+
+  tbody.innerHTML = filtered.map(function(c, i){
+    var best = bestPlatform(c);
+    var bestBadge = best ? '<span class="best-badge" style="background:' + best.color + '22;color:' + best.color + '">' + best.label + '</span>' : '—';
+    var rankClass = i === 0 && sortBy === 'total' ? 'rank-pill gold' : 'rank-pill';
+    return '<tr>' +
+      '<td><span class="' + rankClass + '">' + (i+1) + '</span></td>' +
+      '<td class="clip-title">' + esc(c.title) + (c.reviewed ? '' : ' <span style="color:#C9A84C;font-size:11px;font-weight:800">●&nbsp;pending</span>') + '</td>' +
+      '<td>' + (c.topic ? '<span class="topic-chip">' + esc(c.topic) + '</span>' : '') + '</td>' +
+      '<td>' + esc(c.posted_date) + '</td>' +
+      '<td>' + fmtNum(c.views_x) + '</td>' +
+      '<td>' + fmtNum(c.views_youtube) + '</td>' +
+      '<td>' + fmtNum(c.views_instagram) + '</td>' +
+      '<td>' + fmtNum(c.views_tiktok) + '</td>' +
+      '<td class="total-cell">' + fmtNum(totalViews(c)) + '</td>' +
+      '<td>' + bestBadge + '</td>' +
+      '<td class="row-actions"><button onclick="openModal(' + c.id + ')">Edit</button></td>' +
+      '</tr>';
+  }).join('');
+}
+
+document.getElementById('searchBox').addEventListener('input', render);
+document.getElementById('topicFilter').addEventListener('change', render);
+document.getElementById('sortBy').addEventListener('change', render);
+
+function openModal(id){
+  document.getElementById('modalTitle').textContent = id ? 'Edit Clip' : 'Add Clip';
+  document.getElementById('clipId').value = id || '';
+  document.getElementById('deleteRow').style.display = id ? 'flex' : 'none';
+  if (id) {
+    var c = clips.find(function(x){ return x.id === id; });
+    document.getElementById('fTitle').value = c.title || '';
+    document.getElementById('fTopic').value = c.topic || '';
+    document.getElementById('fDate').value = c.posted_date || '';
+    document.getElementById('fNotes').value = c.notes || '';
+    document.getElementById('fReviewed').checked = !!c.reviewed;
+    PLATFORMS.forEach(function(p){
+      document.getElementById('fLink' + p.key.charAt(0).toUpperCase() + p.key.slice(1)).value = c[p.linkField] || '';
+      document.getElementById('fViews' + p.key.charAt(0).toUpperCase() + p.key.slice(1)).value = c[p.field] || '';
+    });
+  } else {
+    document.getElementById('fTitle').value = '';
+    document.getElementById('fTopic').value = '';
+    document.getElementById('fDate').value = new Date().toISOString().slice(0,10);
+    document.getElementById('fNotes').value = '';
+    document.getElementById('fReviewed').checked = false;
+    PLATFORMS.forEach(function(p){
+      document.getElementById('fLink' + p.key.charAt(0).toUpperCase() + p.key.slice(1)).value = '';
+      document.getElementById('fViews' + p.key.charAt(0).toUpperCase() + p.key.slice(1)).value = '';
+    });
+  }
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+function closeModal(){ document.getElementById('modalOverlay').style.display = 'none'; }
+
+function saveClip(){
+  var id = document.getElementById('clipId').value;
+  var payload = {
+    title: document.getElementById('fTitle').value,
+    topic: document.getElementById('fTopic').value,
+    posted_date: document.getElementById('fDate').value,
+    notes: document.getElementById('fNotes').value,
+    reviewed: document.getElementById('fReviewed').checked ? 1 : 0
+  };
+  PLATFORMS.forEach(function(p){
+    var cap = p.key.charAt(0).toUpperCase() + p.key.slice(1);
+    payload[p.linkField] = document.getElementById('fLink' + cap).value;
+    payload[p.field] = parseInt(document.getElementById('fViews' + cap).value, 10) || 0;
+  });
+  if (!payload.title.trim()) { alert('Title is required'); return; }
+  var url = id ? '/api/clips/' + id : '/api/clips';
+  var method = id ? 'PUT' : 'POST';
+  fetch(url, { method: method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(function(){ closeModal(); loadClips(); });
+}
+
+function deleteClip(){
+  var id = document.getElementById('clipId').value;
+  if (!id || !confirm('Delete this clip? This cannot be undone.')) return;
+  fetch('/api/clips/' + id, { method: 'DELETE' }).then(function(){ closeModal(); loadClips(); });
+}
+
+loadClips();
+</script>
+</body></html>`;
+}
+
 function clubsPage() {
   const divOrder = ['Championship','League One','League Two','National League','National League North','National League South'];
   const divColour = {'Championship':'#1B3A28','League One':'#26523A','League Two':'#2E6046','National League':'#3a4a3f','National League North':'#4a5a4f','National League South':'#545f58'};
@@ -392,7 +873,7 @@ function clubsPage() {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111}.hdr{background:linear-gradient(135deg,#0d2218 0%,#1B3A28 100%);border-bottom:4px solid #C9A84C;padding:20px 32px;display:flex;align-items:center;gap:20px;animation:fadeDown .4s ease}.hdr-icon{font-size:36px;color:#C9A84C;line-height:1;flex-shrink:0}.hdr-text h1{font-size:26px;font-weight:900;color:#C9A84C;text-transform:uppercase;letter-spacing:1.5px}.hdr-text .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-top:2px;font-weight:500}.tab-nav{background:#fff;border-bottom:2px solid #e8e8e8;display:flex;padding:0 32px;overflow-x:auto}.tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}.tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}.tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}.page{max-width:900px;margin:0 auto;padding:0 24px 60px}.cl-section{margin-top:28px}.cl-div-hdr{color:#fff;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:2px;padding:14px 24px}.cl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;padding:16px 0}.cl-card{background:#fff;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:#111;border:1px solid #e8e8e8;transition:transform .2s cubic-bezier(.2,.8,.3,1.1),box-shadow .2s,border-color .2s}.cl-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,58,40,0.12);border-color:#1B3A28}.cl-badge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:28px;border-radius:4px;font-size:10px;font-weight:900;letter-spacing:0.5px;text-transform:uppercase}.cl-name{font-size:14px;font-weight:800;color:#111;line-height:1.3}.cl-city{font-size:12px;color:#888}footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px solid #1B3A28;margin:0 32px}@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}</style></head><body>
 <div class="hdr"><div class="hdr-icon">▲</div><div class="hdr-text"><h1>The Pyramid</h1><div class="sub">Club Guide · EFL &amp; Non-League</div></div></div>
-<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a></nav>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a></nav>
 <div class="page">${sections}</div>
 <footer>The Pyramid · Club Guide · Championship to National League South</footer>
 </body></html>`;
@@ -410,7 +891,7 @@ function clubPage(slug) {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111}.hdr{background:linear-gradient(135deg,#0d2218 0%,#1B3A28 100%);border-bottom:4px solid #C9A84C;padding:20px 32px;display:flex;align-items:center;gap:20px;animation:fadeDown .4s ease}.hdr-icon{font-size:36px;color:#C9A84C;line-height:1;flex-shrink:0}.hdr-text h1{font-size:26px;font-weight:900;color:#C9A84C;text-transform:uppercase;letter-spacing:1.5px}.hdr-text .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-top:2px;font-weight:500}.tab-nav{background:#fff;border-bottom:2px solid #e8e8e8;display:flex;padding:0 32px;overflow-x:auto}.tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}.tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}.tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}.page{max-width:900px;margin:0 auto;padding:0 24px 60px}.club-hero{padding:32px;display:flex;align-items:center;gap:24px}.club-badge-lg{width:72px;height:72px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;background:rgba(255,255,255,0.15);letter-spacing:1px;flex-shrink:0}.club-hero h2{font-size:32px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.3)}.club-nick{font-size:16px;color:rgba(255,255,255,0.8);margin-top:4px}.club-div-chip{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:3px;margin-top:8px}.back-link{display:inline-flex;align-items:center;gap:6px;color:#1B3A28;text-decoration:none;font-size:13px;font-weight:700;padding:16px 0 4px;transition:color .2s}.back-link:hover{color:#C9A84C;text-decoration:underline}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0 0}@media(max-width:600px){.cards{grid-template-columns:1fr}}.card{background:#fff;border-radius:8px;padding:20px 22px;border:1px solid #e8e8e8;transition:box-shadow .2s}.card:hover{box-shadow:0 4px 16px rgba(27,58,40,0.08)}.card-full{grid-column:1/-1}.card h3{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:#1B3A28;border-bottom:2px solid #C9A84C;padding-bottom:7px;margin-bottom:12px}.card p,.card li{font-size:15px;color:#333;line-height:1.7}.card ul{padding-left:18px}.card li{margin-bottom:4px}.stat-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:14px}.stat-row:last-child{border-bottom:none}.stat-label{color:#888;font-weight:600}.stat-value{color:#111;font-weight:700;text-align:right;max-width:60%}footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px solid #1B3A28;margin:0 32px}@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}</style></head><body>
 <div class="hdr"><div class="hdr-icon">▲</div><div class="hdr-text"><h1>The Pyramid</h1><div class="sub">Club Guide · ${club.n}</div></div></div>
-<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a></nav>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a></nav>
 <div class="club-hero" style="background:${club.c}"><div class="club-badge-lg" style="${dk}">${club.a}</div>
 <div><h2>${club.n}</h2><div class="club-nick">${club.nick||''}</div><div class="club-div-chip">${club.div}</div></div></div>
 <div class="page"><a href="/clubs" class="back-link">← Back to Club Guide</a>
@@ -581,6 +1062,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <a href="/" class="tab-link active">📋 Weekly Doc</a>
   <a href="/clubs" class="tab-link">🏟️ Club Guide</a>
   <a href="/transfers" class="tab-link">🔄 Transfers</a>
+  <a href="/clips" class="tab-link">🎬 Clips</a>
 </nav>
 
 <div class="club-filter-bar">
