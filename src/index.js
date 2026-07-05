@@ -1021,22 +1021,9 @@ var TEMPLATE = '<h2>Episode Overview</h2>' +
   '<p><strong>Recording day:</strong> Monday &nbsp; <strong>Guests / callers:</strong> </p>' +
   '<p><strong>Big story of the week:</strong> </p>' +
   '<h2>Headlines &amp; Results Recap</h2>' +
-  '<ul><li>Championship: </li></ul>' +
-  '<h2>Recurring Segments (tick what is in this week)</h2>' +
-  '<ul>' +
-  '<li>&#9744; Predictions</li>' +
-  '<li>&#9744; Best-ever EFL team debate</li>' +
-  '<li>&#9744; Greatest EFL striker (Deeney vs Pukki vs Sharp etc.)</li>' +
-  '<li>&#9744; EFL heroes (Vardy, Bowen, Eze...)</li>' +
-  '<li>&#9744; History of a club</li>' +
-  '<li>&#9744; Team of the Week</li>' +
-  '<li>&#9744; Goal of the Week</li>' +
-  '<li>&#9744; Ones to Watch</li>' +
-  '<li>&#9744; Caller hot takes</li>' +
-  '<li>&#9744; Best kits</li>' +
-  '<li>&#9744; Best managers</li>' +
-  '<li>&#9744; Best front 3</li>' +
-  '</ul>';
+  '<ul><li>Championship: </li><li>League One: </li><li>League Two: </li><li>National League: </li></ul>' +
+  '<h2>Recurring Segments</h2>' +
+  '<ul><li></li></ul>';
 
 function esc(s){
   return (s || '').toString().replace(/[&<>"']/g, function(c){
