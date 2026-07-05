@@ -83,6 +83,8 @@ export default {
     if (p === "/clubs") return ok(clubsPage());
     if (p === "/transfers") return ok(transfersPage());
     if (p === "/plan") return ok(planListPage());
+    const planExportMatch = p.match(/^\/plan\/(\d+)\/export$/);
+    if (planExportMatch) return ok(planExportPage(planExportMatch[1]));
     const planPageMatch = p.match(/^\/plan\/(\d+)$/);
     if (planPageMatch) return ok(planEditorPage(planPageMatch[1]));
     const m = p.match(/^\/club\/([a-z0-9-]+)$/);
@@ -1019,7 +1021,7 @@ var TEMPLATE = '<h2>Episode Overview</h2>' +
   '<p><strong>Recording day:</strong> Monday &nbsp; <strong>Guests / callers:</strong> </p>' +
   '<p><strong>Big story of the week:</strong> </p>' +
   '<h2>Headlines &amp; Results Recap</h2>' +
-  '<ul><li>Championship: </li><li>League One: </li><li>League Two: </li><li>National League (if big enough): </li></ul>' +
+  '<ul><li>Championship: </li></ul>' +
   '<h2>Recurring Segments (tick what is in this week)</h2>' +
   '<ul>' +
   '<li>&#9744; Predictions</li>' +
@@ -1145,7 +1147,7 @@ ${planStyles()}
 <body>
 <div class="hdr">
   <div class="hdr-icon">📝</div>
-  <div class="hdr-text"><h1>Show Plan</h1><div class="sub">Autosaves as you type — anyone with this link can view and edit</div></div>
+  <div class="hdr-text"><h1>Show Plan</h1><div class="sub">Autosaves as you type — use Copy Export Link to send a clean read-only version to others</div></div>
 </div>
 <nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a><a href="/plan" class="tab-link active">📝 Show Plan</a></nav>
 
@@ -1154,7 +1156,7 @@ ${planStyles()}
     <a class="back-link" href="/plan">&larr; All Show Plans</a>
     <div class="doc-status" id="docStatus"></div>
     <div class="doc-actions">
-      <button class="btn-share" onclick="shareLink()">🔗 Copy Share Link</button>
+      <button class="btn-share" onclick="shareLink()">🔗 Copy Export Link</button>
       <button class="btn-del" onclick="deletePlan()">Delete</button>
     </div>
   </div>
@@ -1176,7 +1178,7 @@ ${planStyles()}
 </div>
 
 <footer>Show Plan · EFL Pod</footer>
-<div class="copied-toast" id="toast">Link copied!</div>
+<div class="copied-toast" id="toast">Export link copied!</div>
 
 <script>
 var PLAN_ID = ${id};
@@ -1223,7 +1225,7 @@ function savePlan(){
 }
 
 function shareLink(){
-  var url = location.href;
+  var url = location.origin + '/plan/' + PLAN_ID + '/export';
   var toast = document.getElementById('toast');
   function flash(){ toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 1800); }
   if (navigator.clipboard) {
@@ -1245,6 +1247,69 @@ document.getElementById('titleInput').addEventListener('input', queueSave);
 document.getElementById('dateInput').addEventListener('change', queueSave);
 document.getElementById('docBody').addEventListener('input', queueSave);
 loadPlan();
+</script>
+</body>
+</html>`;
+}
+
+function planExportPage(id) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Show Plan — EFL Pod</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111;font-size:15px;line-height:1.5}
+.export-bar{display:flex;justify-content:space-between;align-items:center;max-width:760px;margin:0 auto;padding:20px 24px 0}
+.export-bar .brand{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#1B3A28}
+.export-bar button{border:none;background:#1B3A28;color:#fff;padding:9px 16px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer}
+.export-bar button:hover{background:#264d36}
+.page{max-width:760px;margin:0 auto;padding:16px 24px 60px}
+.doc-paper{background:#fff;border:1px solid #e8e8e8;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.05);padding:36px 40px}
+#exTitle{font-size:28px;font-weight:900;color:#111}
+#exMeta{font-size:13px;color:#888;font-weight:700;margin-top:6px;padding-bottom:16px;border-bottom:2px solid #C9A84C;margin-bottom:16px}
+#exBody{font-size:15px;line-height:1.7;color:#222}
+#exBody h2{font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:0.8px;color:#1B3A28;border-bottom:2px solid #C9A84C;padding-bottom:6px;margin:22px 0 10px}
+#exBody h2:first-child{margin-top:0}
+#exBody ul{padding-left:22px;margin-bottom:6px}
+#exBody li{margin-bottom:5px}
+#exBody p{margin-bottom:8px}
+.export-footer{text-align:center;color:#bbb;font-size:12px;padding:10px 0 30px}
+@media print{
+  .export-bar{display:none}
+  body{background:#fff}
+  .doc-paper{box-shadow:none;border:none;padding:0}
+  .export-footer{display:none}
+}
+</style>
+</head>
+<body>
+<div class="export-bar">
+  <div class="brand">📝 EFL Pod · Show Plan</div>
+  <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+</div>
+<div class="page">
+  <div class="doc-paper">
+    <div id="exTitle">Loading...</div>
+    <div id="exMeta"></div>
+    <div id="exBody"></div>
+  </div>
+</div>
+<div class="export-footer">Exported from EFL Pod Show Plans</div>
+
+<script>
+var PLAN_ID = ${id};
+fetch('/api/plans/' + PLAN_ID).then(function(r){ return r.json(); }).then(function(data){
+  if (data.error) { document.getElementById('exTitle').textContent = 'Plan not found'; return; }
+  var title = data.title || 'Untitled Show Plan';
+  document.getElementById('exTitle').textContent = title;
+  document.getElementById('exMeta').textContent = data.episode_date ? 'Episode date: ' + data.episode_date : '';
+  document.getElementById('exBody').innerHTML = data.content || '';
+  document.title = title + ' — EFL Pod';
+});
 </script>
 </body>
 </html>`;
