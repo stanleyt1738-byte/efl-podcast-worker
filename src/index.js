@@ -1036,19 +1036,7 @@ var TEMPLATE = '<h2>Episode Overview</h2>' +
   '<li>&#9744; Best kits</li>' +
   '<li>&#9744; Best managers</li>' +
   '<li>&#9744; Best front 3</li>' +
-  '</ul>' +
-  '<h2>Running Order</h2>' +
-  '<ul>' +
-  '<li>Intro / banter — 5 min — </li>' +
-  '<li>Headlines — 10 min — </li>' +
-  '<li>Main debate — 15 min — </li>' +
-  '<li>Predictions — 5 min — </li>' +
-  '<li>Outro / plugs — 5 min — </li>' +
-  '</ul>' +
-  '<h2>Clips to Cut</h2>' +
-  '<ul><li></li></ul>' +
-  '<h2>Notes / Action Items</h2>' +
-  '<ul><li></li></ul>';
+  '</ul>';
 
 function esc(s){
   return (s || '').toString().replace(/[&<>"']/g, function(c){
