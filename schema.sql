@@ -19,3 +19,14 @@ CREATE TABLE IF NOT EXISTS clips (
 
 CREATE INDEX IF NOT EXISTS idx_clips_posted_date ON clips(posted_date);
 CREATE INDEX IF NOT EXISTS idx_clips_reviewed ON clips(reviewed);
+
+CREATE TABLE IF NOT EXISTS plans (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  title TEXT NOT NULL DEFAULT 'Untitled Show Plan',
+  episode_date TEXT DEFAULT '',
+  content TEXT DEFAULT '',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_plans_updated ON plans(updated_at);

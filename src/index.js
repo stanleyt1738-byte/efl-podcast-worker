@@ -44,9 +44,47 @@ export default {
       return json({ ok: true });
     }
 
+    if (p === "/api/plans" && request.method === "GET") {
+      const { results } = await env.DB.prepare("SELECT id, title, episode_date, created_at, updated_at FROM plans ORDER BY updated_at DESC").all();
+      return json(results);
+    }
+
+    if (p === "/api/plans" && request.method === "POST") {
+      const b = await request.json();
+      const result = await env.DB.prepare(
+        `INSERT INTO plans (title, episode_date, content, updated_at) VALUES (?, ?, ?, datetime('now'))`
+      ).bind(b.title || "Untitled Show Plan", b.episode_date || "", b.content || "").run();
+      return json({ id: result.meta.last_row_id });
+    }
+
+    const planMatch = p.match(/^\/api\/plans\/(\d+)$/);
+    if (planMatch && request.method === "GET") {
+      const row = await env.DB.prepare("SELECT * FROM plans WHERE id=?").bind(planMatch[1]).first();
+      if (!row) return json({ error: "Not found" }, 404);
+      return json(row);
+    }
+
+    if (planMatch && request.method === "PUT") {
+      const id = planMatch[1];
+      const b = await request.json();
+      await env.DB.prepare(
+        `UPDATE plans SET title=?, episode_date=?, content=?, updated_at=datetime('now') WHERE id=?`
+      ).bind(b.title || "Untitled Show Plan", b.episode_date || "", b.content || "", id).run();
+      const row = await env.DB.prepare("SELECT updated_at FROM plans WHERE id=?").bind(id).first();
+      return json({ ok: true, updated_at: row ? row.updated_at : null });
+    }
+
+    if (planMatch && request.method === "DELETE") {
+      await env.DB.prepare("DELETE FROM plans WHERE id=?").bind(planMatch[1]).run();
+      return json({ ok: true });
+    }
+
     if (p === "/clips") return ok(clipsPage());
     if (p === "/clubs") return ok(clubsPage());
     if (p === "/transfers") return ok(transfersPage());
+    if (p === "/plan") return ok(planListPage());
+    const planPageMatch = p.match(/^\/plan\/(\d+)$/);
+    if (planPageMatch) return ok(planEditorPage(planPageMatch[1]));
     const m = p.match(/^\/club\/([a-z0-9-]+)$/);
     if (m) return ok(clubPage(m[1]));
     return ok(HOME);
@@ -294,7 +332,7 @@ const TRANSFERS = [
 ];
 
 function transfersPage() {
-  const NAV = `<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link active">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a></nav>`;
+  const NAV = `<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link active">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a><a href="/plan" class="tab-link">📝 Show Plan</a></nav>`;
 
   const clubColour = (name) => {
     const match = Object.values(CLUBS).find(c => c.n === name || c.a === name);
@@ -511,7 +549,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <div class="hdr-icon">🎬</div>
   <div class="hdr-text"><h1>Clip Tracker</h1><div class="sub">Every short across X, YouTube, Instagram &amp; TikTok — see what actually performs</div></div>
 </div>
-<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link active">🎬 Clips</a></nav>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link active">🎬 Clips</a><a href="/plan" class="tab-link">📝 Show Plan</a></nav>
 
 <div class="page">
 
@@ -873,7 +911,7 @@ function clubsPage() {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111}.hdr{background:linear-gradient(135deg,#0d2218 0%,#1B3A28 100%);border-bottom:4px solid #C9A84C;padding:20px 32px;display:flex;align-items:center;gap:20px;animation:fadeDown .4s ease}.hdr-icon{font-size:36px;color:#C9A84C;line-height:1;flex-shrink:0}.hdr-text h1{font-size:26px;font-weight:900;color:#C9A84C;text-transform:uppercase;letter-spacing:1.5px}.hdr-text .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-top:2px;font-weight:500}.tab-nav{background:#fff;border-bottom:2px solid #e8e8e8;display:flex;padding:0 32px;overflow-x:auto}.tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}.tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}.tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}.page{max-width:900px;margin:0 auto;padding:0 24px 60px}.cl-section{margin-top:28px}.cl-div-hdr{color:#fff;font-size:18px;font-weight:900;text-transform:uppercase;letter-spacing:2px;padding:14px 24px}.cl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;padding:16px 0}.cl-card{background:#fff;border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;text-decoration:none;color:#111;border:1px solid #e8e8e8;transition:transform .2s cubic-bezier(.2,.8,.3,1.1),box-shadow .2s,border-color .2s}.cl-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(27,58,40,0.12);border-color:#1B3A28}.cl-badge{display:inline-flex;align-items:center;justify-content:center;width:44px;height:28px;border-radius:4px;font-size:10px;font-weight:900;letter-spacing:0.5px;text-transform:uppercase}.cl-name{font-size:14px;font-weight:800;color:#111;line-height:1.3}.cl-city{font-size:12px;color:#888}footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px solid #1B3A28;margin:0 32px}@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}</style></head><body>
 <div class="hdr"><div class="hdr-icon">▲</div><div class="hdr-text"><h1>The Pyramid</h1><div class="sub">Club Guide · EFL &amp; Non-League</div></div></div>
-<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a></nav>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a><a href="/plan" class="tab-link">📝 Show Plan</a></nav>
 <div class="page">${sections}</div>
 <footer>The Pyramid · Club Guide · Championship to National League South</footer>
 </body></html>`;
@@ -891,7 +929,7 @@ function clubPage(slug) {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111}.hdr{background:linear-gradient(135deg,#0d2218 0%,#1B3A28 100%);border-bottom:4px solid #C9A84C;padding:20px 32px;display:flex;align-items:center;gap:20px;animation:fadeDown .4s ease}.hdr-icon{font-size:36px;color:#C9A84C;line-height:1;flex-shrink:0}.hdr-text h1{font-size:26px;font-weight:900;color:#C9A84C;text-transform:uppercase;letter-spacing:1.5px}.hdr-text .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-top:2px;font-weight:500}.tab-nav{background:#fff;border-bottom:2px solid #e8e8e8;display:flex;padding:0 32px;overflow-x:auto}.tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}.tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}.tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}.page{max-width:900px;margin:0 auto;padding:0 24px 60px}.club-hero{padding:32px;display:flex;align-items:center;gap:24px}.club-badge-lg{width:72px;height:72px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;background:rgba(255,255,255,0.15);letter-spacing:1px;flex-shrink:0}.club-hero h2{font-size:32px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,0.3)}.club-nick{font-size:16px;color:rgba(255,255,255,0.8);margin-top:4px}.club-div-chip{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:4px 12px;border-radius:3px;margin-top:8px}.back-link{display:inline-flex;align-items:center;gap:6px;color:#1B3A28;text-decoration:none;font-size:13px;font-weight:700;padding:16px 0 4px;transition:color .2s}.back-link:hover{color:#C9A84C;text-decoration:underline}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px 0 0}@media(max-width:600px){.cards{grid-template-columns:1fr}}.card{background:#fff;border-radius:8px;padding:20px 22px;border:1px solid #e8e8e8;transition:box-shadow .2s}.card:hover{box-shadow:0 4px 16px rgba(27,58,40,0.08)}.card-full{grid-column:1/-1}.card h3{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:1.2px;color:#1B3A28;border-bottom:2px solid #C9A84C;padding-bottom:7px;margin-bottom:12px}.card p,.card li{font-size:15px;color:#333;line-height:1.7}.card ul{padding-left:18px}.card li{margin-bottom:4px}.stat-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:14px}.stat-row:last-child{border-bottom:none}.stat-label{color:#888;font-weight:600}.stat-value{color:#111;font-weight:700;text-align:right;max-width:60%}footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px solid #1B3A28;margin:0 32px}@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}</style></head><body>
 <div class="hdr"><div class="hdr-icon">▲</div><div class="hdr-text"><h1>The Pyramid</h1><div class="sub">Club Guide · ${club.n}</div></div></div>
-<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a></nav>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link active">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a><a href="/plan" class="tab-link">📝 Show Plan</a></nav>
 <div class="club-hero" style="background:${club.c}"><div class="club-badge-lg" style="${dk}">${club.a}</div>
 <div><h2>${club.n}</h2><div class="club-nick">${club.nick||''}</div><div class="club-div-chip">${club.div}</div></div></div>
 <div class="page"><a href="/clubs" class="back-link">← Back to Club Guide</a>
@@ -918,6 +956,298 @@ ${historyList?`<div class="card card-full"><h3>Club History</h3><ul>${historyLis
 </div></div>
 <footer>The Pyramid · Club Guide · ${club.n}</footer>
 </body></html>`;
+}
+
+function planStyles() {
+  return `*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111;font-size:15px;line-height:1.5}
+.hdr{background:linear-gradient(135deg,#0d2218 0%,#1B3A28 100%);border-bottom:4px solid #C9A84C;padding:20px 32px;display:flex;align-items:center;gap:20px;animation:fadeDown .4s ease}
+.hdr-icon{font-size:36px;color:#C9A84C;line-height:1;flex-shrink:0}
+.hdr-text h1{font-size:26px;font-weight:900;color:#C9A84C;text-transform:uppercase;letter-spacing:1.5px}
+.hdr-text .sub{font-size:14px;color:rgba(255,255,255,0.6);margin-top:2px;font-weight:500}
+.tab-nav{background:#fff;border-bottom:2px solid #e8e8e8;display:flex;padding:0 32px;overflow-x:auto}
+.tab-link{display:inline-block;padding:13px 20px;font-size:13px;font-weight:700;color:#666;text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-2px;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;transition:color .2s,border-bottom-color .25s}
+.tab-link:hover{color:#1B3A28;border-bottom-color:rgba(201,168,76,0.5)}
+.tab-link.active{color:#1B3A28;border-bottom-color:#C9A84C}
+.page{max-width:900px;margin:0 auto;padding:24px 24px 60px}
+footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px solid #1B3A28;margin:0 32px}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}`;
+}
+
+function planListPage() {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Show Plans — EFL Pod</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+${planStyles()}
+.toolbar{display:flex;justify-content:flex-end;margin-bottom:16px}
+.btn-primary{background:#1B3A28;color:#fff;border:none;padding:11px 18px;border-radius:6px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
+.btn-primary:hover{background:#264d36}
+.plan-list{display:flex;flex-direction:column;gap:10px}
+.plan-card{background:#fff;border:1px solid #e8e8e8;border-radius:8px;padding:16px 18px;display:flex;align-items:center;gap:14px;text-decoration:none;color:#111;transition:box-shadow .2s,border-color .2s}
+.plan-card:hover{box-shadow:0 4px 16px rgba(27,58,40,0.1);border-color:#1B3A28}
+.plan-icon{font-size:22px;flex-shrink:0}
+.plan-info{flex:1;min-width:0}
+.plan-title{font-size:15px;font-weight:800;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.plan-meta{font-size:12px;color:#888;margin-top:2px}
+.plan-del{border:none;background:none;color:#bbb;font-size:13px;font-weight:700;cursor:pointer;padding:6px 8px;flex-shrink:0}
+.plan-del:hover{color:#c0392b}
+.empty-msg{text-align:center;color:#999;padding:50px 20px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-icon">📝</div>
+  <div class="hdr-text"><h1>Show Plans</h1><div class="sub">Editable planning docs for each episode — share the link with anyone who needs it</div></div>
+</div>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a><a href="/plan" class="tab-link active">📝 Show Plan</a></nav>
+
+<div class="page">
+  <div class="toolbar"><button class="btn-primary" onclick="newPlan()">+ New Show Plan</button></div>
+  <div class="plan-list" id="planList"></div>
+  <div class="empty-msg" id="emptyMsg" style="display:none">No show plans yet — click "+ New Show Plan" to create the first one.</div>
+</div>
+
+<footer>Show Plans · EFL Pod</footer>
+
+<script>
+var TEMPLATE = '<h2>Episode Overview</h2>' +
+  '<p><strong>Recording day:</strong> Monday &nbsp; <strong>Guests / callers:</strong> </p>' +
+  '<p><strong>Big story of the week:</strong> </p>' +
+  '<h2>Headlines &amp; Results Recap</h2>' +
+  '<ul><li>Championship: </li><li>League One: </li><li>League Two: </li><li>National League (if big enough): </li></ul>' +
+  '<h2>Recurring Segments (tick what is in this week)</h2>' +
+  '<ul>' +
+  '<li>&#9744; Predictions</li>' +
+  '<li>&#9744; Best-ever EFL team debate</li>' +
+  '<li>&#9744; Greatest EFL striker (Deeney vs Pukki vs Sharp etc.)</li>' +
+  '<li>&#9744; EFL heroes (Vardy, Bowen, Eze...)</li>' +
+  '<li>&#9744; History of a club</li>' +
+  '<li>&#9744; Team of the Week</li>' +
+  '<li>&#9744; Goal of the Week</li>' +
+  '<li>&#9744; Ones to Watch</li>' +
+  '<li>&#9744; Caller hot takes</li>' +
+  '<li>&#9744; Best kits</li>' +
+  '<li>&#9744; Best managers</li>' +
+  '<li>&#9744; Best front 3</li>' +
+  '</ul>' +
+  '<h2>Running Order</h2>' +
+  '<ul>' +
+  '<li>Intro / banter — 5 min — </li>' +
+  '<li>Headlines — 10 min — </li>' +
+  '<li>Main debate — 15 min — </li>' +
+  '<li>Predictions — 5 min — </li>' +
+  '<li>Outro / plugs — 5 min — </li>' +
+  '</ul>' +
+  '<h2>Clips to Cut</h2>' +
+  '<ul><li></li></ul>' +
+  '<h2>Notes / Action Items</h2>' +
+  '<ul><li></li></ul>';
+
+function esc(s){
+  return (s || '').toString().replace(/[&<>"']/g, function(c){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+function timeAgo(iso){
+  if (!iso) return '';
+  var d = new Date(iso.replace(' ', 'T') + 'Z');
+  var diff = Math.floor((Date.now() - d.getTime()) / 1000);
+  if (diff < 60) return 'just now';
+  if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+  return Math.floor(diff/86400) + 'd ago';
+}
+
+function loadPlans(){
+  fetch('/api/plans').then(function(r){ return r.json(); }).then(function(data){
+    var list = document.getElementById('planList');
+    var empty = document.getElementById('emptyMsg');
+    if (!data.length) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    list.innerHTML = data.map(function(pl){
+      return '<a class="plan-card" href="/plan/' + pl.id + '">' +
+        '<div class="plan-icon">📄</div>' +
+        '<div class="plan-info">' +
+          '<div class="plan-title">' + esc(pl.title || 'Untitled Show Plan') + '</div>' +
+          '<div class="plan-meta">' + (pl.episode_date ? esc(pl.episode_date) + ' · ' : '') + 'Updated ' + timeAgo(pl.updated_at) + '</div>' +
+        '</div>' +
+        '<button class="plan-del" onclick="event.preventDefault();delPlan(' + pl.id + ')">Delete</button>' +
+      '</a>';
+    }).join('');
+  });
+}
+
+function newPlan(){
+  fetch('/api/plans', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title: 'Untitled Show Plan', episode_date: '', content: TEMPLATE })
+  }).then(function(r){ return r.json(); }).then(function(data){
+    location.href = '/plan/' + data.id;
+  });
+}
+
+function delPlan(id){
+  if (!confirm('Delete this show plan? This cannot be undone.')) return;
+  fetch('/api/plans/' + id, { method: 'DELETE' }).then(function(){ loadPlans(); });
+}
+
+loadPlans();
+</script>
+</body>
+</html>`;
+}
+
+function planEditorPage(id) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Show Plan — EFL Pod</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+${planStyles()}
+.page{max-width:820px}
+.doc-topbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.back-link{color:#1B3A28;text-decoration:none;font-size:13px;font-weight:700}
+.back-link:hover{color:#C9A84C}
+.doc-status{font-size:12px;color:#999;font-weight:600;flex:1}
+.doc-actions{display:flex;gap:8px}
+.doc-actions button{border:none;padding:9px 14px;border-radius:6px;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap}
+.btn-share{background:#C9A84C;color:#1B3A28}
+.btn-share:hover{background:#dab766}
+.btn-del{background:#f8d7da;color:#c0392b}
+.btn-del:hover{background:#f3c1c6}
+.doc-meta-row{display:flex;gap:10px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.doc-meta-row input[type=date]{padding:8px 10px;border-radius:6px;border:1px solid #ddd;font-family:inherit;font-size:13px}
+.doc-meta-row label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;color:#888}
+.doc-toolbar{display:flex;gap:4px;background:#fff;border:1px solid #e8e8e8;border-radius:8px 8px 0 0;padding:8px 10px;position:sticky;top:0;z-index:10}
+.doc-toolbar button{border:none;background:#f4f5f2;color:#333;width:32px;height:32px;border-radius:5px;font-weight:800;font-size:13px;cursor:pointer}
+.doc-toolbar button:hover{background:#e8ebe4}
+.doc-paper{background:#fff;border:1px solid #e8e8e8;border-top:none;border-radius:0 0 10px 10px;box-shadow:0 4px 20px rgba(0,0,0,0.04)}
+#titleInput{width:100%;border:none;outline:none;font-family:inherit;font-size:28px;font-weight:900;color:#111;padding:24px 28px 0;background:transparent}
+#docBody{min-height:420px;padding:14px 28px 32px;outline:none;font-size:15px;line-height:1.7;color:#222}
+#docBody h2{font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:0.8px;color:#1B3A28;border-bottom:2px solid #C9A84C;padding-bottom:6px;margin:22px 0 10px}
+#docBody h2:first-child{margin-top:0}
+#docBody ul{padding-left:22px;margin-bottom:6px}
+#docBody li{margin-bottom:5px}
+#docBody p{margin-bottom:8px}
+.copied-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1B3A28;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s}
+.copied-toast.show{opacity:1}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-icon">📝</div>
+  <div class="hdr-text"><h1>Show Plan</h1><div class="sub">Autosaves as you type — anyone with this link can view and edit</div></div>
+</div>
+<nav class="tab-nav"><a href="/" class="tab-link">📋 Weekly Doc</a><a href="/clubs" class="tab-link">🏟️ Club Guide</a><a href="/transfers" class="tab-link">🔄 Transfers</a><a href="/clips" class="tab-link">🎬 Clips</a><a href="/plan" class="tab-link active">📝 Show Plan</a></nav>
+
+<div class="page">
+  <div class="doc-topbar">
+    <a class="back-link" href="/plan">&larr; All Show Plans</a>
+    <div class="doc-status" id="docStatus"></div>
+    <div class="doc-actions">
+      <button class="btn-share" onclick="shareLink()">🔗 Copy Share Link</button>
+      <button class="btn-del" onclick="deletePlan()">Delete</button>
+    </div>
+  </div>
+  <div class="doc-meta-row">
+    <label>Episode date</label>
+    <input type="date" id="dateInput">
+  </div>
+  <div class="doc-toolbar">
+    <button onclick="fmt('bold')" title="Bold"><b>B</b></button>
+    <button onclick="fmt('italic')" title="Italic"><i>I</i></button>
+    <button onclick="fmt('formatBlock','H2')" title="Heading">H2</button>
+    <button onclick="fmt('insertUnorderedList')" title="Bullet list">&#8226;</button>
+    <button onclick="fmt('insertOrderedList')" title="Numbered list">1.</button>
+  </div>
+  <div class="doc-paper">
+    <input id="titleInput" type="text" placeholder="Untitled Show Plan">
+    <div id="docBody" contenteditable="true"></div>
+  </div>
+</div>
+
+<footer>Show Plan · EFL Pod</footer>
+<div class="copied-toast" id="toast">Link copied!</div>
+
+<script>
+var PLAN_ID = ${id};
+var saveTimer = null;
+
+function fmt(cmd, val){
+  document.execCommand(cmd, false, val || null);
+  document.getElementById('docBody').focus();
+}
+
+function setStatus(text){ document.getElementById('docStatus').textContent = text; }
+
+function loadPlan(){
+  fetch('/api/plans/' + PLAN_ID).then(function(r){ return r.json(); }).then(function(data){
+    if (data.error) { setStatus('Plan not found'); return; }
+    document.getElementById('titleInput').value = data.title || '';
+    document.getElementById('dateInput').value = data.episode_date || '';
+    document.getElementById('docBody').innerHTML = data.content || '';
+    setStatus('All changes saved');
+    document.title = (data.title || 'Show Plan') + ' — EFL Pod';
+  });
+}
+
+function queueSave(){
+  setStatus('Saving...');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(savePlan, 700);
+}
+
+function savePlan(){
+  var body = {
+    title: document.getElementById('titleInput').value || 'Untitled Show Plan',
+    episode_date: document.getElementById('dateInput').value || '',
+    content: document.getElementById('docBody').innerHTML
+  };
+  fetch('/api/plans/' + PLAN_ID, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(function(r){ return r.json(); }).then(function(){
+    setStatus('All changes saved');
+    document.title = (body.title || 'Show Plan') + ' — EFL Pod';
+  });
+}
+
+function shareLink(){
+  var url = location.href;
+  var toast = document.getElementById('toast');
+  function flash(){ toast.classList.add('show'); setTimeout(function(){ toast.classList.remove('show'); }, 1800); }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(flash);
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = url; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    flash();
+  }
+}
+
+function deletePlan(){
+  if (!confirm('Delete this show plan? This cannot be undone.')) return;
+  fetch('/api/plans/' + PLAN_ID, { method: 'DELETE' }).then(function(){ location.href = '/plan'; });
+}
+
+document.getElementById('titleInput').addEventListener('input', queueSave);
+document.getElementById('dateInput').addEventListener('change', queueSave);
+document.getElementById('docBody').addEventListener('input', queueSave);
+loadPlan();
+</script>
+</body>
+</html>`;
 }
 
 const HOME = `<!DOCTYPE html>
@@ -1063,6 +1393,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <a href="/clubs" class="tab-link">🏟️ Club Guide</a>
   <a href="/transfers" class="tab-link">🔄 Transfers</a>
   <a href="/clips" class="tab-link">🎬 Clips</a>
+  <a href="/plan" class="tab-link">📝 Show Plan</a>
 </nav>
 
 <div class="club-filter-bar">
