@@ -228,6 +228,11 @@ const CLUBS = {
 
 const TRANSFERS = [
   // ── CHAMPIONSHIP — CONFIRMED SIGNINGS ────────────────────────────────────
+  {club:'Millwall',player:'Mathis Servais',age:21,from:'KV Mechelen',fee:'~€6m (club record)',type:'in',date:'6 Jul 2026',status:'confirmed'},
+  {club:'Cardiff City',player:'Nathan Trott',age:27,from:'FC Copenhagen',fee:'£1.5m',type:'in',date:'15 Jun 2026',status:'confirmed'},
+  {club:'Swansea City',player:'Moussa Yeo',age:22,from:'RB Salzburg',fee:'~€4m',type:'in',date:'26 Jun 2026',status:'confirmed'},
+  {club:'Stoke City',player:'Svante Ingelsson',age:24,from:'Sheffield Wednesday',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed'},
+  {club:'Birmingham City',player:'Dael Fry',age:28,from:'Middlesbrough (contract expired)',fee:'Free',type:'in',date:'2 Jul 2026',status:'confirmed'},
   {club:'Wolverhampton Wanderers',player:'Raúl Jiménez',age:35,from:'Free agent',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed'},
   {club:'Wolverhampton Wanderers',player:'Kieran Trippier',age:35,from:'Free agent',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed'},
   {club:'Bolton Wanderers',player:'David Watson',age:21,from:'Kilmarnock',fee:'Compensation',type:'in',date:'27 May 2026',status:'confirmed'},
@@ -285,8 +290,12 @@ const TRANSFERS = [
   {club:'Derby County',player:'Matt Targett',age:30,from:'Newcastle United',fee:'Free',type:'in',date:'Jun 2026',status:'advanced'},
   {club:'West Bromwich Albion',player:'Ben Brereton Díaz',age:27,from:'Southampton',fee:'TBC',type:'in',date:'Jun 2026',status:'advanced'},
   {club:'Sheffield Wednesday',player:'Sil Swinkels',age:22,from:'Aston Villa',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'advanced'},
-  {club:'Middlesbrough',player:'Hayden Hackney',age:23,to:'Everton',fee:'~£25m',type:'out',date:'Jun 2026',status:'advanced'},
-  {club:'West Ham United',player:'Mateus Fernandes',age:21,to:'Tottenham Hotspur',fee:'~£85m',type:'out',date:'1 Jul 2026',status:'advanced'},
+  {club:'Sheffield Wednesday',player:'Louie Barry',age:20,from:'Aston Villa',fee:'TBC',type:'in',date:'Jul 2026',status:'rumour'},
+  {club:'Sheffield United',player:'Harrison Burrows',age:24,to:'West Ham United',fee:'~£10m',type:'out',date:'Jul 2026',status:'advanced'},
+
+  // ── COMPLETED THIS WEEK ─────────────────────────────────────────────────
+  {club:'Middlesbrough',player:'Hayden Hackney',age:24,to:'Everton',fee:'£16.5m rising to £25m',type:'out',date:'1-2 Jul 2026',status:'confirmed'},
+  {club:'West Ham United',player:'Mateus Fernandes',age:21,to:'Tottenham Hotspur',fee:'£85m (club record)',type:'out',date:'2 Jul 2026',status:'confirmed'},
 
   // ── RUMOURS ─────────────────────────────────────────────────────────────
   {club:'Middlesbrough',player:'Morgan Whittaker',age:25,to:'Fulham / Bournemouth / Wolves',fee:'~£20m',type:'out',date:'Jun 2026',status:'rumour'},
@@ -296,13 +305,16 @@ const TRANSFERS = [
   {club:'Swansea City',player:'Zan Vipotnik',age:24,to:'Leeds / Everton / Newcastle / Aston Villa',fee:'£15-25m asked',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Watford',player:'Imran Louza',age:27,to:'Everton / Fulham / Brighton',fee:'~£15m',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Watford',player:'Nestory Irankunda',age:20,to:'Everton / Bayer Leverkusen',fee:'TBC (Bayern 50% sell-on)',type:'out',date:'Jun 2026',status:'rumour'},
-  {club:'West Ham United',player:'Jarrod Bowen',age:29,to:'Aston Villa',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour'},
-  {club:'West Ham United',player:'Crysencio Summerville',age:24,to:'Manchester United',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour'},
+  {club:'West Ham United',player:'Jarrod Bowen',age:29,to:'Staying — Aston Villa reportedly priced out',fee:'N/A',type:'out',date:'Jul 2026',status:'rumour'},
+  {club:'West Ham United',player:'Crysencio Summerville',age:24,to:'Arsenal / Manchester United (£40m release clause)',fee:'£40m',type:'out',date:'Jul 2026',status:'rumour'},
+  {club:'West Ham United',player:'Taty Castellanos',age:27,to:'Everton / Fulham',fee:'TBC',type:'out',date:'Jul 2026',status:'rumour'},
+  {club:'Sheffield United',player:'Sydie Peck',age:21,to:'West Ham / Nottingham Forest / Brentford',fee:'~£25m valuation',type:'out',date:'Jul 2026',status:'rumour'},
   {club:'Southampton',player:'Tyler Dibling',age:20,to:'Multiple PL clubs circling',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour'},
   {club:'Sheffield United',player:'Kalvin Phillips',age:30,from:'Available on free',fee:'TBC',type:'in',date:'Jun 2026',status:'rumour'},
   {club:'Derby County',player:'Thierry Small',age:21,from:'Charlton Athletic — chased by Blackburn &amp; Millwall too',fee:'TBC',type:'in',date:'Jun 2026',status:'rumour'},
   {club:'Wolverhampton Wanderers',player:'Johann Lepenant',age:23,from:'Improved £15m bid submitted',fee:'~£15m',type:'in',date:'Jun 2026',status:'rumour'},
   {club:'Oxford United',player:'Bamba Dieng',age:26,from:'Lorient (free agent) — also chased by Blackburn, Leicester, Portsmouth, St Pauli',fee:'Free',type:'in',date:'Jun 2026',status:'rumour'},
+  {club:'Middlesbrough',player:'Oliver Skipp',age:25,from:'Leicester City',fee:'TBC',type:'in',date:'Jul 2026',status:'rumour'},
 
   // ── LEAGUE ONE — CONFIRMED ────────────────────────────────────────────────
   {club:'Bradford City',player:'Jon McCracken',age:26,from:'Dundee',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
@@ -315,6 +327,7 @@ const TRANSFERS = [
   {club:'Plymouth Argyle',player:'Alex Hartridge',age:24,from:'Burton Albion',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
   {club:'Doncaster Rovers',player:'Leon Ayinde',age:21,from:'Ipswich Town',fee:'Free',type:'in',date:'20 May 2026',status:'confirmed'},
   {club:'Reading',player:'Kyreece Lisbie',age:23,from:'Colchester United',fee:'Undisclosed (~£500k)',type:'in',date:'1 Jul 2026',status:'confirmed'},
+  {club:'Bolton Wanderers',player:'Akin Famewo',age:26,from:'Hull City',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed'},
 
   // ── LEAGUE TWO — CONFIRMED ────────────────────────────────────────────────
   {club:'Oldham Athletic',player:'Ollie Norburn',age:32,from:'Notts County',fee:'Undisclosed',type:'in',date:'15 Jun 2026',status:'confirmed'},
@@ -325,6 +338,8 @@ const TRANSFERS = [
   {club:'Rotherham United',player:'Fábio Tavares',age:26,from:'Burton Albion',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed'},
   {club:'Walsall',player:'Sven Sprangler',age:28,from:'St Johnstone',fee:'Undisclosed',type:'in',date:'27 Jun 2026',status:'confirmed'},
   {club:'Port Vale',player:'Jackson Smith',age:23,from:'Barnsley',fee:'Undisclosed',type:'in',date:'19 Jun 2026',status:'confirmed'},
+  {club:'Port Vale',player:'Kyle Dempsey',age:27,from:'Bolton Wanderers',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed'},
+  {club:'Shrewsbury Town',player:'Jay Turner-Cooke',age:22,from:'FC Halifax Town',fee:'Undisclosed (FA dispute over option clause)',type:'in',date:'4 Jul 2026',status:'confirmed'},
 
   // ── NATIONAL LEAGUE — CONFIRMED ───────────────────────────────────────────
   {club:'AFC Fylde',player:'Cedric Main',age:27,from:'Darlington',fee:'Undisclosed',type:'in',date:'Jun 2026',status:'confirmed'},
@@ -1295,7 +1310,7 @@ const HOME = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Pyramid — 2 July 2026</title>
+<title>The Pyramid — 7 July 2026</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -1424,7 +1439,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <div class="sub">Tom Garratt &amp; Callum Fowler · EFL Football Weekly</div>
   </div>
   <div class="hdr-meta">
-    <div class="week-pill">2 July 2026</div>
+    <div class="week-pill">7 July 2026</div>
     <div class="date">Countdown to 2026/27</div>
   </div>
 </div>
@@ -1454,15 +1469,19 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <div class="sub-hdr red">Summer News <span class="sub-hdr-badge">Pre-Season</span></div>
 
   <div class="story red" data-clubs="Southampton, Middlesbrough, Hull City">
-    <h3><span class="bge" style="background:#D71920">SOU</span>🔴 Spygate ends: Southampton disqualified, Hull City promoted instead</h3>
-    <p>Southampton beat Middlesbrough in the semi-final but were <strong>expelled from the play-offs entirely</strong> after admitting a member of staff filmed Boro's training at Rockliffe Hall. Middlesbrough took their spot in the final — and lost 1–0 to Hull City at Wembley (McBurnie, 90+5', att. 84,506). Hull are promoted to the Premier League.</p>
-    <p>Southampton also start 2026/27 on <strong>a 4-point deduction</strong> — meaning they need results just to reach zero before the season "really" begins.</p>
-    <div class="src"><a href="https://en.wikipedia.org/wiki/2026_EFL_Championship_play-off_final" target="_blank">Wikipedia</a></div>
+    <h3><span class="bge" style="background:#D71920">SOU</span>🔴 Spygate hangover: Saints start on -4 — and keep the manager anyway</h3>
+    <p>Southampton were expelled from the play-off final in May after admitting staff — authorised by head coach Tonda Eckert — filmed opponents' training sessions (Oxford, Ipswich, and the semi vs Middlesbrough; a junior analyst intern was sent to spy on Oxford). Their appeal was dismissed, Middlesbrough took their Wembley place instead and lost 1–0 to Hull City (McBurnie, 90+5', att. 84,506, Hull promoted). Saints carry a <strong>four-point deduction into 2026/27</strong> — and owner Dragan Solak has given Eckert his full backing, so he stays as head coach. Their CEO called the punishment "manifestly disproportionate."</p>
+    <div class="src"><a href="https://en.wikipedia.org/wiki/2026_EFL_Championship_play-off_final" target="_blank">Wikipedia</a> <a href="https://www.skysports.com/football/news/11095/13550009/spygate-latest-tonda-eckert-given-southampton-owners-backing-as-head-coach-apologises-for-scandal" target="_blank">Sky Sports</a></div>
   </div>
 
   <div class="story" data-clubs="Wolverhampton Wanderers, Blackburn Rovers, Burnley, West Ham United">
     <h3>⬇️ Three Premier League clubs arrive: Wolves, Burnley &amp; West Ham</h3>
-    <p>Wolves sacked Rob Edwards and appointed <strong>César Peixoto</strong>; they open at home to Blackburn (Fri 14 Aug) — Tony Mowbray's first game back in his second Rovers spell. Burnley are still managerless (Michael Jackson interim only) and open at Turf Moor against West Ham (Sun 16 Aug) — the two relegated sides colliding on matchday one. West Ham kept faith with Nuno Espírito Santo, tying him down to 2028.</p>
+    <p>Wolves sacked Rob Edwards and appointed 46-year-old <strong>César Peixoto</strong> from Gil Vicente — a relegated club betting parachute money on a coach with zero English football experience; he's thrown straight in at home to Blackburn on opening night, Friday 14 Aug, live on Sky (Tony Mowbray's first game back at Molineux in his second Rovers spell). Burnley open at Turf Moor against West Ham (Sun 16 Aug) — two relegated sides colliding on matchday one.</p>
+  </div>
+
+  <div class="story red" data-clubs="West Ham United, Aston Villa">
+    <h3>⚽ West Ham's Bowen saga: Villa reportedly priced out, he may just... stay</h3>
+    <p>West Ham are down after 13 years in the Premier League, and captain Jarrod Bowen is the summer's defining soap opera. Aston Villa were the front-runners but reportedly walked away after a £19.4m UEFA fine wrecked their maths on the ~£50m asking price; West Ham now feel it's "increasingly clear" the 29-year-old stays for a season in the Championship. Elsewhere: Wan-Bissaka is expected to draw Premier League interest, while Kilman, Hermansen and Walker-Peters are all reportedly staying put. The fixture computer hasn't been kind either way — Burnley away on opening night.</p>
   </div>
 
   <div class="story" data-clubs="Sheffield Wednesday">
@@ -1481,26 +1500,27 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <p>In, out, and one big surprise: <strong>Bristol City hired Michael Skubala</strong> — the man who just took Lincoln City up as League One champions — to replace the sacked Gerhard Struber. Watford appointed Italian Alessio Dionisi after sacking Ed Still inside three months. West Brom made James Morrison permanent after he steadied the ship post-Eric Ramsay. Lincoln, in turn, have promoted internally (Chris Cohen &amp; Tom Shaw) rather than replace Skubala with an outside appointment.</p>
   </div>
 
-  <div class="story red" data-clubs="West Ham United, Tottenham Hotspur, Burnley">
-    <h3>💰 Spurs beat Man Utd to Mateus Fernandes in club-record £85m deal</h3>
-    <p>West Ham have agreed to sell 21-year-old midfielder <strong>Mateus Fernandes</strong> to Tottenham for around £85m — a Spurs club record — with the medical underway; Manchester United were also in the race. It's the biggest fee involving a Championship club so far this window. Burnley, meanwhile, have made their own statement signing: <strong>Florentino</strong> in from Benfica for £20.7m to sit in front of the defence.</p>
-    <div class="src"><a href="https://www.skysports.com/football/news/11095/13559281" target="_blank">Sky Sports</a></div>
+  <div class="story red" data-clubs="West Ham United, Tottenham Hotspur, Middlesbrough, Everton, Birmingham City">
+    <h3>💰 Two deals now DONE: Fernandes to Spurs (£85m), Hackney to Everton (£16.5m+)</h3>
+    <p>Both deals we've been tracking are over the line. <strong>Mateus Fernandes</strong>' move from West Ham to Tottenham completed 2 July at around <strong>£85m — a Spurs club record</strong> — beating Manchester United to him, and it's the biggest fee involving a Championship club this window. <strong>Hayden Hackney</strong>, reigning Championship Player of the Season, completed his switch from Middlesbrough to Everton — <strong>£16.5m guaranteed, rising to £25m</strong> with add-ons, after Boro rejected lower bids first. Boro's exodus continues: captain <strong>Dael Fry</strong> also left, on a free to Birmingham, after two rejected contract offers.</p>
+    <div class="src"><a href="https://www.skysports.com/football/news/11095/13559281" target="_blank">Sky Sports</a> <a href="https://www.espn.com/soccer/story/_/id/49228404/everton-set-sign-midfielder-hayden-hackney-middlesbrough-sources" target="_blank">ESPN</a></div>
   </div>
 
-  <div class="story" data-clubs="Wolverhampton Wanderers, Leicester City, Middlesbrough, Stoke City, Southampton, Derby County, Birmingham City">
+  <div class="story" data-clubs="Wolverhampton Wanderers, Stoke City, Southampton, Derby County, Cardiff City, Swansea City, Millwall">
     <h3>💼 Ins &amp; outs so far</h3>
-    <p>Wolves have been busy — free-transfer swoops for <strong>Raúl Jiménez</strong> and <strong>Kieran Trippier</strong>, plus <strong>Ladislav Krejci</strong> in from Girona for £6.5m. Leicester's rebuild is mostly an exodus rather than a rebuild for now — around ten players are leaving as contracts expire, including <strong>Patson Daka</strong>, Jordan Ayew, Ricardo Pereira and Jamaal Lascelles (El Khannouss and Monga have already gone, to Stuttgart and Arsenal respectively). Middlesbrough look set to lose captain Hayden Hackney to Everton for around £25m. Elsewhere: Stoke paid £10m to Swansea for Ethan Galbraith, Southampton signed goalkeeper Daniel Peretz from Bayern (£6.9m) and Derby brought in Bobby Clark from RB Salzburg (£6m).</p>
+    <p>Wolves have been busy — free-transfer swoops for <strong>Raúl Jiménez</strong> and <strong>Kieran Trippier</strong>, plus <strong>Ladislav Krejci</strong> in from Girona for £6.5m. Stoke paid £10m to Swansea for <strong>Ethan Galbraith</strong> and added <strong>Svante Ingelsson</strong> from Sheffield Wednesday; Southampton signed goalkeeper Daniel Peretz from Bayern (£6.9m); Derby brought in <strong>Bobby Clark</strong> from RB Salzburg (£6m); Cardiff signed keeper <strong>Nathan Trott</strong> from Copenhagen (£1.5m); Swansea also added <strong>Moussa Yeo</strong> from Salzburg; and Millwall made their club-record signing official today — <strong>Mathis Servais</strong> in from KV Mechelen for around €6m (though one source has the true figure closer to €3m — fee genuinely disputed).</p>
     <div class="src"><a href="https://www.lcfc.com/news-transfers" target="_blank">LCFC</a> <a href="https://sportsmole.co.uk" target="_blank">Sports Mole</a></div>
   </div>
 
   <div class="on-air">
     <div class="on-air-lbl">On Air</div>
     <ul>
-      <li>Southampton disqualified from their own play-off run — harsh, fair, or overdue? And can they even function on -4 points from day one?</li>
-      <li>Bristol City poaching the manager who just won League One off a divisional rival — smart business or bad look?</li>
+      <li>Southampton keeping Tonda Eckert after Spygate — loyalty or a club refusing to learn a lesson? Can they even function on -4 from day one?</li>
+      <li>Would Bowen at 29 really do a season of Tuesday nights at Preston — and is West Ham's relegated squad the strongest ever to go down?</li>
       <li>Sheffield Wednesday's takeover + crest reversal — best off-season story in the whole pyramid?</li>
-      <li>Burnley still without a permanent manager weeks out from facing West Ham on opening day — a problem?</li>
+      <li>Bristol City poaching the manager who just won League One off a divisional rival — smart business or bad look?</li>
       <li>Six-team play-offs from this season — does it dilute the drama or just give more clubs a shot?</li>
+      <li>Middlesbrough sold their Player of the Season AND lost their captain on a free in the same week — rebuild or fire sale?</li>
     </ul>
   </div>
 </div>
@@ -1561,35 +1581,29 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   </div>
 
   <div class="story red" data-clubs="Leicester City">
-    <h3><span class="bge" style="background:#003090">LEI</span>🦊 Leicester in League One for only the 2nd time in 142 years — Russell Martin in, exodus under way</h3>
-    <p>Ten years on from the 5,000-1 title, back-to-back relegations (plus a 6-point PSR deduction) have sent Leicester into the third tier. Russell Martin has been appointed on a three-year deal — their seventh permanent boss since April 2023 — replacing caretaker Gary Rowett. On the pitch it's almost entirely outgoings so far: around ten players leaving as contracts expire, including Patson Daka, Jordan Ayew, Ricardo Pereira and Jamaal Lascelles, plus Wout Faes confirmed departing and Harry Winks (Cagliari) and Victor Kristiansen (Panathinaikos) both in exit talks. Leicester open the season away at Notts County (Sat 15 Aug, 12:30pm, live on Sky) in an East Midlands derby.</p>
+    <h3><span class="bge" style="background:#003090">LEI</span>🦊 Leicester in League One for only the 2nd time in 142 years — 16 exits and counting</h3>
+    <p>Ten years on from the 5,000-1 title, back-to-back relegations (plus a 6-point PSR deduction) have sent Leicester into the third tier. Russell Martin has been appointed on a deal to <strong>2029</strong>, replacing caretaker Gary Rowett. The exodus is already at <strong>16 exits</strong>: Ricardo Pereira among 10 released, five loanees returned, with Winks, Faes and academy lifer Hamza Choudhury all expected to follow. 22-year-old Ben Nelson is reportedly being circled by Man Utd, Chelsea and Torino (rumour). Leicester open the season away at Notts County — the world's oldest professional club hosting the 2016 Premier League champions in the third tier — Sat 15 Aug, 12:30pm, live on Sky.</p>
     <div class="src"><a href="https://www.lcfc.com/media-article/chairman-statement-leicester-city-relegated-league-one" target="_blank">LCFC</a></div>
   </div>
 
-  <div class="story" data-clubs="Blackpool, Luton Town, Barnsley, Huddersfield Town, Exeter City, Wigan Athletic, Stockport County, Lincoln City, Bristol City">
+  <div class="story" data-clubs="Blackpool, Luton Town, Barnsley, Huddersfield Town, Exeter City, Wigan Athletic, Stockport County, Lincoln City, Bristol City, Oxford United">
     <h3>🔄 Manager merry-go-round</h3>
-    <p>Blackpool appointed <strong>Steve Bruce</strong>; Luton Town brought back boyhood fan <strong>Jack Wilshere</strong> to manage his old club and moved their pre-season camp to Spain; Barnsley re-appointed <strong>Daniel Stendel</strong> for a second Oakwell spell; Huddersfield hired <strong>Martin Drury</strong> — their 10th permanent or de-facto boss since 2022; Exeter made <strong>Matt Taylor</strong> permanent after Gary Caldwell left for Wigan (2nd spell); Stockport lost Dave Challinor and turned to ex-Rochdale promotion-winner <strong>Jimmy McNulty</strong>; and Lincoln City, having lost title-winner Michael Skubala to Bristol City, are running with internal duo <strong>Chris Cohen &amp; Tom Shaw</strong>.</p>
+    <p>Blackpool appointed <strong>Steve Bruce</strong>; Luton Town brought back boyhood fan <strong>Jack Wilshere</strong>; Barnsley re-appointed <strong>Daniel Stendel</strong> for a second Oakwell spell, seven years after his 91-point promotion side; Huddersfield made <strong>Martin Drury</strong> permanent; Exeter made <strong>Matt Taylor</strong> permanent after Gary Caldwell left for Wigan (2nd spell); Stockport turned to <strong>Jimmy McNulty</strong>; Lincoln City are running with internal duo Chris Cohen &amp; Tom Shaw after losing Skubala to Bristol City; and Oxford appointed <strong>Aaron Ramsey</strong> — his first permanent job, barely two months after retiring as a player — after Matt Bloomfield's exit.</p>
   </div>
 
-  <div class="story" data-clubs="Oxford United, West Bromwich Albion">
-    <h3>💼 Oxford turn to Aaron Ramsey after Bloomfield exit</h3>
-    <p>Oxford sacked Matt Bloomfield following relegation (22nd, four points from safety) and have appointed Aaron Ramsey — the 35-year-old ex-Arsenal and Wales midfielder, who retired earlier this year and had a caretaker spell at Cardiff — as head coach, his first permanent job. On transfers: Matt Ingram has joined West Brom and Przemysław Płacheta's off to Austin FC in MLS; Oxford are chasing free agent Bamba Dieng (also wanted by Blackburn, Leicester, Portsmouth and St Pauli) but haven't landed a confirmed first-team signing yet.</p>
-    <div class="src"><a href="https://www.skysports.com/football/news/12040/13556847/oxford-united-aaron-ramsey-appointed-head-coach-after-matt-bloomfield-exit" target="_blank">Sky Sports</a></div>
-  </div>
-
-  <div class="story" data-clubs="Leyton Orient, Bristol City">
-    <h3>🎯 Bristol City bid for League One's top scorer</h3>
-    <p>Bristol City have tabled a bid for Leyton Orient's Dom Ballard, who scored 23 goals last season to finish as League One's top scorer — Orient are said to want the offer improved before it goes through.</p>
+  <div class="story red" data-clubs="Luton Town, Hull City">
+    <h3>💼 Luton close in on Kasey Palmer as Wilshere says he's "close with one, close with two"</h3>
+    <p>Jack Wilshere enters his first full season after last year's Vertu Trophy win but a limp 10th-place league finish. Luton have reportedly agreed a deal with Hull for <strong>Kasey Palmer</strong> (advanced, not yet officially announced), with George Johnstone already in on a free from Bolton. They're also two players over the League One squad limit, with Christ Makosso reportedly close to a move to Auxerre.</p>
   </div>
 
   <div class="on-air">
     <div class="on-air-lbl">On Air</div>
     <ul>
       <li>Sheffield Wednesday arrive with a new owner, a new crest and a point to prove — favourites for an instant return?</li>
-      <li>Jack Wilshere managing his boyhood club — best storyline in the division this summer?</li>
-      <li>Bristol City poaching Lincoln's title-winning manager, then Lincoln poaching nobody and just promoting from within — who got the better end of that?</li>
-      <li>Leicester City's rebuild so far is mostly outgoings — how worried should Foxes fans be?</li>
-      <li>Stockport handing the reins to the man who just got Rochdale out of the National League — good appointment?</li>
+      <li>Is Leicester the biggest club ever to play in this division — title, play-offs, or full Sunderland-2018 chaos?</li>
+      <li>Aaron Ramsey at Oxford — genuine appointment or box-office gamble two months after retiring as a player?</li>
+      <li>Luton closing in on Kasey Palmer — with trophy pedigree and Championship-level backing, is anything short of automatic promotion a failure for Wilshere?</li>
+      <li>Pick your fixture of the season: Wednesday vs Barnsley, Bradford vs Huddersfield, or Leicester's trip to Notts County?</li>
     </ul>
   </div>
 </div>
@@ -1644,19 +1658,19 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <div class="src"><a href="https://www.efl.com/news/2026/may/25/live--sky-bet-league-two-play-off-final-notts-county-v-salford-city/" target="_blank">EFL.com</a> <a href="https://www.footballleagueworld.co.uk/salford-city-confirm-big-change-after-stoke-city-middlesbrough-decisions" target="_blank">FLW</a></div>
   </div>
 
-  <div class="story" data-clubs="Newport County">
-    <h3>😬 Newport boss quits on the eve of pre-season</h3>
-    <p>Christian Fuchs has resigned as Newport County manager after just seven months — barely eight weeks after keeping the club up on the final day. Newport are now searching for their fourth boss in a little over two years, with no replacement named as of 2 July.</p>
+  <div class="story red" data-clubs="Newport County, Rochdale">
+    <h3>😬 Newport boss walks out on the eve of pre-season — and opens live on Sky vs Rochdale</h3>
+    <p>Christian Fuchs resigned as Newport County manager on 27 June — just seven months in, barely eight weeks after keeping the club up on the final day with a 2-1 win at Barrow. Chris Todd is in as interim while County hunt their fourth boss in a little over two years, with five weeks to build a squad before they open the season live on Sky at home to newly-promoted Rochdale (15 Aug).</p>
   </div>
 
-  <div class="story" data-clubs="Northampton Town, Rotherham United, Walsall, Salford City">
-    <h3>🔄 Manager merry-go-round</h3>
-    <p>Northampton Town appointed <strong>Chris Hogg</strong>; Rotherham United (relegated from League One) turned to <strong>Alex Bruce</strong> after failed approaches for Ian Burchnall and Mat Sadler; Walsall hired ex-Man Utd keeper <strong>Lee Grant</strong> after sacking Sadler in March. Salford's vacancy (above) remains the big one still unresolved.</p>
+  <div class="story red" data-clubs="Rotherham United, Salford City">
+    <h3>🔄 Alex Bruce takes on Rotherham; Salford turn to Malaysia's national coach</h3>
+    <p>Double-relegated Rotherham ended their long manager search on 29 June, appointing 41-year-old <strong>Alex Bruce</strong> — first senior job, son of Steve Bruce (who's already chirping in the press) — on a deal to 2028. Salford, still stinging from a 3-0 Wembley final battering, appointed <strong>Peter Cklamovski</strong> as head coach — hours after he left the Malaysia national team job — alongside their full crest/kit rebrand from 1 July.</p>
   </div>
 
-  <div class="story" data-clubs="Rochdale, Stockport County">
-    <h3>👋 Rochdale back in the EFL — but lose their promotion-winning boss</h3>
-    <p>Rochdale beat Boreham Wood on penalties to return to the Football League, then immediately lost manager Jimmy McNulty to League One's Stockport County. They've replaced him with Ian Watson, arriving from National League North side South Shields.</p>
+  <div class="story" data-clubs="Shrewsbury Town, Port Vale">
+    <h3>⚖️ Shrewsbury's new signing comes with an FA legal row attached</h3>
+    <p>Shrewsbury signed 22-year-old ex-Newcastle midfielder <strong>Jay Turner-Cooke</strong> from Halifax on 4 July — their sixth summer signing — but there's a genuine contract dispute over whether Halifax triggered his option in time, reportedly now with the FA's legal team. Elsewhere, Port Vale continue shopping a division up: <strong>Kyle Dempsey</strong> in from Bolton, their fourth summer addition.</p>
   </div>
 
   <div class="story" data-clubs="Grimsby Town, Fleetwood Town">
@@ -1667,11 +1681,11 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
   <div class="on-air">
     <div class="on-air-lbl">On Air</div>
     <ul>
-      <li>Salford's full rebrand plus a Postecoglou-lineage head coach in Cklamovski — genuine promotion push or just a fresh coat of paint?</li>
-      <li>Notts County — world's oldest professional club — now in League One. Where do they end up in 5 years?</li>
-      <li>Rochdale get promoted then immediately lose their manager to a divisional rival two tiers up — gutted or just football?</li>
       <li>Newport's manager quitting on the eve of pre-season, two months after saving them from relegation — what's actually going on there?</li>
-      <li>Which of this summer's new managers (Hogg, Bruce, Grant) is under the most pressure from day one?</li>
+      <li>Alex Bruce at Rotherham — biggest budget in the division handed to a rookie whose surname is doing the heavy lifting. Inspired or reckless?</li>
+      <li>An international manager choosing Tuesday nights at Accrington — is Cklamovski the most Salford appointment ever?</li>
+      <li>Salford's full rebrand plus a Postecoglou-lineage head coach — genuine promotion push or just a fresh coat of paint?</li>
+      <li>Notts County — world's oldest professional club — now in League One. Where do they end up in 5 years?</li>
     </ul>
   </div>
 </div>
@@ -1716,13 +1730,17 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 </div>
 
 <div class="div-section">
-  <div class="story">
-    <h3>📅 Fixtures out 10 July — season starts 8 August</h3>
-    <p>National League, NL North and NL South fixtures all drop together on Friday 10 July at 11am — still a week away as we go to print. Play-offs run 28 April–2 May 2027, with the Promotion Final back at Wembley on 9 May.</p>
+  <div class="story red">
+    <h3>📅 Fixtures out THIS Friday (10 July) — season starts 8 August</h3>
+    <p>National League, NL North and NL South fixtures all drop together this Friday. Opening day is Saturday 8 August, final day 24 April 2027, with promotion finals 8/9 May 2027.</p>
   </div>
-  <div class="story" data-clubs="Carlisle United, Gateshead, Southend United, Kidderminster Harriers, Barrow">
-    <h3>🔄 Manager merry-go-round: three first-time bosses appointed</h3>
-    <p>Carlisle United — bookies' early favourites for the title at 11/4 — appointed ex-Newcastle keeper <strong>Rob Elliot</strong>. Gateshead gave <strong>Lee Cattermole</strong> his first senior job. Southend United did the same for <strong>Kieron Dyer</strong>. Meanwhile Kidderminster Harriers lost promotion-winning boss Adam Murray to Barrow just days after going up, and replaced him with ex-Torquay manager <strong>Paul Wotton</strong>.</p>
+  <div class="story red" data-clubs="Morecambe">
+    <h3>😢 Morecambe are a sixth-tier club — first time since 1995</h3>
+    <p>Third relegation in four years, sealed by a 5-1 loss at Woking in April, capping a chaotic season under new owners Panjab Warriors. 18 players released in May, and Derek Bentley's successor is ex-Halifax boss <strong>Adam Lakeland</strong> on a three-year deal. The chairman insists they'll stay full-time professional in National League North — from League One in 2022 to the sixth tier in four years.</p>
+  </div>
+  <div class="story" data-clubs="Southend United, Hartlepool United">
+    <h3>🏆 Southend and Hartlepool both fancied for the title</h3>
+    <p>FA Trophy holders Southend (beat Wealdstone 4-2 on pens at Wembley, 43,306 there) are properly underway under <strong>Kieron Dyer</strong>, appointed 8 June — he's signed Lewys Twamley, Anthony Hartigan and Darren Oldaker and given a great quote: fitness testing has disproven the idea that "athleticism and physical data goes down as you go down the leagues." Meanwhile Lee Clark has made <strong>ten summer signings</strong> at Hartlepool (Jordan Hugill, Chris Popov, Jack Nolan among them) after 13 players left — ex-striker Aaron McLean says they're "in the conversation" for the title.</p>
   </div>
   <div class="story" data-clubs="Hornchurch">
     <h3>🎙️ Anton Ferdinand takes his first coaching role — at Hornchurch</h3>
@@ -1733,17 +1751,14 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <h3>📣 "3UP" campaign still unresolved</h3>
     <p>All 72 National League clubs back the campaign for three automatic EFL promotion spots instead of one, and it's picked up cross-party MP support and an FSA fan poll showing 9 in 10 in favour. The EFL has agreed to put it to its member clubs — but no vote date or result yet. Genuine live story to keep tracking into the season.</p>
   </div>
-  <div class="story" data-clubs="Portishead Town, Willand Rovers">
-    <h3>🚧 Portishead denied promotion over ground grading</h3>
-    <p>Portishead Town won the Southern League Division One South play-offs but were denied a step up the pyramid after failing ground grading requirements — Willand Rovers took the reprieved spot instead.</p>
-  </div>
   <div class="on-air">
     <div class="on-air-lbl">On Air</div>
     <ul>
+      <li>Fixture release is Friday — what's the first game the boys want to see? (Barrow vs Harrogate, the ex-EFL derby?)</li>
+      <li>Morecambe from League One to NL North in four years — is staying full-time in the sixth tier brave or reckless?</li>
+      <li>Does a ten-signing rebuild ever actually work in this league? Clark's Hartlepool vs Dyer's Southend as pre-season favourites.</li>
       <li>Should the National League get three automatic promotion spots like every other division in the pyramid?</li>
       <li>Anton Ferdinand's first coaching job coming at Hornchurch, of all places — good starting point for a coaching career?</li>
-      <li>Carlisle as early title favourites under a rookie manager (Rob Elliot) — deserved, or lazy bookmaking?</li>
-      <li>A club winning promotion on the pitch and still not going up because of ground grading — how harsh is that on Portishead?</li>
     </ul>
   </div>
 </div>
@@ -1772,7 +1787,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 
 </div>
 
-<footer>The Pyramid &nbsp;·&nbsp; EFL Football Weekly &nbsp;·&nbsp; 2 July 2026</footer>
+<footer>The Pyramid &nbsp;·&nbsp; EFL Football Weekly &nbsp;·&nbsp; 7 July 2026</footer>
 
 <script>
 (function(){
