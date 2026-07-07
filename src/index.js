@@ -228,141 +228,133 @@ const CLUBS = {
 
 const TRANSFERS = [
   // ── CHAMPIONSHIP — CONFIRMED SIGNINGS ────────────────────────────────────
-  {club:'Millwall',player:'Mathis Servais',age:21,from:'KV Mechelen',fee:'£3-5m (club record)',type:'in',date:'6 Jul 2026',status:'confirmed',src:'https://www.millwallfc.co.uk/news/2026/july/06/millwall-complete-mathis-servais-signing/'},
-  {club:'Cardiff City',player:'Nathan Trott',age:27,from:'FC Copenhagen',fee:'£1.5m',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://www.fck.dk/en/news/nathan-trott-sold-cardiff-city-fc'},
-  {club:'Swansea City',player:'Moussa Yeo',age:22,from:'RB Salzburg',fee:'~€4m',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://x.com/SwansOfficial/status/2072326862626541761'},
-  {club:'Stoke City',player:'Svante Ingelsson',age:28,from:'Sheffield Wednesday',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.swfc.co.uk/news/2026/july/01/svante-/'},
-  {club:'Birmingham City',player:'Dael Fry',age:28,from:'Middlesbrough (contract expired)',fee:'Free',type:'in',date:'2 Jul 2026',status:'confirmed',src:'https://www.gazettelive.co.uk/sport/football/transfer-news/middlesbrough-dael-fry-birmingham-transfer-34214788'},
-  {club:'Wolverhampton Wanderers',player:'Raúl Jiménez',age:35,from:'Free agent',fee:'Free',type:'in',date:'9 Jun 2026',status:'confirmed',src:'https://www.wolves.co.uk/news/mens-first-team/20260609-raul-jimenez-makes-his-molineux-return/'},
-  {club:'Wolverhampton Wanderers',player:'Kieran Trippier',age:35,from:'Free agent',fee:'Free',type:'in',date:'8 Jun 2026',status:'confirmed',src:'https://www.wolves.co.uk/news/mens-first-team/20260608-trippier-joins-wolves-as-first-summer-signing/'},
-  {club:'Bolton Wanderers',player:'David Watson',age:21,from:'Kilmarnock',fee:'Compensation',type:'in',date:'27 May 2026',status:'confirmed',src:'https://www.bwfc.co.uk/news/watson-first'},
-  {club:'Lincoln City',player:'Callum Elder',age:31,from:'Derby County (released)',fee:'Free',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://staceywest.net/2026/06/29/former-derby-county-defender-is-first-lincoln-city-summer-capture/'},
-  {club:'Birmingham City',player:'Jhon Solis',age:22,from:'Girona',fee:'€7m (option triggered)',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://www.gironafc.cat/en/news/agreement-with-birmingham-city-for-the-transfer-of-jhon-solis'},
-  {club:'Bristol City',player:'Gibson Yah',age:22,from:'FC Volendam',fee:'Undisclosed',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://www.bcfc.co.uk/city-men-news/city-sign-yah/'},
-  {club:'Charlton Athletic',player:'Ivan Mesik',age:23,from:'Heracles Almelo',fee:'Undisclosed',type:'in',date:'30 Jun 2026',status:'confirmed',src:'https://x.com/CAFCofficial/status/2071927479653249532'},
-  {club:'Millwall',player:'Jenson Metcalfe',age:21,from:'Bradford City',fee:'Undisclosed',type:'in',date:'17 Jun 2026',status:'confirmed',src:'https://www.millwallfc.co.uk/news/2026/june/16/millwall-confirm-metcalfe-signing/'},
-  {club:'Norwich City',player:'Bruno Alves',age:19,from:'Cruzeiro (loan-to-buy, ~£1.7m option)',fee:'Loan',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.canaries.co.uk/content/alves-joins-norwich-city-from-cruzeiro'},
-  {club:'Norwich City',player:'Andre Brooks',age:20,from:'Sheffield United',fee:'~£8m rising to £9m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.canaries.co.uk/content/city-sign-winger-andre-brooks-from-sheffield-united'},
-  {club:'QPR',player:'Boy Kemper',age:24,from:'NAC Breda',fee:'Free',type:'in',date:'20 Jun 2026',status:'confirmed',src:'https://www.qpr.co.uk/news/2026/june/20/boy-kemper-completes-qpr-move/'},
-  {club:'Stoke City',player:'Djibril Soumare',age:22,from:'Braga (parent club, after loan spell)',fee:'~€4.5m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://sportwitness.co.uk/stoke-city-reach-agreement-for-permanent-signing-sheffield-united-form-convinces-potters/'},
-  {club:'Stoke City',player:'Josh Griffiths',age:23,from:'West Bromwich Albion',fee:'~£600k',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.portsmouth.co.uk/sport/football/portsmouth-fc/portsmouth-fc-transfers-josh-griffiths-stoke-city-pompey-west-brom-lincoln-city-bristol-rovers-8763785'},
-  {club:'Sheffield Wednesday',player:'Ricardo Santos',age:31,from:'Swansea City',fee:'Free',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://www.swfc.co.uk/news/2026/june/19/santos-signs-for-wednesday/'},
-  {club:'Burnley',player:'Florentino',age:26,from:'Benfica',fee:'~£20.8m',type:'in',date:'12 Jun 2026',status:'confirmed',src:'https://onefootball.com/en/news/burnley-trigger-24m-clause-to-sign-florentino-luis-permanently-43002839'},
-  {club:'Stoke City',player:'Ethan Galbraith',age:25,from:'Swansea City',fee:'~£10m',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.stokecityfc.com/news/2026/july/01/ethan-galbraith-is-a-potter/'},
-  {club:'Southampton',player:'Daniel Peretz',age:25,from:'Bayern Munich',fee:'£6.9m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.jpost.com/israel-news/sports/article-898510'},
-  {club:'Derby County',player:'Bobby Clark',age:21,from:'RB Salzburg',fee:'£6m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.dcfc.co.uk/news/2026/06/signing-bobby-clark-signs-permanent-derby-deal'},
-  {club:'Wolverhampton Wanderers',player:'Ladislav Krejci',age:27,from:'Girona',fee:'~€23m (loan-to-buy, ~€30m total)',type:'in',date:'6 Jun 2026',status:'confirmed',src:'https://tribuna.com/en/news/2026-06-06-wolves-confirm-permanent-signing-of-ladislav-krejci-from-girona/'},
-  {club:'Bolton Wanderers',player:'Akin Famewo',age:27,from:'Hull City',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.wearehullcity.co.uk/news/2026/july/01/famewo-joins-bolton-wanderers/'},
-  {club:'West Bromwich Albion',player:'Jimmy-Jay Morgan',age:20,from:'Chelsea',fee:'~£4m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.wba.co.uk/news/albion-sign-jimmy-jay-morgan-chelsea'},
-  {club:'Norwich City',player:'Sam Field',age:28,from:'QPR',fee:'~£1.5m rising to £2.8m',type:'in',date:'20 Jun 2026',status:'confirmed',src:'https://readnorwich.com/2026/06/20/sam-field-completes-permanent-norwich-city-transfer-qpr/'},
-  {club:'Bristol City',player:'Sam Greenwood',age:24,from:'Pogoń Szczecin',fee:'~£2m + add-ons',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.tribalfootball.com/article/done-deal-sam-greenwood-joins-bristol-city-from-pogon-szczecin-d63e9198-1026-410a-a0dc-37ef1bd52ad5'},
-  {club:'Bristol City',player:'Sam Tickle',age:24,from:'Wigan Athletic',fee:'Undisclosed',type:'in',date:'25 Jun 2026',status:'confirmed',src:'https://www.bcfc.co.uk/city-men-news/sam-tickle-is-a-robin/'},
-  {club:'Sheffield Wednesday',player:'Callum Slattery',age:26,from:'Motherwell',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed'},
-  {club:'Middlesbrough',player:'Jeremy Sarmiento',age:24,from:'Brighton (obligation triggered)',fee:'~£3.2m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.brightonandhovealbion.com/media-article/mft-transfer-news-jeremy-sarmiento-middlesbrough-permanent-transfer-june-2026'},
+  {div:'Championship',club:'Millwall',player:'Mathis Servais',age:21,from:'KV Mechelen',fee:'£3-5m (club record)',type:'in',date:'6 Jul 2026',status:'confirmed',src:'https://www.millwallfc.co.uk/news/2026/july/06/millwall-complete-mathis-servais-signing/'},
+  {div:'Championship',club:'Cardiff City',player:'Nathan Trott',age:27,from:'FC Copenhagen',fee:'£1.5m',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://www.fck.dk/en/news/nathan-trott-sold-cardiff-city-fc'},
+  {div:'Championship',club:'Swansea City',player:'Moussa Yeo',age:22,from:'RB Salzburg',fee:'~€4m',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://x.com/SwansOfficial/status/2072326862626541761'},
+  {div:'Championship',club:'Stoke City',player:'Svante Ingelsson',age:28,from:'Sheffield Wednesday',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.swfc.co.uk/news/2026/july/01/svante-/'},
+  {div:'Championship',club:'Birmingham City',player:'Dael Fry',age:28,from:'Middlesbrough (contract expired)',fee:'Free',type:'in',date:'2 Jul 2026',status:'confirmed',src:'https://www.gazettelive.co.uk/sport/football/transfer-news/middlesbrough-dael-fry-birmingham-transfer-34214788'},
+  {div:'Championship',club:'Wolverhampton Wanderers',player:'Raúl Jiménez',age:35,from:'Free agent',fee:'Free',type:'in',date:'9 Jun 2026',status:'confirmed',src:'https://www.wolves.co.uk/news/mens-first-team/20260609-raul-jimenez-makes-his-molineux-return/'},
+  {div:'Championship',club:'Wolverhampton Wanderers',player:'Kieran Trippier',age:35,from:'Free agent',fee:'Free',type:'in',date:'8 Jun 2026',status:'confirmed',src:'https://www.wolves.co.uk/news/mens-first-team/20260608-trippier-joins-wolves-as-first-summer-signing/'},
+  {div:'Championship',club:'Bolton Wanderers',player:'David Watson',age:21,from:'Kilmarnock',fee:'Compensation',type:'in',date:'27 May 2026',status:'confirmed',src:'https://www.bwfc.co.uk/news/watson-first'},
+  {div:'Championship',club:'Lincoln City',player:'Callum Elder',age:31,from:'Derby County (released)',fee:'Free',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://staceywest.net/2026/06/29/former-derby-county-defender-is-first-lincoln-city-summer-capture/'},
+  {div:'Championship',club:'Birmingham City',player:'Jhon Solis',age:22,from:'Girona',fee:'€7m (option triggered)',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://www.gironafc.cat/en/news/agreement-with-birmingham-city-for-the-transfer-of-jhon-solis'},
+  {div:'Championship',club:'Bristol City',player:'Gibson Yah',age:22,from:'FC Volendam',fee:'Undisclosed',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://www.bcfc.co.uk/city-men-news/city-sign-yah/'},
+  {div:'Championship',club:'Charlton Athletic',player:'Ivan Mesik',age:23,from:'Heracles Almelo',fee:'Undisclosed',type:'in',date:'30 Jun 2026',status:'confirmed',src:'https://x.com/CAFCofficial/status/2071927479653249532'},
+  {div:'Championship',club:'Millwall',player:'Jenson Metcalfe',age:21,from:'Bradford City',fee:'Undisclosed',type:'in',date:'17 Jun 2026',status:'confirmed',src:'https://www.millwallfc.co.uk/news/2026/june/16/millwall-confirm-metcalfe-signing/'},
+  {div:'Championship',club:'Norwich City',player:'Bruno Alves',age:19,from:'Cruzeiro (loan-to-buy, ~£1.7m option)',fee:'Loan',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.canaries.co.uk/content/alves-joins-norwich-city-from-cruzeiro'},
+  {div:'Championship',club:'Norwich City',player:'Andre Brooks',age:20,from:'Sheffield United',fee:'~£8m rising to £9m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.canaries.co.uk/content/city-sign-winger-andre-brooks-from-sheffield-united'},
+  {div:'Championship',club:'QPR',player:'Boy Kemper',age:24,from:'NAC Breda',fee:'Free',type:'in',date:'20 Jun 2026',status:'confirmed',src:'https://www.qpr.co.uk/news/2026/june/20/boy-kemper-completes-qpr-move/'},
+  {div:'Championship',club:'Stoke City',player:'Djibril Soumare',age:22,from:'Braga (parent club, after loan spell)',fee:'~€4.5m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://sportwitness.co.uk/stoke-city-reach-agreement-for-permanent-signing-sheffield-united-form-convinces-potters/'},
+  {div:'Championship',club:'Stoke City',player:'Josh Griffiths',age:23,from:'West Bromwich Albion',fee:'~£600k',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.portsmouth.co.uk/sport/football/portsmouth-fc/portsmouth-fc-transfers-josh-griffiths-stoke-city-pompey-west-brom-lincoln-city-bristol-rovers-8763785'},
+  {div:'Championship',club:'Sheffield Wednesday',player:'Ricardo Santos',age:31,from:'Swansea City',fee:'Free',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://www.swfc.co.uk/news/2026/june/19/santos-signs-for-wednesday/'},
+  {div:'Championship',club:'Burnley',player:'Florentino',age:26,from:'Benfica',fee:'~£20.8m',type:'in',date:'12 Jun 2026',status:'confirmed',src:'https://onefootball.com/en/news/burnley-trigger-24m-clause-to-sign-florentino-luis-permanently-43002839'},
+  {div:'Championship',club:'Stoke City',player:'Ethan Galbraith',age:25,from:'Swansea City',fee:'~£10m',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.stokecityfc.com/news/2026/july/01/ethan-galbraith-is-a-potter/'},
+  {div:'Championship',club:'Southampton',player:'Daniel Peretz',age:25,from:'Bayern Munich',fee:'£6.9m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.jpost.com/israel-news/sports/article-898510'},
+  {div:'Championship',club:'Derby County',player:'Bobby Clark',age:21,from:'RB Salzburg',fee:'£6m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.dcfc.co.uk/news/2026/06/signing-bobby-clark-signs-permanent-derby-deal'},
+  {div:'Championship',club:'Wolverhampton Wanderers',player:'Ladislav Krejci',age:27,from:'Girona',fee:'~€23m (loan-to-buy, ~€30m total)',type:'in',date:'6 Jun 2026',status:'confirmed',src:'https://tribuna.com/en/news/2026-06-06-wolves-confirm-permanent-signing-of-ladislav-krejci-from-girona/'},
+  {div:'Championship',club:'Bolton Wanderers',player:'Akin Famewo',age:27,from:'Hull City',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.wearehullcity.co.uk/news/2026/july/01/famewo-joins-bolton-wanderers/'},
+  {div:'Championship',club:'West Bromwich Albion',player:'Jimmy-Jay Morgan',age:20,from:'Chelsea',fee:'~£4m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.wba.co.uk/news/albion-sign-jimmy-jay-morgan-chelsea'},
+  {div:'Championship',club:'Norwich City',player:'Sam Field',age:28,from:'QPR',fee:'~£1.5m rising to £2.8m',type:'in',date:'20 Jun 2026',status:'confirmed',src:'https://readnorwich.com/2026/06/20/sam-field-completes-permanent-norwich-city-transfer-qpr/'},
+  {div:'Championship',club:'Bristol City',player:'Sam Greenwood',age:24,from:'Pogoń Szczecin',fee:'~£2m + add-ons',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.tribalfootball.com/article/done-deal-sam-greenwood-joins-bristol-city-from-pogon-szczecin-d63e9198-1026-410a-a0dc-37ef1bd52ad5'},
+  {div:'Championship',club:'Bristol City',player:'Sam Tickle',age:24,from:'Wigan Athletic',fee:'Undisclosed',type:'in',date:'25 Jun 2026',status:'confirmed',src:'https://www.bcfc.co.uk/city-men-news/sam-tickle-is-a-robin/'},
+  {div:'Championship',club:'Sheffield Wednesday',player:'Callum Slattery',age:26,from:'Motherwell',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed'},
+  {div:'Championship',club:'Middlesbrough',player:'Jeremy Sarmiento',age:24,from:'Brighton (obligation triggered)',fee:'~£3.2m',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.brightonandhovealbion.com/media-article/mft-transfer-news-jeremy-sarmiento-middlesbrough-permanent-transfer-june-2026'},
+  {div:'Championship',club:'Sheffield Wednesday',player:'Sil Swinkels',age:22,from:'Aston Villa',fee:'Undisclosed',type:'in',date:'2 Jul 2026',status:'confirmed',src:'https://readastonvilla.com/2026/07/02/aston-villa-sil-swinkels-sheffield-wednesday-transfer-2/'},
 
   // ── CONFIRMED DEPARTURES ──────────────────────────────────────────────────
-  {club:'Wolverhampton Wanderers',player:'Matt Doherty',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://onefootball.com/en/news/matt-doherty-leaves-wolves-as-contract-expires-42978588'},
-  {club:'Middlesbrough',player:'Darragh Lenihan',age:34,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.gazettelive.co.uk/sport/football/transfer-news/every-confirmed-championship-free-agent-34048076'},
-  {club:'Middlesbrough',player:'Marcus Forss',age:26,to:'Free agent (released, after loan at Bolton)',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.gazettelive.co.uk/sport/football/football-news/marcus-forss-classy-message-middlesbrough-34027957'},
-  {club:'Middlesbrough',player:'Alex Gilbert',age:24,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
-  {club:'Middlesbrough',player:'Dan Barlaser',age:28,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
-  {club:'Middlesbrough',player:'Sammy Silvera',age:25,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.yorkshirepost.co.uk/sport/football/middlesbrough-fc-sammy-silvera-blackpool-portsmouth-8750668'},
-  {club:'Middlesbrough',player:'Jon McLaughlin',age:38,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
-  {club:'Millwall',player:'Billy Mitchell',age:25,to:'Watford',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed',src:'https://southwarknews.co.uk/sport/football/millwall/mitchell-rejects-millwall-contract-offer/'},
-  {club:'Millwall',player:'Danny McNamara',age:26,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/14/millwall-retained-list-2026/'},
-  {club:'Millwall',player:'Joe Bryan',age:31,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/14/millwall-retained-list-2026/'},
-  {club:'Millwall',player:'Massimo Luongo',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/14/millwall-retained-list-2026/'},
-  {club:'Millwall',player:'Wes Harding',age:29,to:'Plymouth Argyle',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.millwallfc.co.uk/news/2026/february/02/wes-harding-joins-plymouth-argyle-on-loan/'},
-  {club:'Derby County',player:'Ben Osborn',age:30,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://sports.yahoo.com/articles/elder-osborn-rooney-weimann-released-162002575.html'},
-  {club:'Derby County',player:'Andi Weimann',age:34,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://sports.yahoo.com/articles/elder-osborn-rooney-weimann-released-162002575.html'},
-  {club:'Portsmouth',player:'Andre Dozzell',age:27,to:'DC United (MLS)',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed'},
-  {club:'Portsmouth',player:'Jordan Archer',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
-  {club:'Cardiff City',player:'Ryan Wintle',age:28,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/21/cardiff-city-must-find-ryan-wintle-replacement/'},
-  {club:'Swansea City',player:'Ricardo Santos',age:31,to:'Sheffield Wednesday',fee:'Free',type:'out',date:'19 Jun 2026',status:'confirmed',src:'https://www.swfc.co.uk/news/2026/june/19/santos-signs-for-wednesday/'},
-  {club:'Stoke City',player:'Lewis Baker',age:30,to:'Bursaspor (Turkey)',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed'},
-  {club:'Charlton Athletic',player:'Josh Davison',age:25,to:'Shrewsbury Town',fee:'Undisclosed',type:'out',date:'26 Jun 2026',status:'confirmed'},
-  {club:'Charlton Athletic',player:'Terry Taylor',age:25,to:'Stevenage',fee:'Free',type:'out',date:'26 Jun 2026',status:'confirmed'},
-  {club:'Norwich City',player:'Tony Springett',age:23,to:'Leyton Orient',fee:'Free',type:'out',date:'11 Jun 2026',status:'confirmed',src:'https://www.leytonorient.com/news/2026/june/11/orient-welcome-tony-springett/'},
-  {club:'Bristol City',player:'Sinclair Armstrong',age:23,to:'Göztepe (Turkey)',fee:'Undisclosed',type:'out',date:'30 Jun 2026',status:'confirmed'},
-
-  // ── ADVANCED / IMMINENT ─────────────────────────────────────────────────
-  {club:'Sheffield Wednesday',player:'Sil Swinkels',age:22,from:'Aston Villa',fee:'Undisclosed',type:'in',date:'2 Jul 2026',status:'confirmed',src:'https://readastonvilla.com/2026/07/02/aston-villa-sil-swinkels-sheffield-wednesday-transfer-2/'},
-  {club:'Sheffield Wednesday',player:'Louie Barry',age:20,from:'Aston Villa',fee:'TBC',type:'in',date:'Jul 2026',status:'advanced',src:'https://www.thestar.co.uk/sport/football/sheffield-wednesday/sheffield-wednesday-news-harry-gray-transfer-8773637'},
-  {club:'Sheffield Wednesday',player:'Harry Gray',age:17,from:'Leeds United (loan)',fee:'Loan',type:'in',date:'Jul 2026',status:'advanced',src:'https://www.thestar.co.uk/sport/football/sheffield-wednesday/sheffield-wednesday-news-harry-gray-transfer-8773637'},
+  {div:'Championship',club:'Wolverhampton Wanderers',player:'Matt Doherty',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://onefootball.com/en/news/matt-doherty-leaves-wolves-as-contract-expires-42978588'},
+  {div:'Championship',club:'Middlesbrough',player:'Darragh Lenihan',age:34,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.gazettelive.co.uk/sport/football/transfer-news/every-confirmed-championship-free-agent-34048076'},
+  {div:'Championship',club:'Middlesbrough',player:'Marcus Forss',age:26,to:'Free agent (released, after loan at Bolton)',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.gazettelive.co.uk/sport/football/football-news/marcus-forss-classy-message-middlesbrough-34027957'},
+  {div:'Championship',club:'Middlesbrough',player:'Alex Gilbert',age:24,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Middlesbrough',player:'Dan Barlaser',age:28,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Middlesbrough',player:'Sammy Silvera',age:25,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.yorkshirepost.co.uk/sport/football/middlesbrough-fc-sammy-silvera-blackpool-portsmouth-8750668'},
+  {div:'Championship',club:'Middlesbrough',player:'Jon McLaughlin',age:38,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Millwall',player:'Billy Mitchell',age:25,to:'Watford',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed',src:'https://southwarknews.co.uk/sport/football/millwall/mitchell-rejects-millwall-contract-offer/'},
+  {div:'Championship',club:'Millwall',player:'Danny McNamara',age:26,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/14/millwall-retained-list-2026/'},
+  {div:'Championship',club:'Millwall',player:'Joe Bryan',age:31,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/14/millwall-retained-list-2026/'},
+  {div:'Championship',club:'Millwall',player:'Massimo Luongo',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/14/millwall-retained-list-2026/'},
+  {div:'Championship',club:'Millwall',player:'Wes Harding',age:29,to:'Plymouth Argyle',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.millwallfc.co.uk/news/2026/february/02/wes-harding-joins-plymouth-argyle-on-loan/'},
+  {div:'Championship',club:'Derby County',player:'Ben Osborn',age:30,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://sports.yahoo.com/articles/elder-osborn-rooney-weimann-released-162002575.html'},
+  {div:'Championship',club:'Derby County',player:'Andi Weimann',age:34,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://sports.yahoo.com/articles/elder-osborn-rooney-weimann-released-162002575.html'},
+  {div:'Championship',club:'Portsmouth',player:'Andre Dozzell',age:27,to:'DC United (MLS)',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Portsmouth',player:'Jordan Archer',age:33,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Cardiff City',player:'Ryan Wintle',age:28,to:'Free agent',fee:'Released',type:'out',date:'Jun 2026',status:'confirmed',src:'https://the72.co.uk/2026/05/21/cardiff-city-must-find-ryan-wintle-replacement/'},
+  {div:'Championship',club:'Swansea City',player:'Ricardo Santos',age:31,to:'Sheffield Wednesday',fee:'Free',type:'out',date:'19 Jun 2026',status:'confirmed',src:'https://www.swfc.co.uk/news/2026/june/19/santos-signs-for-wednesday/'},
+  {div:'Championship',club:'Stoke City',player:'Lewis Baker',age:30,to:'Bursaspor (Turkey)',fee:'Free',type:'out',date:'Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Charlton Athletic',player:'Josh Davison',age:25,to:'Shrewsbury Town',fee:'Undisclosed',type:'out',date:'26 Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Charlton Athletic',player:'Terry Taylor',age:25,to:'Stevenage',fee:'Free',type:'out',date:'26 Jun 2026',status:'confirmed'},
+  {div:'Championship',club:'Norwich City',player:'Tony Springett',age:23,to:'Leyton Orient',fee:'Free',type:'out',date:'11 Jun 2026',status:'confirmed',src:'https://www.leytonorient.com/news/2026/june/11/orient-welcome-tony-springett/'},
+  {div:'Championship',club:'Bristol City',player:'Sinclair Armstrong',age:23,to:'Göztepe (Turkey)',fee:'Undisclosed',type:'out',date:'30 Jun 2026',status:'confirmed'},
 
   // ── COMPLETED THIS WEEK ─────────────────────────────────────────────────
-  {club:'Middlesbrough',player:'Hayden Hackney',age:24,to:'Everton',fee:'~£24m (£16.5m + add-ons)',type:'out',date:'1-2 Jul 2026',status:'confirmed',src:'https://www.skysports.com/football/news/11671/13559023/hayden-hackney-transfer-news-everton-sign-midfielder-from-middlesbrough-in-lb24m-deal'},
-  {club:'West Ham United',player:'Mateus Fernandes',age:21,to:'Tottenham Hotspur',fee:'£85m (club record)',type:'out',date:'2 Jul 2026',status:'confirmed',src:'https://www.skysports.com/football/news/11095/13559479/mateus-fernandes-transfer-news-midfielder-set-for-medical-after-spurs-beat-man-utd-to-lb85m-deal'},
+  {div:'Championship',club:'Middlesbrough',player:'Hayden Hackney',age:24,to:'Everton',fee:'~£24m (£16.5m + add-ons)',type:'out',date:'1-2 Jul 2026',status:'confirmed',src:'https://www.skysports.com/football/news/11671/13559023/hayden-hackney-transfer-news-everton-sign-midfielder-from-middlesbrough-in-lb24m-deal'},
+  {div:'Championship',club:'West Ham United',player:'Mateus Fernandes',age:21,to:'Tottenham Hotspur',fee:'£85m (club record)',type:'out',date:'2 Jul 2026',status:'confirmed',src:'https://www.skysports.com/football/news/11095/13559479/mateus-fernandes-transfer-news-midfielder-set-for-medical-after-spurs-beat-man-utd-to-lb85m-deal'},
 
-  // ── RUMOURS ─────────────────────────────────────────────────────────────
-  {club:'Derby County',player:'Matt Targett',age:30,from:'Newcastle United — wide-open race (Boro, Southampton, Coventry, Leeds, Everton all linked)',fee:'Free',type:'in',date:'Jun 2026',status:'rumour',src:'https://footballleagueworld.co.uk/derby-county-join-middlesbrough-race-newcastle-united-matt-targett/'},
-  {club:'West Bromwich Albion',player:'Ben Brereton Díaz',age:27,from:'Southampton — Sheff Utd &amp; Boro also linked',fee:'TBC',type:'in',date:'Jun 2026',status:'rumour',src:'https://www.sportsboom.co.uk/football/transfer-news/exclusive-sheffield-united-west-brom-and-middlesborough-set-to-battle-it-out-for-southampton-striker-ben-brereton-diaz'},
-  {club:'Sheffield United',player:'Harrison Burrows',age:24,to:'West Ham United — still at target stage, no bid yet',fee:'~£10m',type:'out',date:'Jul 2026',status:'rumour',src:'https://readwestham.com/2026/07/05/west-ham-harrison-burrows-bid-diouf-cover/'},
-  {club:'Middlesbrough',player:'Morgan Whittaker',age:25,to:'Fulham / Bournemouth / Wolves',fee:'~£20m',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.sportsboom.co.uk/football/transfer-news/exclusive-morgan-whittaker-boro-set-20m-valuation'},
-  {club:'Middlesbrough',player:'Kyle Joseph',age:23,to:'Hull City — £5m deal collapsed over medical issue',fee:'~£5m (deal fell through)',type:'out',date:'Jul 2026',status:'rumour',src:'https://www.gazettelive.co.uk/sport/football/transfer-news/kyle-joseph-transfer-latest-after-34229835'},
-  {club:'Millwall',player:'Femi Azeez',age:24,to:'PL clubs — £20m bid from Ipswich rejected',fee:'£30m (Millwall valuation)',type:'out',date:'Jun 2026',status:'rumour',src:'https://dailypost.ng/2026/05/28/millwall-reject-ipswich-towns-20m-bid-for-azeez/'},
-  {club:'Wrexham AFC',player:'Josh Windass',age:32,to:'Rangers',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.ibroxnews.com/2026/05/25/rangers-make-fresh-move-for-wrexham-star-josh-windass-as-update-shared-on-ibrox-return/'},
-  {club:'Swansea City',player:'Zan Vipotnik',age:24,to:'Everton / Newcastle / Villa / Leeds / Brentford / West Ham / Brighton',fee:'~€30m asked',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.teamtalk.com/brighton/zan-vipotnik-transfer-news-brighton-everton-newcastle-swansea-new-gyokeres'},
-  {club:'Watford',player:'Imran Louza',age:27,to:'Everton / Fulham / Brighton',fee:'~£15m',type:'out',date:'Jun 2026',status:'rumour',src:'https://footballleagueworld.co.uk/everton-fulham-eyeing-watford-imran-louza/'},
-  {club:'Watford',player:'Nestory Irankunda',age:20,to:'Everton / Bayer Leverkusen / Fiorentina / Crystal Palace',fee:'~€20m asked',type:'out',date:'Jun 2026',status:'rumour',src:'https://football360.com.au/nestory-irankunda-transfer-news-socceroos-world-cup-everton-crystal-palace-fiorentina-bayer-leverkusen-watford/'},
-  {club:'West Ham United',player:'Jarrod Bowen',age:29,to:'Staying — Aston Villa\'s £50m bid complicated by UEFA fine',fee:'N/A',type:'out',date:'Jul 2026',status:'rumour',src:'https://the72.co.uk/2026/07/02/west-ham-confident-keep-jarrod-bowen-transfer/'},
-  {club:'West Ham United',player:'Crysencio Summerville',age:24,to:'Manchester United (exploratory talks; £40m release clause)',fee:'£40m',type:'out',date:'Jul 2026',status:'rumour',src:'https://www.footballtransfers.com/en/transfer-news/uk-premier-league/2026/07/transfer-rumours-man-utd-formal-crysencio-summerville-talks-west-ham'},
-  {club:'West Ham United',player:'Taty Castellanos',age:27,to:'Everton / Fulham (one £15m bid so far)',fee:'~£15m',type:'out',date:'Jul 2026',status:'rumour',src:'https://the72.co.uk/2026/07/02/west-ham-everton-fulham-taty-castellanos-transfer/'},
-  {club:'Sheffield United',player:'Sydie Peck',age:21,to:'West Ham United considering ~£25m',fee:'~£25m valuation',type:'out',date:'Jul 2026',status:'rumour',src:'https://readwestham.com/2026/07/05/sydie-peck-west-ham-koppen-25m-value-test/'},
-  {club:'Sheffield United',player:'Kalvin Phillips',age:30,from:'Manchester City — loan being discussed (still under contract, not a free agent)',fee:'Loan (TBC)',type:'in',date:'Jul 2026',status:'rumour',src:'https://the72.co.uk/2026/07/07/sheffield-united-transfer-update-kalvin-phillips/'},
-  {club:'Oxford United',player:'Bamba Dieng',age:26,from:'Lorient (free agent) — also chased by Blackburn, Leicester, Portsmouth, St Pauli',fee:'Free',type:'in',date:'Jun 2026',status:'rumour',src:'https://footballleagueworld.co.uk/blackburn-leicester-oxford-portsmouth-set-to-tussle-for-bamba-dieng-lorient/'},
-  {club:'Middlesbrough',player:'Oliver Skipp',age:25,from:'Leicester City want £15m',fee:'TBC',type:'in',date:'Jul 2026',status:'rumour',src:'https://www.yorkshirepost.co.uk/sport/football/middlesbrough-fc-leicester-city-oliver-skipp-hayden-hackney-8767379'},
+  // ── RUMOURS — CHAMPIONSHIP (not officially confirmed by the club; includes deals previously flagged "advanced" — Louie Barry &amp; Harry Gray) ──
+  {div:'Championship',club:'Sheffield Wednesday',player:'Louie Barry',age:20,from:'Aston Villa',fee:'TBC',type:'in',date:'Jul 2026',status:'rumour',src:'https://www.thestar.co.uk/sport/football/sheffield-wednesday/sheffield-wednesday-news-harry-gray-transfer-8773637'},
+  {div:'Championship',club:'Sheffield Wednesday',player:'Harry Gray',age:17,from:'Leeds United (loan)',fee:'Loan',type:'in',date:'Jul 2026',status:'rumour',src:'https://www.thestar.co.uk/sport/football/sheffield-wednesday/sheffield-wednesday-news-harry-gray-transfer-8773637'},
+  {div:'Championship',club:'Derby County',player:'Matt Targett',age:30,from:'Newcastle United — wide-open race (Boro, Southampton, Coventry, Leeds, Everton all linked)',fee:'Free',type:'in',date:'Jun 2026',status:'rumour',src:'https://footballleagueworld.co.uk/derby-county-join-middlesbrough-race-newcastle-united-matt-targett/'},
+  {div:'Championship',club:'West Bromwich Albion',player:'Ben Brereton Díaz',age:27,from:'Southampton — Sheff Utd &amp; Boro also linked',fee:'TBC',type:'in',date:'Jun 2026',status:'rumour',src:'https://www.sportsboom.co.uk/football/transfer-news/exclusive-sheffield-united-west-brom-and-middlesborough-set-to-battle-it-out-for-southampton-striker-ben-brereton-diaz'},
+  {div:'Championship',club:'Sheffield United',player:'Harrison Burrows',age:24,to:'West Ham United — still at target stage, no bid yet',fee:'~£10m',type:'out',date:'Jul 2026',status:'rumour',src:'https://readwestham.com/2026/07/05/west-ham-harrison-burrows-bid-diouf-cover/'},
+  {div:'Championship',club:'Middlesbrough',player:'Morgan Whittaker',age:25,to:'Fulham / Bournemouth / Wolves',fee:'~£20m',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.sportsboom.co.uk/football/transfer-news/exclusive-morgan-whittaker-boro-set-20m-valuation'},
+  {div:'Championship',club:'Middlesbrough',player:'Kyle Joseph',age:23,to:'Hull City — £5m deal collapsed over medical issue',fee:'~£5m (deal fell through)',type:'out',date:'Jul 2026',status:'rumour',src:'https://www.gazettelive.co.uk/sport/football/transfer-news/kyle-joseph-transfer-latest-after-34229835'},
+  {div:'Championship',club:'Millwall',player:'Femi Azeez',age:24,to:'PL clubs — £20m bid from Ipswich rejected',fee:'£30m (Millwall valuation)',type:'out',date:'Jun 2026',status:'rumour',src:'https://dailypost.ng/2026/05/28/millwall-reject-ipswich-towns-20m-bid-for-azeez/'},
+  {div:'Championship',club:'Wrexham AFC',player:'Josh Windass',age:32,to:'Rangers',fee:'TBC',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.ibroxnews.com/2026/05/25/rangers-make-fresh-move-for-wrexham-star-josh-windass-as-update-shared-on-ibrox-return/'},
+  {div:'Championship',club:'Swansea City',player:'Zan Vipotnik',age:24,to:'Everton / Newcastle / Villa / Leeds / Brentford / West Ham / Brighton',fee:'~€30m asked',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.teamtalk.com/brighton/zan-vipotnik-transfer-news-brighton-everton-newcastle-swansea-new-gyokeres'},
+  {div:'Championship',club:'Watford',player:'Imran Louza',age:27,to:'Everton / Fulham / Brighton',fee:'~£15m',type:'out',date:'Jun 2026',status:'rumour',src:'https://footballleagueworld.co.uk/everton-fulham-eyeing-watford-imran-louza/'},
+  {div:'Championship',club:'Watford',player:'Nestory Irankunda',age:20,to:'Everton / Bayer Leverkusen / Fiorentina / Crystal Palace',fee:'~€20m asked',type:'out',date:'Jun 2026',status:'rumour',src:'https://football360.com.au/nestory-irankunda-transfer-news-socceroos-world-cup-everton-crystal-palace-fiorentina-bayer-leverkusen-watford/'},
+  {div:'Championship',club:'West Ham United',player:'Jarrod Bowen',age:29,to:'Staying — Aston Villa\'s £50m bid complicated by UEFA fine',fee:'N/A',type:'out',date:'Jul 2026',status:'rumour',src:'https://the72.co.uk/2026/07/02/west-ham-confident-keep-jarrod-bowen-transfer/'},
+  {div:'Championship',club:'West Ham United',player:'Crysencio Summerville',age:24,to:'Manchester United (exploratory talks; £40m release clause)',fee:'£40m',type:'out',date:'Jul 2026',status:'rumour',src:'https://www.footballtransfers.com/en/transfer-news/uk-premier-league/2026/07/transfer-rumours-man-utd-formal-crysencio-summerville-talks-west-ham'},
+  {div:'Championship',club:'West Ham United',player:'Taty Castellanos',age:27,to:'Everton / Fulham (one £15m bid so far)',fee:'~£15m',type:'out',date:'Jul 2026',status:'rumour',src:'https://the72.co.uk/2026/07/02/west-ham-everton-fulham-taty-castellanos-transfer/'},
+  {div:'Championship',club:'Sheffield United',player:'Sydie Peck',age:21,to:'West Ham United considering ~£25m',fee:'~£25m valuation',type:'out',date:'Jul 2026',status:'rumour',src:'https://readwestham.com/2026/07/05/sydie-peck-west-ham-koppen-25m-value-test/'},
+  {div:'Championship',club:'Sheffield United',player:'Kalvin Phillips',age:30,from:'Manchester City — loan being discussed (still under contract, not a free agent)',fee:'Loan (TBC)',type:'in',date:'Jul 2026',status:'rumour',src:'https://the72.co.uk/2026/07/07/sheffield-united-transfer-update-kalvin-phillips/'},
+  {div:'Championship',club:'Oxford United',player:'Bamba Dieng',age:26,from:'Lorient (free agent) — also chased by Blackburn, Leicester, Portsmouth, St Pauli',fee:'Free',type:'in',date:'Jun 2026',status:'rumour',src:'https://footballleagueworld.co.uk/blackburn-leicester-oxford-portsmouth-set-to-tussle-for-bamba-dieng-lorient/'},
+  {div:'Championship',club:'Middlesbrough',player:'Oliver Skipp',age:25,from:'Leicester City want £15m',fee:'TBC',type:'in',date:'Jul 2026',status:'rumour',src:'https://www.yorkshirepost.co.uk/sport/football/middlesbrough-fc-leicester-city-oliver-skipp-hayden-hackney-8767379'},
 
   // ── LEAGUE ONE — CONFIRMED (Leicester City relegated here for 2026/27; Bradford City promoted up from League Two) ──
-  {club:'Bradford City',player:'Jon McCracken',age:26,from:'Dundee',fee:'Undisclosed',type:'in',date:'25 Jun 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/25/city-secure-mccracken/'},
-  {club:'Bradford City',player:'Callum Connolly',age:28,from:'Stockport County',fee:'Undisclosed',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/29/city-capture-connolly/'},
-  {club:'Bradford City',player:'Curtis Tilt',age:34,to:'Burton Albion',fee:'Undisclosed',type:'out',date:'29 Jun 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/29/tilt-departs/'},
-  {club:'Bradford City',player:'Jake Beesley',age:27,from:'Burton Albion',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/02/bantams-sign-beesley/'},
-  {club:'Bradford City',player:'Adam Phillips',age:25,from:'Barnsley',fee:'Undisclosed (reported six-figure)',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://www.barnsleyfc.co.uk/news/2026/june/19/adam-phillips-joins-bradford-city/'},
-  {club:'Blackpool',player:'Ilmari Niskanen',age:28,from:'Exeter City',fee:'Free',type:'in',date:'27 Jun 2026',status:'confirmed',src:'https://www.blackpoolfc.co.uk/news/2026/june/27/ilmari-niskanen-signs-for-the-pool/'},
-  {club:'Blackpool',player:'Dion Charles',age:27,from:'Huddersfield Town (loan)',fee:'Loan',type:'in',date:'27 Jun 2026',status:'confirmed',src:'https://www.blackpoolgazette.co.uk/sport/football/blackpool-fc/blackpool-huddersfield-town-exeter-city-8773562'},
-  {club:'Mansfield Town',player:'David McGoldrick',age:38,from:'Barnsley (released)',fee:'Free',type:'in',date:'16 Jun 2026',status:'confirmed',src:'https://www.mansfieldtown.net/news/2026/june/16/mansfield-town-sign-david-mcgoldrick/'},
-  {club:'Barnsley',player:'Cameron McGeehan',age:31,from:'Northampton Town',fee:'Free',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://www.barnsleyfc.co.uk/news/2026/june/29/cameron-mcgeehan-returns/'},
-  {club:'Plymouth Argyle',player:'Alex Hartridge',age:24,from:'Burton Albion',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.pafc.co.uk/news/alex-hartridge-signs-argyle'},
-  {club:'Doncaster Rovers',player:'Leon Ayinde',age:21,from:'Ipswich Town',fee:'Free',type:'in',date:'20 May 2026',status:'confirmed',src:'https://www.doncasterroversfc.co.uk/news/2026/may/20/Rovers-first-signing-of-the-2026-27-Season/'},
-  {club:'Reading',player:'Kyreece Lisbie',age:22,from:'Colchester United',fee:'Undisclosed',type:'in',date:'22 Jun 2026',status:'confirmed',src:'https://www.readingfc.co.uk/news/2026/june/22/lisbie-is-a-royal/'},
-  {club:'Reading',player:'Jacob Brown',age:27,from:'Luton Town (released)',fee:'Free',type:'in',date:'2 Jul 2026',status:'confirmed',src:'https://www.readingfc.co.uk/news/2026/july/02/jacob-brown-becomes-a-royal/'},
-  {club:'Wigan Athletic',player:'Max Power',age:32,from:'Bradford City',fee:'Undisclosed',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://wiganathletic.com/news/2026/june/06/max-power-returns-to-wigan-athletic-/'},
-  {club:'Wigan Athletic',player:'Sam Tickle',age:24,to:'Bristol City',fee:'Undisclosed',type:'out',date:'25 Jun 2026',status:'confirmed',src:'https://www.bcfc.co.uk/city-men-news/sam-tickle-is-a-robin/'},
-  {club:'Wigan Athletic',player:'Sonny Perkins',age:22,from:'Leyton Orient',fee:'Undisclosed',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://www.leytonorient.com/news/2026/june/26/sonny-perkins-joins-wigan-athletic/'},
-  {club:'Peterborough United',player:'Evan Weir',age:22,from:'Walsall',fee:'Free',type:'in',date:'11 Jun 2026',status:'confirmed',src:'https://x.com/theposh/status/2065033804851331474'},
-  {club:'Leicester City',player:'Bilal El Khannouss',age:22,to:'VfB Stuttgart',fee:'~€21.5m (obligation triggered)',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.lcfc.com/media-article/bilal-el-khannouss-completes-permanent-stuttgart-move-bundesliga-leicester-city-lcfc'},
-  {club:'Leicester City',player:'Patson Daka',age:27,to:'Free agent (contract expired)',fee:'Released',type:'out',date:'24 May 2026',status:'confirmed',src:'https://filbertway.com/2026/05/24/patson-daka-among-10-players-leaving-leicester-as-surprising-news-appear/'},
+  {div:'League One',club:'Bradford City',player:'Jon McCracken',age:26,from:'Dundee',fee:'Undisclosed',type:'in',date:'25 Jun 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/25/city-secure-mccracken/'},
+  {div:'League One',club:'Bradford City',player:'Callum Connolly',age:28,from:'Stockport County',fee:'Undisclosed',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/29/city-capture-connolly/'},
+  {div:'League One',club:'Bradford City',player:'Curtis Tilt',age:34,to:'Burton Albion',fee:'Undisclosed',type:'out',date:'29 Jun 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/29/tilt-departs/'},
+  {div:'League One',club:'Bradford City',player:'Jake Beesley',age:27,from:'Burton Albion',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.bradfordcityafc.com/news/2026/june/02/bantams-sign-beesley/'},
+  {div:'League One',club:'Bradford City',player:'Adam Phillips',age:25,from:'Barnsley',fee:'Undisclosed (reported six-figure)',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://www.barnsleyfc.co.uk/news/2026/june/19/adam-phillips-joins-bradford-city/'},
+  {div:'League One',club:'Blackpool',player:'Ilmari Niskanen',age:28,from:'Exeter City',fee:'Free',type:'in',date:'27 Jun 2026',status:'confirmed',src:'https://www.blackpoolfc.co.uk/news/2026/june/27/ilmari-niskanen-signs-for-the-pool/'},
+  {div:'League One',club:'Blackpool',player:'Dion Charles',age:27,from:'Huddersfield Town (loan)',fee:'Loan',type:'in',date:'27 Jun 2026',status:'confirmed',src:'https://www.blackpoolgazette.co.uk/sport/football/blackpool-fc/blackpool-huddersfield-town-exeter-city-8773562'},
+  {div:'League One',club:'Mansfield Town',player:'David McGoldrick',age:38,from:'Barnsley (released)',fee:'Free',type:'in',date:'16 Jun 2026',status:'confirmed',src:'https://www.mansfieldtown.net/news/2026/june/16/mansfield-town-sign-david-mcgoldrick/'},
+  {div:'League One',club:'Barnsley',player:'Cameron McGeehan',age:31,from:'Northampton Town',fee:'Free',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://www.barnsleyfc.co.uk/news/2026/june/29/cameron-mcgeehan-returns/'},
+  {div:'League One',club:'Plymouth Argyle',player:'Alex Hartridge',age:24,from:'Burton Albion',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.pafc.co.uk/news/alex-hartridge-signs-argyle'},
+  {div:'League One',club:'Doncaster Rovers',player:'Leon Ayinde',age:21,from:'Ipswich Town',fee:'Free',type:'in',date:'20 May 2026',status:'confirmed',src:'https://www.doncasterroversfc.co.uk/news/2026/may/20/Rovers-first-signing-of-the-2026-27-Season/'},
+  {div:'League One',club:'Reading',player:'Kyreece Lisbie',age:22,from:'Colchester United',fee:'Undisclosed',type:'in',date:'22 Jun 2026',status:'confirmed',src:'https://www.readingfc.co.uk/news/2026/june/22/lisbie-is-a-royal/'},
+  {div:'League One',club:'Reading',player:'Jacob Brown',age:27,from:'Luton Town (released)',fee:'Free',type:'in',date:'2 Jul 2026',status:'confirmed',src:'https://www.readingfc.co.uk/news/2026/july/02/jacob-brown-becomes-a-royal/'},
+  {div:'League One',club:'Wigan Athletic',player:'Max Power',age:32,from:'Bradford City',fee:'Undisclosed',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://wiganathletic.com/news/2026/june/06/max-power-returns-to-wigan-athletic-/'},
+  {div:'League One',club:'Wigan Athletic',player:'Sam Tickle',age:24,to:'Bristol City',fee:'Undisclosed',type:'out',date:'25 Jun 2026',status:'confirmed',src:'https://www.bcfc.co.uk/city-men-news/sam-tickle-is-a-robin/'},
+  {div:'League One',club:'Wigan Athletic',player:'Sonny Perkins',age:22,from:'Leyton Orient',fee:'Undisclosed',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://www.leytonorient.com/news/2026/june/26/sonny-perkins-joins-wigan-athletic/'},
+  {div:'League One',club:'Peterborough United',player:'Evan Weir',age:22,from:'Walsall',fee:'Free',type:'in',date:'11 Jun 2026',status:'confirmed',src:'https://x.com/theposh/status/2065033804851331474'},
+  {div:'League One',club:'Leicester City',player:'Bilal El Khannouss',age:22,to:'VfB Stuttgart',fee:'~€21.5m (obligation triggered)',type:'out',date:'Jun 2026',status:'confirmed',src:'https://www.lcfc.com/media-article/bilal-el-khannouss-completes-permanent-stuttgart-move-bundesliga-leicester-city-lcfc'},
+  {div:'League One',club:'Leicester City',player:'Patson Daka',age:27,to:'Free agent (contract expired)',fee:'Released',type:'out',date:'24 May 2026',status:'confirmed',src:'https://filbertway.com/2026/05/24/patson-daka-among-10-players-leaving-leicester-as-surprising-news-appear/'},
 
   // ── LEAGUE ONE — RUMOUR ────────────────────────────────────────────────────
-  {club:'Leicester City',player:'Jeremy Monga',age:17,to:'Arsenal — first bid rejected, talks ongoing',fee:'~£10m discussed',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.espn.com/soccer/story/_/id/49117473/arsenal-leicester-jeremy-monga-transfers'},
+  {div:'League One',club:'Leicester City',player:'Jeremy Monga',age:17,to:'Arsenal — first bid rejected, talks ongoing',fee:'~£10m discussed',type:'out',date:'Jun 2026',status:'rumour',src:'https://www.espn.com/soccer/story/_/id/49117473/arsenal-leicester-jeremy-monga-transfers'},
 
   // ── LEAGUE TWO — CONFIRMED (Northampton Town relegated here; Rotherham United &amp; Port Vale relegated here) ──
-  {club:'Oldham Athletic',player:'Ollie Norburn',age:33,from:'Notts County',fee:'Free',type:'in',date:'3 Jun 2026',status:'confirmed',src:'https://www.oldhamathletic.co.uk/news/2026/june/03/norburn-signs-for-latics/'},
-  {club:'Oldham Athletic',player:'Elliott Nevitt',age:29,from:'Gillingham (released)',fee:'Free',type:'in',date:'29 May 2026',status:'confirmed',src:'https://www.oldhamathletic.co.uk/news/2026/may/29/elliott-nevitt-signs-for-latics/'},
-  {club:'Salford City',player:'Will Aimson',age:31,from:'Wigan Athletic',fee:'Free',type:'in',date:'23 Jun 2026',status:'confirmed',src:'https://www.salfordcityfc.co.uk/news/2026/june/23/serial-promotion-winner-will-aimson-signs/'},
-  {club:'Salford City',player:'Joe Powell',age:27,from:'Rotherham United',fee:'Free',type:'in',date:'20 Jun 2026',status:'confirmed',src:'https://www.salfordcityfc.co.uk/news/2026/june/20/joe-powell-agrees-salford-city-move/'},
-  {club:'Barnet',player:'Taye Ashby-Hammond',age:27,from:'Stevenage (released)',fee:'Free',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://barnetfc.com/ashby-hammond-arrives-at-the-hive'},
-  {club:'Barnet',player:'Jack Maskell',age:21,from:'Darlington (National League)',fee:'Undisclosed',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://barnetfc.com/maskell-makes-barnet-move'},
-  {club:'Grimsby Town',player:'Andy Cook',age:35,from:'Bradford City',fee:'Free',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://gtfc.co.uk/cook-signs-permanent-deal-with-the-mariners'},
-  {club:'Northampton Town',player:'Janoi Donacien',age:32,from:'Chesterfield',fee:'Free',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://www.ntfc.co.uk/news/2026/june/26/meet-janoi-donacien/'},
-  {club:'Northampton Town',player:'Cameron McGeehan',age:31,to:'Barnsley',fee:'Free',type:'out',date:'29 Jun 2026',status:'confirmed',src:'https://www.barnsleyfc.co.uk/news/2026/june/29/cameron-mcgeehan-returns/'},
-  {club:'Rotherham United',player:'Fábio Tavares',age:25,from:'Burton Albion',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.rotherhamadvertiser.co.uk/sport/football/i-dont-sulk-or-mope-around-and-i-dont-want-other-people-to-either-fabio-tavares-joins-the-ranks-at-rotherham-united-8765399'},
-  {club:'Walsall',player:'Sven Sprangler',age:31,from:'St Johnstone',fee:'Undisclosed',type:'in',date:'27 Jun 2026',status:'confirmed',src:'https://www.saddlers.co.uk/news/2026/june/27/sven-sprangler-signs/'},
-  {club:'Port Vale',player:'Jackson Smith',age:24,from:'Barnsley',fee:'Undisclosed',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://www.port-vale.co.uk/news/jackson-smith-valiant'},
-  {club:'Port Vale',player:'Kyle Dempsey',age:30,from:'Bolton Wanderers',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.port-vale.co.uk/news/kyle-dempsey-valiant'},
-  {club:'Shrewsbury Town',player:'Jay Turner-Cooke',age:22,from:'FC Halifax Town',fee:'Undisclosed (FA dispute over option clause)',type:'in',date:'4 Jul 2026',status:'confirmed',src:'https://www.shrewsburytown.com/news/2026/july/04/shrewsbury-win-the-race-to-snap-up-talented-midfielder-jay-turner-cooke'},
-  {club:'Newport County',player:'Christian Doidge',age:33,from:'Forest Green Rovers (released)',fee:'Free',type:'in',date:'Jul 2026',status:'confirmed',src:'https://x.com/NewportCounty/status/2069707112427421953'},
-  {club:'Colchester United',player:'Sean Raggett',age:32,from:'Rotherham United (released)',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.gazette-news.co.uk/sport/colchesterunited/26246130.colchester-united-sign-experienced-defender-sean-raggett/'},
-  {club:'York City',player:'Charlie McArthur',age:21,from:'Newcastle United (released)',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed',src:'https://yorkcityfootballclub.co.uk/charlie-mcarthur-signs-for-york-city/'},
-  {club:'Fleetwood Town',player:'Danny Andrew',age:35,from:'Exeter City (released)',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.fleetwoodtownfc.com/danny-andrew-returns-to-town-on-a-one-year-deal/'},
-  {club:'Crawley Town',player:'Vito Mannone',age:38,from:'Free agent (joins as player-coach)',fee:'Free',type:'in',date:'10 Jun 2026',status:'confirmed',src:'https://www.crawleytownfc.com/news/2026/june/10/vito-mannone-joins-as-player-coach/'},
-
-  // ── NATIONAL LEAGUE — CONFIRMED (Fylde, Worthing &amp; Hornchurch all promoted up into the National League proper for 2026/27) ──
-  {club:'AFC Fylde',player:'Cedric Main',age:28,from:'Darlington',fee:'Undisclosed',type:'in',date:'10 May 2026',status:'confirmed',src:'https://darlingtonfc.co.uk/news/thanks-cedric'},
-  {club:'Worthing',player:'Dom Hutchinson',age:24,from:'Wealdstone (ex-Watford academy)',fee:'Undisclosed',type:'in',date:'30 Jun 2026',status:'confirmed',src:'https://worthingfc.com/2026/06/hutchinson-signs-for-the-reds/'},
-  {club:'Hornchurch',player:'Nathan Ferguson',age:30,from:'Hartlepool United',fee:'Undisclosed',type:'in',date:'23 Jun 2026',status:'confirmed',src:'https://hornchurchfc.com/welcome-to-the-urchins-nathan-ferguson/'},
-  {club:'Kidderminster Harriers',player:'Joe Foulkes',age:22,to:'Grimsby Town',fee:'Free',type:'out',date:'16 Jun 2026',status:'confirmed',src:'https://gtfc.co.uk/mariners-secure-signature-of-joe-foulkes/'},
+  {div:'League Two',club:'Oldham Athletic',player:'Ollie Norburn',age:33,from:'Notts County',fee:'Free',type:'in',date:'3 Jun 2026',status:'confirmed',src:'https://www.oldhamathletic.co.uk/news/2026/june/03/norburn-signs-for-latics/'},
+  {div:'League Two',club:'Oldham Athletic',player:'Elliott Nevitt',age:29,from:'Gillingham (released)',fee:'Free',type:'in',date:'29 May 2026',status:'confirmed',src:'https://www.oldhamathletic.co.uk/news/2026/may/29/elliott-nevitt-signs-for-latics/'},
+  {div:'League Two',club:'Salford City',player:'Will Aimson',age:31,from:'Wigan Athletic',fee:'Free',type:'in',date:'23 Jun 2026',status:'confirmed',src:'https://www.salfordcityfc.co.uk/news/2026/june/23/serial-promotion-winner-will-aimson-signs/'},
+  {div:'League Two',club:'Salford City',player:'Joe Powell',age:27,from:'Rotherham United',fee:'Free',type:'in',date:'20 Jun 2026',status:'confirmed',src:'https://www.salfordcityfc.co.uk/news/2026/june/20/joe-powell-agrees-salford-city-move/'},
+  {div:'League Two',club:'Barnet',player:'Taye Ashby-Hammond',age:27,from:'Stevenage (released)',fee:'Free',type:'in',date:'29 Jun 2026',status:'confirmed',src:'https://barnetfc.com/ashby-hammond-arrives-at-the-hive'},
+  {div:'League Two',club:'Barnet',player:'Jack Maskell',age:21,from:'Darlington (National League)',fee:'Undisclosed',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://barnetfc.com/maskell-makes-barnet-move'},
+  {div:'League Two',club:'Grimsby Town',player:'Andy Cook',age:35,from:'Bradford City',fee:'Free',type:'in',date:'15 Jun 2026',status:'confirmed',src:'https://gtfc.co.uk/cook-signs-permanent-deal-with-the-mariners'},
+  {div:'League Two',club:'Northampton Town',player:'Janoi Donacien',age:32,from:'Chesterfield',fee:'Free',type:'in',date:'26 Jun 2026',status:'confirmed',src:'https://www.ntfc.co.uk/news/2026/june/26/meet-janoi-donacien/'},
+  {div:'League Two',club:'Northampton Town',player:'Cameron McGeehan',age:31,to:'Barnsley',fee:'Free',type:'out',date:'29 Jun 2026',status:'confirmed',src:'https://www.barnsleyfc.co.uk/news/2026/june/29/cameron-mcgeehan-returns/'},
+  {div:'League Two',club:'Rotherham United',player:'Fábio Tavares',age:25,from:'Burton Albion',fee:'Free',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.rotherhamadvertiser.co.uk/sport/football/i-dont-sulk-or-mope-around-and-i-dont-want-other-people-to-either-fabio-tavares-joins-the-ranks-at-rotherham-united-8765399'},
+  {div:'League Two',club:'Walsall',player:'Sven Sprangler',age:31,from:'St Johnstone',fee:'Undisclosed',type:'in',date:'27 Jun 2026',status:'confirmed',src:'https://www.saddlers.co.uk/news/2026/june/27/sven-sprangler-signs/'},
+  {div:'League Two',club:'Port Vale',player:'Jackson Smith',age:24,from:'Barnsley',fee:'Undisclosed',type:'in',date:'19 Jun 2026',status:'confirmed',src:'https://www.port-vale.co.uk/news/jackson-smith-valiant'},
+  {div:'League Two',club:'Port Vale',player:'Kyle Dempsey',age:30,from:'Bolton Wanderers',fee:'Undisclosed',type:'in',date:'1 Jul 2026',status:'confirmed',src:'https://www.port-vale.co.uk/news/kyle-dempsey-valiant'},
+  {div:'League Two',club:'Shrewsbury Town',player:'Jay Turner-Cooke',age:22,from:'FC Halifax Town',fee:'Undisclosed (FA dispute over option clause)',type:'in',date:'4 Jul 2026',status:'confirmed',src:'https://www.shrewsburytown.com/news/2026/july/04/shrewsbury-win-the-race-to-snap-up-talented-midfielder-jay-turner-cooke'},
+  {div:'League Two',club:'Newport County',player:'Christian Doidge',age:33,from:'Forest Green Rovers (released)',fee:'Free',type:'in',date:'Jul 2026',status:'confirmed',src:'https://x.com/NewportCounty/status/2069707112427421953'},
+  {div:'League Two',club:'Colchester United',player:'Sean Raggett',age:32,from:'Rotherham United (released)',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.gazette-news.co.uk/sport/colchesterunited/26246130.colchester-united-sign-experienced-defender-sean-raggett/'},
+  {div:'League Two',club:'York City',player:'Charlie McArthur',age:21,from:'Newcastle United (released)',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed',src:'https://yorkcityfootballclub.co.uk/charlie-mcarthur-signs-for-york-city/'},
+  {div:'League Two',club:'Fleetwood Town',player:'Danny Andrew',age:35,from:'Exeter City (released)',fee:'Free',type:'in',date:'Jun 2026',status:'confirmed',src:'https://www.fleetwoodtownfc.com/danny-andrew-returns-to-town-on-a-one-year-deal/'},
+  {div:'League Two',club:'Crawley Town',player:'Vito Mannone',age:38,from:'Free agent (joins as player-coach)',fee:'Free',type:'in',date:'10 Jun 2026',status:'confirmed',src:'https://www.crawleytownfc.com/news/2026/june/10/vito-mannone-joins-as-player-coach/'},
 ];
 
 function transfersPage() {
@@ -421,18 +413,23 @@ function transfersPage() {
     return map;
   };
 
-  const renderSection = (title, list, colour) => {
-    if (!list.length) return `<div class="t-empty">No ${title.toLowerCase()} to show yet — check back soon.</div>`;
-    return list.map(renderRow).join('');
+  const DIVISIONS = ['Championship', 'League One', 'League Two'];
+
+  const renderDivisionGroups = (list) => {
+    if (!list.length) return `<div class="t-empty">Nothing to show yet — check back soon.</div>`;
+    return DIVISIONS.map(div => {
+      const divList = list.filter(t => t.div === div);
+      if (!divList.length) return '';
+      const clubs = groupByClub(divList);
+      const clubBlocks = Object.keys(clubs).sort().map(clubName => `<div class="t-club-group">
+        <div class="t-club-hdr">${badge(clubName)}<span>${clubName}</span></div>
+        <div class="t-block">${clubs[clubName].map(renderRow).join('')}</div>
+      </div>`).join('');
+      return `<div class="t-division-hdr">${div}</div>${clubBlocks}`;
+    }).join('');
   };
 
-  const allSorted = [...TRANSFERS].sort((a,b) => {
-    const order = { confirmed:0, advanced:1, rumour:2 };
-    return (order[a.status]||3) - (order[b.status]||3);
-  });
-
   const confirmed = TRANSFERS.filter(t => t.status === 'confirmed');
-  const advanced = TRANSFERS.filter(t => t.status === 'advanced');
   const rumours = TRANSFERS.filter(t => t.status === 'rumour');
 
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transfers — The Pyramid</title>
@@ -449,6 +446,9 @@ function transfersPage() {
 .page{max-width:860px;margin:0 auto;padding:0 24px 60px}
 .t-section-hdr{font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:1.5px;color:#fff;padding:10px 20px;border-radius:4px 4px 0 0;margin-top:24px}
 .t-section-hdr.confirmed{background:#00a651}.t-section-hdr.advanced{background:#f59e0b}.t-section-hdr.rumour{background:#6b7280}
+.t-division-hdr{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px;color:#1B3A28;margin:16px 2px 8px;padding-bottom:5px;border-bottom:2px solid #C9A84C}
+.t-club-group{margin-bottom:10px}
+.t-club-hdr{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:#333;padding:9px 18px;background:#f7f8f6;border:1px solid #e8e8e8;border-bottom:none;border-radius:6px 6px 0 0}
 .t-block{background:#fff;border-radius:0 0 6px 6px;border:1px solid #e8e8e8;border-top:none;margin-bottom:8px;overflow:hidden}
 .t-row{display:grid;grid-template-columns:52px 1fr 2fr 1fr auto;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid #f2f2f2;transition:background .15s}
 .t-row:last-child{border-bottom:none}
@@ -477,16 +477,13 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
 <div class="hdr"><div class="hdr-icon">▲</div><div class="hdr-text"><h1>The Pyramid</h1><div class="sub">Transfers · Summer 2026</div></div></div>
 ${NAV}
 <div class="page">
-<p class="t-updated">Updated: 7 Jul 2026 · Championship, League One, League Two &amp; National League · Every entry sourced — Confirmed (official club announcement), Advanced (multiple reliable outlets, medical/here-we-go stage) or Rumour (reported but not club-confirmed) — tap Source/Evidence to check</p>
+<p class="t-updated">Updated: 7 Jul 2026 · Championship, League One &amp; League Two · Every entry sourced — Confirmed (official club announcement) or Rumour (reported but not club-confirmed) — tap Source/Evidence to check</p>
 
 <div class="t-section-hdr confirmed">✅ Confirmed</div>
-<div class="t-block">${renderSection('confirmed signings', confirmed, '#00a651')}</div>
-
-<div class="t-section-hdr advanced">⏳ Advanced / Imminent</div>
-<div class="t-block">${renderSection('advanced deals', advanced, '#f59e0b')}</div>
+${renderDivisionGroups(confirmed)}
 
 <div class="t-section-hdr rumour">💬 Rumours</div>
-<div class="t-block">${renderSection('rumours', rumours, '#6b7280')}</div>
+${renderDivisionGroups(rumours)}
 
 </div>
 <footer>The Pyramid · Transfers · Summer 2026</footer>
