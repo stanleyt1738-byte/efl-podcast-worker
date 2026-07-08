@@ -108,6 +108,19 @@ export default {
       return json({ ok: true });
     }
 
+    if (p === "/api/push/mute" && request.method === "POST") {
+      const b = await request.json();
+      if (!b.endpoint) return json({ error: "Missing endpoint" }, 400);
+      await env.DB.prepare("UPDATE push_subscriptions SET muted=? WHERE endpoint=?").bind(b.muted ? 1 : 0, b.endpoint).run();
+      return json({ ok: true });
+    }
+
+    if (p === "/api/push/status" && request.method === "GET") {
+      const endpoint = new URL(request.url).searchParams.get("endpoint") || "";
+      const row = endpoint ? await env.DB.prepare("SELECT muted FROM push_subscriptions WHERE endpoint=?").bind(endpoint).first() : null;
+      return json({ subscribed: !!row, muted: row ? !!row.muted : false });
+    }
+
     if (p === "/sw.js") {
       return new Response(SERVICE_WORKER_JS, { headers: { "Content-Type": "application/javascript;charset=utf-8" } });
     }
@@ -116,7 +129,7 @@ export default {
   },
 
   async scheduled(event, env, ctx) {
-    const { results } = await env.DB.prepare("SELECT * FROM push_subscriptions").all();
+    const { results } = await env.DB.prepare("SELECT * FROM push_subscriptions WHERE COALESCE(muted, 0) = 0").all();
     for (const sub of results) {
       try {
         const res = await sendPushNotification(sub, env);
@@ -616,6 +629,8 @@ body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111;font-size:15px
 .btn-primary:hover{background:#264d36}
 .btn-secondary{background:#fff;color:#1B3A28;border:2px solid #1B3A28;padding:9px 16px;border-radius:6px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
 .btn-secondary:hover{background:#f0f5f1}
+.mute-toggle{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:#1B3A28;white-space:nowrap;cursor:pointer}
+.mute-toggle input{width:auto;cursor:pointer}
 .stats-note{background:#fbf7ec;border:1px solid #e8dbb0;color:#7a6320;font-size:12.5px;font-weight:600;padding:10px 14px;border-radius:8px;margin-bottom:20px}
 
 .section{background:#fff;border-radius:8px;border:1px solid #e8e8e8;margin-bottom:20px;overflow:hidden}
@@ -704,6 +719,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
       <option value="views_tiktok">Sort: TikTok Views</option>
     </select>
     <button class="btn-secondary" id="pushBtn" onclick="togglePush()">🔔 Enable Weekday Reminder</button>
+    <label class="mute-toggle" id="muteToggle" style="display:none"><input type="checkbox" id="muteCheckbox" onchange="toggleMute()"> 🔇 Silent (no notification)</label>
     <button class="btn-primary" onclick="openModal()">+ Add Clip</button>
   </div>
 
@@ -1025,10 +1041,27 @@ function urlBase64ToUint8Array(base64String) {
   return outputArray;
 }
 
-function setPushBtnLabel(subscribed) {
+function setPushUI(subscribed, muted) {
   var btn = document.getElementById("pushBtn");
-  if (!btn) return;
-  btn.textContent = subscribed ? "🔕 Disable Weekday Reminder" : "🔔 Enable Weekday Reminder";
+  var muteToggle = document.getElementById("muteToggle");
+  var muteCheckbox = document.getElementById("muteCheckbox");
+  if (btn) btn.textContent = subscribed ? "🔕 Disable Weekday Reminder" : "🔔 Enable Weekday Reminder";
+  if (muteToggle) muteToggle.style.display = subscribed ? "flex" : "none";
+  if (muteCheckbox) muteCheckbox.checked = !!muted;
+}
+
+function toggleMute() {
+  var checkbox = document.getElementById("muteCheckbox");
+  navigator.serviceWorker.getRegistration().then(function(reg){
+    if (!reg) return null;
+    return reg.pushManager.getSubscription();
+  }).then(function(sub){
+    if (!sub) { checkbox.checked = false; return; }
+    return fetch("/api/push/mute", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ endpoint: sub.endpoint, muted: checkbox.checked })
+    });
+  });
 }
 
 function togglePush() {
@@ -1044,7 +1077,7 @@ function togglePush() {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ endpoint: existing.endpoint })
           });
-        }).then(function(){ setPushBtnLabel(false); });
+        }).then(function(){ setPushUI(false, false); });
       }
       return Notification.requestPermission().then(function(perm){
         if (perm !== "granted") { alert("Notification permission was not granted."); return; }
@@ -1056,7 +1089,7 @@ function togglePush() {
             method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify(sub.toJSON())
           });
-        }).then(function(){ setPushBtnLabel(true); });
+        }).then(function(){ setPushUI(true, false); });
       });
     });
   }).catch(function(err){
@@ -1069,7 +1102,10 @@ function togglePush() {
   navigator.serviceWorker.register("/sw.js").then(function(reg){
     return reg.pushManager.getSubscription();
   }).then(function(existing){
-    setPushBtnLabel(!!existing);
+    if (!existing) { setPushUI(false, false); return; }
+    return fetch("/api/push/status?endpoint=" + encodeURIComponent(existing.endpoint))
+      .then(function(r){ return r.json(); })
+      .then(function(status){ setPushUI(true, status.muted); });
   }).catch(function(){});
 })();
 

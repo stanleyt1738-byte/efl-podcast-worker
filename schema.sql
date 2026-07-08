@@ -36,5 +36,6 @@ CREATE TABLE IF NOT EXISTS push_subscriptions (
   endpoint TEXT NOT NULL UNIQUE,
   p256dh TEXT NOT NULL,
   auth TEXT NOT NULL,
+  muted INTEGER DEFAULT 0,
   created_at TEXT DEFAULT CURRENT_TIMESTAMP
 );
