@@ -6,3 +6,9 @@ compatibility_date = "2024-09-23"
 binding = "DB"
 database_name = "efl-clips"
 database_id = "3fe1e17c-be01-4408-a85c-c0cc18837c58"
+
+# Weekday 17:30 UK time reminder to log last week's clip stats.
+# Cron is fixed in UTC — 16:30 UTC = 17:30 during BST (late Mar-late Oct).
+# Once UK clocks go back to GMT (late Oct 2026), bump to "30 17 * * 1-5" to stay at 17:30 local.
+[triggers]
+crons = ["30 16 * * 1-5"]

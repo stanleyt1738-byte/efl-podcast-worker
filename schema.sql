@@ -30,3 +30,11 @@ CREATE TABLE IF NOT EXISTS plans (
 );
 
 CREATE INDEX IF NOT EXISTS idx_plans_updated ON plans(updated_at);
+
+CREATE TABLE IF NOT EXISTS push_subscriptions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  endpoint TEXT NOT NULL UNIQUE,
+  p256dh TEXT NOT NULL,
+  auth TEXT NOT NULL,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);

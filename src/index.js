@@ -89,9 +89,93 @@ export default {
     if (planPageMatch) return ok(planEditorPage(planPageMatch[1]));
     const m = p.match(/^\/club\/([a-z0-9-]+)$/);
     if (m) return ok(clubPage(m[1]));
+
+    if (p === "/api/push/subscribe" && request.method === "POST") {
+      const b = await request.json();
+      if (!b.endpoint) return json({ error: "Missing endpoint" }, 400);
+      const p256dh = (b.keys && b.keys.p256dh) || "";
+      const auth = (b.keys && b.keys.auth) || "";
+      await env.DB.prepare(
+        `INSERT INTO push_subscriptions (endpoint, p256dh, auth) VALUES (?, ?, ?)
+         ON CONFLICT(endpoint) DO UPDATE SET p256dh=excluded.p256dh, auth=excluded.auth`
+      ).bind(b.endpoint, p256dh, auth).run();
+      return json({ ok: true });
+    }
+
+    if (p === "/api/push/unsubscribe" && request.method === "POST") {
+      const b = await request.json();
+      if (b.endpoint) await env.DB.prepare("DELETE FROM push_subscriptions WHERE endpoint=?").bind(b.endpoint).run();
+      return json({ ok: true });
+    }
+
+    if (p === "/sw.js") {
+      return new Response(SERVICE_WORKER_JS, { headers: { "Content-Type": "application/javascript;charset=utf-8" } });
+    }
+
     return ok(HOME);
   },
+
+  async scheduled(event, env, ctx) {
+    const { results } = await env.DB.prepare("SELECT * FROM push_subscriptions").all();
+    for (const sub of results) {
+      try {
+        const res = await sendPushNotification(sub, env);
+        if (res.status === 404 || res.status === 410) {
+          await env.DB.prepare("DELETE FROM push_subscriptions WHERE id=?").bind(sub.id).run();
+        }
+      } catch (e) {}
+    }
+  },
 };
+
+const VAPID_PUBLIC_KEY = "BOovtABGccd6ylrrln3SLHuHGHDYG7Pg-5HXYHv1gIrXSviE-GpI97rpxBKGnW5vtJB7ZhZR16G59l44QmyeIs8";
+
+function b64urlEncode(buf) {
+  const bytes = new Uint8Array(buf);
+  let bin = "";
+  for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+  return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+async function buildVapidAuthHeader(endpoint, privateKeyJwk) {
+  const aud = new URL(endpoint).origin;
+  const header = { typ: "JWT", alg: "ES256" };
+  const now = Math.floor(Date.now() / 1000);
+  const payload = { aud, exp: now + 12 * 3600, sub: "mailto:stanleyt1738@gmail.com" };
+  const encHeader = b64urlEncode(new TextEncoder().encode(JSON.stringify(header)));
+  const encPayload = b64urlEncode(new TextEncoder().encode(JSON.stringify(payload)));
+  const unsigned = `${encHeader}.${encPayload}`;
+  const key = await crypto.subtle.importKey("jwk", privateKeyJwk, { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
+  const sig = await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, key, new TextEncoder().encode(unsigned));
+  return `vapid t=${unsigned}.${b64urlEncode(sig)}, k=${VAPID_PUBLIC_KEY}`;
+}
+
+async function sendPushNotification(subscription, env) {
+  const privateKeyJwk = JSON.parse(env.VAPID_PRIVATE_KEY_JWK);
+  const authHeader = await buildVapidAuthHeader(subscription.endpoint, privateKeyJwk);
+  return fetch(subscription.endpoint, {
+    method: "POST",
+    headers: { "Authorization": authHeader, "TTL": "21600", "Content-Length": "0" },
+  });
+}
+
+const SERVICE_WORKER_JS = `
+self.addEventListener("push", function(event) {
+  var title = "Clip stats reminder";
+  var body = "Add in last week's post stats across X, YouTube, Instagram & TikTok.";
+  event.waitUntil(self.registration.showNotification(title, { body: body, tag: "clip-stats-reminder" }));
+});
+
+self.addEventListener("notificationclick", function(event) {
+  event.notification.close();
+  event.waitUntil(clients.matchAll({ type: "window" }).then(function(list){
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].url.indexOf("/clips") !== -1 && "focus" in list[i]) return list[i].focus();
+    }
+    if (clients.openWindow) return clients.openWindow("/clips");
+  }));
+});
+`;
 
 const CLUBS = {
 /* === CHAMPIONSHIP === */
@@ -530,6 +614,9 @@ body{font-family:'Inter',sans-serif;background:#f0f2ef;color:#111;font-size:15px
 .toolbar select{padding:10px 12px;border-radius:6px;border:1px solid #ddd;font-size:13px;background:#fff;font-family:inherit}
 .btn-primary{background:#1B3A28;color:#fff;border:none;padding:11px 18px;border-radius:6px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
 .btn-primary:hover{background:#264d36}
+.btn-secondary{background:#fff;color:#1B3A28;border:2px solid #1B3A28;padding:9px 16px;border-radius:6px;font-weight:800;font-size:13px;cursor:pointer;white-space:nowrap}
+.btn-secondary:hover{background:#f0f5f1}
+.stats-note{background:#fbf7ec;border:1px solid #e8dbb0;color:#7a6320;font-size:12.5px;font-weight:600;padding:10px 14px;border-radius:8px;margin-bottom:20px}
 
 .section{background:#fff;border-radius:8px;border:1px solid #e8e8e8;margin-bottom:20px;overflow:hidden}
 .section-inner{padding:18px 20px}
@@ -596,6 +683,8 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
     <div id="platBars"></div>
   </div>
 
+  <div class="stats-note">📅 Note: view counts shown above only reflect a clip's first week live — we don't track growth after that.</div>
+
   <div class="section" id="reviewSection" style="display:none">
     <div class="section-inner">
       <div class="section-hdr">⏳ Awaiting Review — enter this week's views</div>
@@ -614,6 +703,7 @@ footer{text-align:center;color:#bbb;font-size:12px;padding:24px 0;border-top:2px
       <option value="views_instagram">Sort: Instagram Views</option>
       <option value="views_tiktok">Sort: TikTok Views</option>
     </select>
+    <button class="btn-secondary" id="pushBtn" onclick="togglePush()">🔔 Enable Weekday Reminder</button>
     <button class="btn-primary" onclick="openModal()">+ Add Clip</button>
   </div>
 
@@ -923,6 +1013,65 @@ function deleteClip(){
   if (!id || !confirm('Delete this clip? This cannot be undone.')) return;
   fetch('/api/clips/' + id, { method: 'DELETE' }).then(function(){ closeModal(); loadClips(); });
 }
+
+var VAPID_PUBLIC_KEY_CLIENT = "BOovtABGccd6ylrrln3SLHuHGHDYG7Pg-5HXYHv1gIrXSviE-GpI97rpxBKGnW5vtJB7ZhZR16G59l44QmyeIs8";
+
+function urlBase64ToUint8Array(base64String) {
+  var padding = "=".repeat((4 - base64String.length % 4) % 4);
+  var base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  var rawData = atob(base64);
+  var outputArray = new Uint8Array(rawData.length);
+  for (var i = 0; i < rawData.length; ++i) outputArray[i] = rawData.charCodeAt(i);
+  return outputArray;
+}
+
+function setPushBtnLabel(subscribed) {
+  var btn = document.getElementById("pushBtn");
+  if (!btn) return;
+  btn.textContent = subscribed ? "🔕 Disable Weekday Reminder" : "🔔 Enable Weekday Reminder";
+}
+
+function togglePush() {
+  if (!("serviceWorker" in navigator) || !("PushManager" in window)) {
+    alert("Push notifications are not supported in this browser.");
+    return;
+  }
+  navigator.serviceWorker.register("/sw.js").then(function(reg){
+    return reg.pushManager.getSubscription().then(function(existing){
+      if (existing) {
+        return existing.unsubscribe().then(function(){
+          return fetch("/api/push/unsubscribe", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ endpoint: existing.endpoint })
+          });
+        }).then(function(){ setPushBtnLabel(false); });
+      }
+      return Notification.requestPermission().then(function(perm){
+        if (perm !== "granted") { alert("Notification permission was not granted."); return; }
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY_CLIENT)
+        }).then(function(sub){
+          return fetch("/api/push/subscribe", {
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(sub.toJSON())
+          });
+        }).then(function(){ setPushBtnLabel(true); });
+      });
+    });
+  }).catch(function(err){
+    alert("Could not set up push notifications: " + err.message);
+  });
+}
+
+(function initPushStatus(){
+  if (!("serviceWorker" in navigator)) return;
+  navigator.serviceWorker.register("/sw.js").then(function(reg){
+    return reg.pushManager.getSubscription();
+  }).then(function(existing){
+    setPushBtnLabel(!!existing);
+  }).catch(function(){});
+})();
 
 loadClips();
 </script>
